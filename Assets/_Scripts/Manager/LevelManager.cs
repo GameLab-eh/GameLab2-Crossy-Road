@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
     [Header("Variables")]
     [SerializeField, Min(1)] int chunckWidth;
 
+    [SerializeField] LayoutManager layout;
 
     public static LevelManager Instance { get; private set; }
 

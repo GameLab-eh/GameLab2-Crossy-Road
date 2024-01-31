@@ -5,7 +5,8 @@ using UnityEngine;
 public class ObstacleMotion : MonoBehaviour
 {
     [SerializeField] float speed;
-    [SerializeField] float trainDelay = 2f;
+    [SerializeField] float delay = 0f;
+    [SerializeField] float _frequencyRate = 0f;
 
     private int boundRigth = -3;
     private int boundLeft;
@@ -28,7 +29,7 @@ public class ObstacleMotion : MonoBehaviour
 
         if (transform.position.z > boundLeft || transform.position.z < boundRigth)
         {
-            if (transform.CompareTag("Train")) StartCoroutine(CoroutineWait());
+            StartCoroutine(CoroutineWait());
             transform.position = new(x, 0, origin);
         }
     }
@@ -43,8 +44,10 @@ public class ObstacleMotion : MonoBehaviour
     {
         float spedbackup = speed;
         speed = 0;
-        yield return new WaitForSeconds(trainDelay);
+        yield return new WaitForSeconds(delay);
 
         speed = spedbackup;
     }
+
+    public float GetFrequencyRate() { return _frequencyRate; }
 }
