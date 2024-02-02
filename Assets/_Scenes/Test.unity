@@ -407,7 +407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276468856}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -417,7 +417,7 @@ Transform:
   - {fileID: 457771130}
   - {fileID: 1942960464}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &408860310
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 408860311}
   - component: {fileID: 408860312}
+  - component: {fileID: 408860313}
   m_Layer: 0
   m_Name: pooler PTG
   m_TagString: Untagged
@@ -457,7 +458,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408860310}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed76fe5e2c5e5614d89c8a956a4dc148, type: 3}
   m_Name: 
@@ -533,6 +534,97 @@ MonoBehaviour:
       value: 1
       inSlope: 0.9693396
       outSlope: 0.9693396
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  length: 20
+--- !u!114 &408860313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408860310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7e2d03b63f3604186508254fcdaa69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _terrainPrefabs:
+  - {fileID: 1173290322696329899, guid: bcd72cecafa96d84f9f1f5317813f03b, type: 3}
+  - {fileID: 5804105966408075239, guid: 3061b61fed930274681e835416a6f7c0, type: 3}
+  - {fileID: 7148348828950921592, guid: a5c97e98f4f5e5a4cb4a261e8d8d72de, type: 3}
+  - {fileID: 1203279906652238510, guid: 7432d6e01db10c049a50618741ed8219, type: 3}
+  - {fileID: 7148348828950921592, guid: 218fd9acd64beb444b29d7a6ff6bb50a, type: 3}
+  - {fileID: 5804105966408075239, guid: f0b476de901516e4193e630da057c8ca, type: 3}
+  _obstacleGrass:
+  - {fileID: 515466607417976836, guid: e8e037d7b40c1454096f17db3e9bedd5, type: 3}
+  - {fileID: 1702499592096932997, guid: 4bf03a7696a148b49a8d18c9f5dc55ba, type: 3}
+  - {fileID: 3315318291376495938, guid: 37e5eb321b264114d8bfa6f1aaca32d6, type: 3}
+  - {fileID: 8693253073300581937, guid: 473b2791de1da6b47897bd2a5a32be77, type: 3}
+  _obstacleRoad:
+  - {fileID: 515466607417976836, guid: ed7ebc08198bf824792473d35e00a642, type: 3}
+  _obstacleRoad2:
+  - {fileID: 515466607417976836, guid: 2617165487366a241857fb94b33348dd, type: 3}
+  _obstacleRailroad:
+  - {fileID: 515466607417976836, guid: df1978979ac4e05468174e6d5166ab70, type: 3}
+  _obstacleRiver:
+  - {fileID: 515466607417976836, guid: cccee2b1eae7cd3418c1b0bd6edade9f, type: 3}
+  _obstacleLake:
+  - {fileID: 515466607417976836, guid: 0b6cf8fa0f0426e46a8db9a31640a978, type: 3}
+  _obstacleHighway:
+  - {fileID: 515466607417976836, guid: e5954245aefe494458270c181bfaeaa7, type: 3}
+  _takeable:
+  - {fileID: 515466607417976836, guid: e57dd381959a5ab488410081513e5d46, type: 3}
+  spawnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _player: {fileID: 1922592666}
+  _departureArea: {fileID: 686966600}
+  _visibleChunks: 3
+  _obstacleDensity: 2
+  difficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0041656494
+      value: 0.018859863
+      inSlope: 0.98524433
+      outSlope: 0.98524433
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.98524433
+      outSlope: 0.98524433
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -718,6 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chunckWidth: 21
+  layout: {fileID: 6929154052748719751, guid: 46f755533e675f54e9b438c31ce7a665, type: 3}
 --- !u!114 &620695228
 MonoBehaviour:
   m_ObjectHideFlags: 0

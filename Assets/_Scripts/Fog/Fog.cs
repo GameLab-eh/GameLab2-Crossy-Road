@@ -13,7 +13,7 @@ public class Fog : MonoBehaviour
 
     private void Start()
     {
-        float width = LevelManager.Instance.GetChunckWidth();
+        float width = LevelManager.Instance.ChunckWidth;
         _backFog.transform.localScale = new((width / 10f), _backFog.transform.localScale.y, _backFog.transform.localScale.z);
         _leftFog.transform.position = new(_leftFog.transform.position.x, _leftFog.transform.position.y, width - (width / 4));
         _rigthFog.transform.position = new(_leftFog.transform.position.x, _leftFog.transform.position.y, width / 4);

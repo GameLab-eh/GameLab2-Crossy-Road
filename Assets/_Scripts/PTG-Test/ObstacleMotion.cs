@@ -1,10 +1,12 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
-public class DynamicProps : Props
+public class ObstacleMotion : MonoBehaviour
 {
-    [SerializeField, Min(0)] float speed;
-    [SerializeField, Min(0)] float delay = 0f;
+    [SerializeField] float speed;
+    [SerializeField] float delay = 0f;
+    [SerializeField] float _frequencyRate = 0f;
 
     private int boundRigth = -3;
     private int boundLeft;
@@ -14,7 +16,7 @@ public class DynamicProps : Props
 
     private void Awake()
     {
-        boundLeft = LevelManager.Instance.GetChunckWidth() + 2;
+        boundLeft = LevelManager.Instance.ChunckWidth + 2;
 
         x = (int)transform.position.x;
         boundRigth = -3;
@@ -28,7 +30,7 @@ public class DynamicProps : Props
         if (transform.position.z > boundLeft || transform.position.z < boundRigth)
         {
             StartCoroutine(CoroutineWait());
-            transform.position = new(x, 0, origin); //da girare
+            transform.position = new(x, 0, origin);
         }
     }
 
@@ -43,6 +45,9 @@ public class DynamicProps : Props
         float spedbackup = speed;
         speed = 0;
         yield return new WaitForSeconds(delay);
+
         speed = spedbackup;
     }
+
+    public float GetFrequencyRate() { return _frequencyRate; }
 }

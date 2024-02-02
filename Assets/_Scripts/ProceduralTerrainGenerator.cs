@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -43,7 +42,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
 
     void Start()
     {
-        width = LevelManager.Instance.GetChunckWidth();
+        width = LevelManager.Instance.ChunckWidth;
 
         _player.position = new(_player.position.x, _player.position.y, width / 2f);
 
