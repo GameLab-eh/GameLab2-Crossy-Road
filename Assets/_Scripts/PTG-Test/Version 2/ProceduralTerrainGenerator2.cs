@@ -15,10 +15,11 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
     private List<GameObject> _activeChunks = new();
     private float _lastPlayerPosition;
-    private Dictionary<GameObject, List<GameObject>> _chunkObstacles = new();
+    private Dictionary<Terrain, List<Props>> _chunkObstacles = new();
     private readonly int _voxelSize = 1;
 
     private LevelManager levelManager;
+    private int currentTheme;
 
     void Start()
     {
@@ -86,32 +87,61 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
         int chunckID = Mathf.CeilToInt(position / levelManager.ChunckLength);
 
+        _activeChunks.Add(newChunk);
+
         for (float i = 0; i < levelManager.ChunckLength; i += _voxelSize)
         {
-            //GameObject terrainPrefab = _terrainPrefabs[Random.Range(0, _terrainPrefabs.Count)];
+            Terrain terrain = null;
 
+            float random = Random.Range(0f, 100f);
+            float tmp = 0;
 
+            for (int j = 0; j < currentPoolTheme.Count; j++)
+            {
+                tmp += GetNormalizedSpawnPercentage(levelManager.Layout.Theme(currentTheme).TerrainList, j, 1, GetTerrainFrequency);
+                if (random <= tmp)
+                {
+                    terrain = currentPoolTheme[j].Terrain.GetObject();
+                    break;
+                }
+            }
+
+            terrain.transform.position = new(0f, 0f, position + i);
+            terrain.transform.SetParent(newChunk.transform);
+
+            terrain.transform.localScale = new(levelManager.ChunckWidth, 1f, 1f);
+
+            GenerateObstacles(terrain, currentPoolTheme[chunckID].PropsList);
         }
-
-        //GenerateObstacles
     }
 
-    //void GenerateObstacles(GameObject terrainObject, List<GameObject> obstacleList, bool single, float factor)
+    //void GenerateObstacles(Terrain terrain, List<ObjectPooler<Props>> obstacleList)
     //{
+    //    Props props = null;
+    //    float random = Random.Range(0f, 100f);
+    //    float tmp = 0;
+
+    //    for (int j = 0; j < obstacleList.Count; j++)
+    //    {
+    //        tmp += GetNormalizedSpawnPercentage(terrain.PropList, j, 1, GetPropsFrequency);
+    //        if (random <= tmp)
+    //        {
+    //            props = obstacleList[j].GetObject();
+    //            break;
+    //        }
+    //    }
+
+
     //    bool isReverse = Random.Range(0, 2) == 0;
 
     //    bool isDynamic = obstacleList[0].GetComponent<ObstacleMotion>() != null;
 
-    //    List<GameObject> obstacles = new List<GameObject>();
-    //    _chunkObstacles.Add(terrainObject, obstacles);
+    //    List<Props> obstacles = new();
+    //    _chunkObstacles.Add(terrain, obstacles);
 
-    //    float rowWidth = terrainObject.transform.localScale.z * _voxelSize;  // Inverti X e Z
+    //    float rowWidth = terrain.transform.localScale.x * _voxelSize;
 
-    //    float _factor = factor / 100f;
-    //    float difficultyPercentage = difficultyCurve.Evaluate(_factor);
-    //    float spawnPercentage = spawnCurve.Evaluate(_factor);
-
-    //    int size = Mathf.Clamp(Mathf.CeilToInt(obstacleList[0].transform.GetChild(0).transform.localScale.x), 1, 2);  // Inverti X e Z
+    //    int size = Mathf.Clamp(Mathf.CeilToInt(props.transform.GetChild(0).transform.localScale.x), 1, 3);
 
     //    int obstacleCount = (int)Mathf.Clamp(Mathf.CeilToInt(difficultyPercentage * rowWidth * _obstacleDensity), 0, rowWidth - Mathf.CeilToInt(rowWidth / 8) * 2);
 
@@ -126,17 +156,17 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     //        int tp;
     //        do
     //        {
-    //            tp = Mathf.CeilToInt(Random.Range(terrainObject.transform.position.x - 1, terrainObject.transform.position.x - 1 + rowWidth));  // Inverti X e Z
-    //        } while (@bool[tp] || @bool[(int)(tp + (size / 2)) > (terrainObject.transform.position.x - 1 + rowWidth) ? 0 : (int)(tp + (size / 2))]);
+    //            tp = Mathf.CeilToInt(Random.Range(terrain.transform.position.x - 1, terrain.transform.position.x - 1 + rowWidth));  // Inverti X e Z
+    //        } while (@bool[tp] || @bool[(int)(tp + (size / 2)) > (terrain.transform.position.x - 1 + rowWidth) ? 0 : (int)(tp + (size / 2))]);
 
     //        @bool[tp] = true;
-    //        @bool[(int)(tp + (size / 2)) > (terrainObject.transform.position.x - 1 + rowWidth) ? 0 : (int)(tp + (size / 2))] = true;
+    //        @bool[(int)(tp + (size / 2)) > (terrain.transform.position.x - 1 + rowWidth) ? 0 : (int)(tp + (size / 2))] = true;
 
     //        GameObject obstaclePrefab = obstacleList[Random.Range(0, obstacleList.Count)];
 
-    //        if (terrainObject.CompareTag("Grass") && Random.value < spawnPercentage) obstaclePrefab = _takeable[Random.Range(0, _takeable.Count)];
+    //        if (terrain.CompareTag("Grass") && Random.value < spawnPercentage) obstaclePrefab = _takeable[Random.Range(0, _takeable.Count)];
 
-    //        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tp, 0f, terrainObject.transform.position.x), Quaternion.identity, terrainObject.transform);  // Inverti X e Z
+    //        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tp, 0f, terrain.transform.position.x), Quaternion.identity, terrain.transform);  // Inverti X e Z
     //        obstacle.transform.localScale = new Vector3(1f / width, 1f, 1f);  // Inverti X e Z
 
     //        if (isDynamic) if (isReverse) obstacle.GetComponent<ObstacleMotion>().Reverse();
@@ -144,6 +174,53 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     //        obstacles.Add(obstacle);
     //    }
     //}
+
+    void GenerateObstacles(Terrain terrain, List<ObjectPooler<Props>> obstaclePoolList)
+    {
+        float _factor = GetTerrainFactor(terrain);
+
+        int size = Mathf.CeilToInt(obstaclePoolList[0].GetObject().transform.GetChild(0).transform.localScale.z);
+
+        float rowWidth = terrain.transform.localScale.x * _voxelSize;
+
+        float difficultyPercentage = levelManager.Layout.DifficultyCurve.Evaluate(_factor);
+
+        int obstacleCount = Mathf.Clamp(Mathf.CeilToInt(difficultyPercentage * rowWidth * levelManager.Layout.ObstacleDensity), 0, Mathf.CeilToInt(rowWidth - rowWidth / 8) * 2);
+
+        bool[] isOccupied = new bool[Mathf.CeilToInt(rowWidth)];
+
+        for (int i = 0; i < obstacleCount; i++)
+        {
+            int tmp;
+            do
+            {
+                tmp = Mathf.CeilToInt(Random.Range(0, rowWidth));
+            } while (isOccupied[tmp] || (tmp + size / 2 < rowWidth && isOccupied[tmp + size / 2]));
+
+            isOccupied[tmp] = true;
+            isOccupied[tmp + size / 2 < rowWidth ? tmp + size / 2 : 0] = true;
+
+            ObjectPooler<Props> obstaclePool = obstaclePoolList[Random.Range(0, obstaclePoolList.Count)];
+
+            Props obstacleProps = obstaclePool.GetObject();
+
+            // Posiziona l'oggetto nella posizione desiderata
+            float xPos = terrain.transform.position.x;
+            float zPos = terrain.transform.position.z + (tmp * _voxelSize);
+
+            Vector3 obstaclePosition = new(xPos, 0f, zPos);
+            obstacleProps.transform.position = obstaclePosition;
+            obstacleProps.transform.SetParent(terrain.transform);
+        }
+    }
+
+    float GetTerrainFactor(Terrain terrain)
+    {
+        // Calcola il fattore specifico per il terreno in base alla tua logica
+        // Puoi modificare questo metodo in base alle tue esigenze specifiche
+        return terrain.Frequency(0);  // Stiamo usando il primo chunk come esempio
+    }
+
 
     //void UnloadChunk(GameObject chunk)
     //{
