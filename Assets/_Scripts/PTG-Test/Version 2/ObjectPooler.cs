@@ -39,6 +39,20 @@ public class ObjectPooler<T> where T : Component
         obj.gameObject.SetActive(false);
     }
 
+    public void DestroyPool()
+    {
+        foreach (T obj in pooledObjects)
+        {
+            if (obj != null)
+            {
+                Object.Destroy(obj.gameObject);
+            }
+        }
+
+        pooledObjects.Clear();
+        pooledObjects = null;
+    }
+
     private T CreateObject()
     {
         T newObj = Object.Instantiate(prefab, parentTransform);
