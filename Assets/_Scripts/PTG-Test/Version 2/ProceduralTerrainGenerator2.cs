@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class ProceduralTerrainGenerator2 : MonoBehaviour
@@ -18,15 +18,13 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     private Dictionary<GameObject, List<GameObject>> _chunkObstacles = new();
     private readonly int _voxelSize = 1;
 
-    private int chunckID;
-
     private LevelManager levelManager;
 
     void Start()
     {
         levelManager = LevelManager.Instance;
 
-        _player.position = new(_player.position.x, _player.position.y, levelManager.ChunckWidth / 2f);
+        _player.position = new(-(levelManager.ChunckWidth / 2f), _player.position.y, _player.position.z);
 
         GenerateInitialChunks();
 
@@ -34,7 +32,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).Terrain(0).PropList, 0, 1, GetPropsFrequency));
     }
 
-    void update()
+    void Update()
     {
         UpdateChunks();
     }
@@ -44,7 +42,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         GenerateObjectPoolerTheme(0, 0, currentPoolTheme);
         for (int i = 0; i < levelManager.VisibleChunks; i++)
         {
-            //SpawnChunk(i * levelManager.ChunckLength);
+            SpawnChunk(i * levelManager.ChunckLength);
         }
     }
 
@@ -81,12 +79,19 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         }
     }
 
-    void SpawnChunk(float positionX)
+    void SpawnChunk(float position)
     {
         GameObject newChunk = new("Chunk");
-        newChunk.transform.position = new Vector3(positionX, 0f, 0f);
+        newChunk.transform.position = new Vector3(position, 0f, 0f);
 
-        chunckID = Mathf.CeilToInt(positionX / levelManager.ChunckLength);
+        int chunckID = Mathf.CeilToInt(position / levelManager.ChunckLength);
+
+        for (float i = 0; i < levelManager.ChunckLength; i += _voxelSize)
+        {
+            //GameObject terrainPrefab = _terrainPrefabs[Random.Range(0, _terrainPrefabs.Count)];
+
+
+        }
 
         //GenerateObstacles
     }
@@ -192,8 +197,9 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         for (int i = 0; i < levelManager.Layout.Theme(currentThemeIndex).TerrainList.Count; i++)
         {
             terrainSpawnPercentage[i] = Mathf.CeilToInt(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(currentThemeIndex).TerrainList, i, chunkCounter, GetTerrainFrequency) / levelManager.ChunckLength);
-            propSpawnPercentage[i] = new int[levelManager.Layout.Theme(currentThemeIndex).Terrain(i).PropList.Count + levelManager.Layout.Theme(currentThemeIndex).Terrain(i).RarityList.Count];
-            List<Props> allProps = levelManager.Layout.Theme(currentThemeIndex).Terrain(i).PropList.Concat(levelManager.Layout.Theme(currentThemeIndex).Terrain(i).RarityList).ToList();
+            Terrain tmp = levelManager.Layout.Theme(currentThemeIndex).Terrain(i);
+            propSpawnPercentage[i] = new int[tmp.PropList.Count + tmp.RarityList.Count];
+            List<Props> allProps = tmp.PropList.Concat(tmp.RarityList).ToList();
             for (int j = 0; j < allProps.Count; j++)
             {
                 propSpawnPercentage[i][j] = Mathf.CeilToInt(GetNormalizedSpawnPercentage(allProps, j, chunkCounter, GetPropsFrequency) / levelManager.ChunckWidth);
@@ -204,13 +210,13 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         {
             ObjectPooler<Terrain> objectPooler;
             Terrain tmp = levelManager.Layout.Theme(currentThemeIndex).Terrain(i);
-            objectPooler = new ObjectPooler<Terrain>(tmp, terrainSpawnPercentage[i] * levelManager.VisibleChunks);
+            objectPooler = new ObjectPooler<Terrain>(tmp, terrainSpawnPercentage[i] * levelManager.VisibleChunks, transform);
             Pool pool1 = new(objectPooler);
             for (int j = 0; j < propSpawnPercentage[i].Length; j++)
             {
                 ObjectPooler<Props> objectPooler2;
                 int num = propSpawnPercentage[i][j] * terrainSpawnPercentage[i] * levelManager.VisibleChunks;
-                objectPooler2 = new(j < tmp.PropList.Count ? tmp.PropList[j] : tmp.RarityList[j - tmp.PropList.Count], num);
+                objectPooler2 = new(j < tmp.PropList.Count ? tmp.PropList[j] : tmp.RarityList[j - tmp.PropList.Count], num, transform);
                 pool1.Add(objectPooler2);
             }
             pool.Add(pool1);

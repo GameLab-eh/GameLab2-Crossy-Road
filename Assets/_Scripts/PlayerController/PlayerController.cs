@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     void MoveForward()
     {
         // Calcola il vettore di movimento in avanti
-        Vector3 moveDirection = transform.right * speed * Time.deltaTime;
+        Vector3 moveDirection = transform.forward * speed * Time.deltaTime;
 
         // Applica il movimento
         transform.Translate(moveDirection, Space.World);
