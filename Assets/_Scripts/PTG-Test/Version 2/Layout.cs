@@ -8,8 +8,7 @@ public class Layout : MonoBehaviour
     [SerializeField] int obstacleDensity = 2;
     [SerializeField] AnimationCurve difficultyCurve;
 
-    public Theme Theme(int index) => themeList[index];
-    public List<Theme> ThemeList => themeList;
+    public List<Theme> Theme => themeList;
     public string Name => this.name;
     public int ObstacleDensity => obstacleDensity;
     public AnimationCurve DifficultyCurve => difficultyCurve;

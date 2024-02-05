@@ -38,8 +38,8 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
         GenerateInitialChunks();
 
-        //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).TerrainList, 0, 1, GetTerrainFrequency));
-        //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).Terrain(0).PropList, 0, 1, GetPropsFrequency));
+        //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).Terrain, 0, 1, GetTerrainFrequency));
+        //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).Terrain(0).Props, 0, 1, GetPropsFrequency));
     }
 
     void Update()
@@ -103,7 +103,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
             for (int j = 0; j < currentPoolTheme.Count; j++)
             {
-                tmp += GetNormalizedSpawnPercentage(levelManager.Layout.Theme(currentTheme).TerrainList, j, chunckID, GetTerrainFrequency);
+                tmp += GetNormalizedSpawnPercentage(levelManager.Layout.Theme[currentTheme].Terrain, j, chunckID, GetTerrainFrequency);
                 if (random <= tmp)
                 {
                     terrain = currentPoolTheme[j].Terrain.GetObject();
@@ -124,7 +124,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     void GenerateObstacles(Terrain terrain, Pool obejctPool, int terrainID)
     {
 
-        List<Props> props = terrain.AllPropsList;
+        List<Props> props = terrain.AllProps;
 
         bool isReverse = Random.Range(0, 2) == 0;
 
@@ -139,10 +139,10 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
             for (int j = 0; j < obejctPool.PropsList.Count; j++)
             {
-                tmp += GetNormalizedSpawnPercentage(terrain.PropList, j, chunckID, GetPropsFrequency);
+                tmp += GetNormalizedSpawnPercentage(terrain.Props, j, chunckID, GetPropsFrequency);
                 if (random <= tmp)
                 {
-                    prop = levelManager.Layout.Theme(currentTheme).Terrain(terrainID).AllProp(j); //cambiare sistemare ogni tanto un easter egg
+                    prop = levelManager.Layout.Theme[currentTheme].Terrain[terrainID].Props[j]; //cambiare sistemare ogni tanto un easter egg
                     tmp = j;
                     break;
                 }
@@ -220,10 +220,10 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
                 for (int j = 0; j < obejctPool.PropsList.Count; j++)
                 {
-                    tmp += GetNormalizedSpawnPercentage(terrain.PropList, j, chunckID, GetPropsFrequency);
+                    tmp += GetNormalizedSpawnPercentage(terrain.Props, j, chunckID, GetPropsFrequency);
                     if (random <= tmp)
                     {
-                        prop = levelManager.Layout.Theme(currentTheme).Terrain(terrainID).AllProp(j);
+                        prop = levelManager.Layout.Theme[currentTheme].Terrain[currentTheme].Props[j];
                         tmp = j;
                         break;
                     }
@@ -255,10 +255,10 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
                 if (grandChild.TryGetComponent(out Props propComponent))
                 {
                     int i = 0;
-                    foreach (var terrain in levelManager.Layout.Theme(currentTheme).TerrainList)
+                    foreach (var terrain in levelManager.Layout.Theme[currentTheme].Terrain)
                     {
                         int j = 0;
-                        foreach (var props in terrain.PropList)
+                        foreach (var props in terrain.Props)
                         {
                             if (props.name + "(Clone)" == propComponent.name)
                             {
@@ -273,7 +273,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
             if (child.TryGetComponent(out Terrain terrainComponent))
             {
                 int i = 0;
-                foreach (var terrain in levelManager.Layout.Theme(currentTheme).TerrainList)
+                foreach (var terrain in levelManager.Layout.Theme[currentTheme].Terrain)
                 {
                     if (terrain.name + "(Clone)" == terrainComponent.name)
                     {
@@ -312,14 +312,14 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     /// <param name="pool">List to store the generated object pools.</param>
     void GenerateObjectPoolerTheme(int currentThemeIndex, int chunkCounter, List<Pool> pool)
     {
-        int[] terrainSpawnPercentage = new int[levelManager.Layout.Theme(currentThemeIndex).TerrainList.Count];
-        int[][] propSpawnPercentage = new int[levelManager.Layout.Theme(currentThemeIndex).TerrainList.Count][];
-        for (int i = 0; i < levelManager.Layout.Theme(currentThemeIndex).TerrainList.Count; i++)
+        int[] terrainSpawnPercentage = new int[levelManager.Layout.Theme[currentThemeIndex].Terrain.Count];
+        int[][] propSpawnPercentage = new int[levelManager.Layout.Theme[currentThemeIndex].Terrain.Count][];
+        for (int i = 0; i < levelManager.Layout.Theme[currentThemeIndex].Terrain.Count; i++)
         {
-            terrainSpawnPercentage[i] = Mathf.CeilToInt(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(currentThemeIndex).TerrainList, i, chunkCounter, GetTerrainFrequency) / levelManager.ChunckLength);
-            Terrain tmp = levelManager.Layout.Theme(currentThemeIndex).Terrain(i);
-            propSpawnPercentage[i] = new int[tmp.PropList.Count + tmp.RarityList.Count];
-            List<Props> allProps = tmp.PropList.Concat(tmp.RarityList).ToList();
+            terrainSpawnPercentage[i] = Mathf.CeilToInt(GetNormalizedSpawnPercentage(levelManager.Layout.Theme[currentThemeIndex].Terrain, i, chunkCounter, GetTerrainFrequency) / levelManager.ChunckLength);
+            Terrain tmp = levelManager.Layout.Theme[currentThemeIndex].Terrain[i];
+            propSpawnPercentage[i] = new int[tmp.Props.Count + tmp.Rarity.Count];
+            List<Props> allProps = tmp.Props.Concat(tmp.Rarity).ToList();
             for (int j = 0; j < allProps.Count; j++)
             {
                 propSpawnPercentage[i][j] = Mathf.CeilToInt(GetNormalizedSpawnPercentage(allProps, j, chunkCounter, GetPropsFrequency) / levelManager.ChunckWidth);
@@ -329,14 +329,14 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         for (int i = 0; i < terrainSpawnPercentage.Length; i++)
         {
             ObjectPooler<Terrain> objectPooler;
-            Terrain tmp = levelManager.Layout.Theme(currentThemeIndex).Terrain(i);
+            Terrain tmp = levelManager.Layout.Theme[currentThemeIndex].Terrain[i];
             objectPooler = new ObjectPooler<Terrain>(tmp, terrainSpawnPercentage[i] * levelManager.VisibleChunks, transform);
             Pool pool1 = new(objectPooler);
             for (int j = 0; j < propSpawnPercentage[i].Length; j++)
             {
                 ObjectPooler<Props> objectPooler2;
                 int num = propSpawnPercentage[i][j] * terrainSpawnPercentage[i] * levelManager.VisibleChunks;
-                objectPooler2 = new(j < tmp.PropList.Count ? tmp.PropList[j] : tmp.RarityList[j - tmp.PropList.Count], num, transform);
+                objectPooler2 = new(j < tmp.Props.Count ? tmp.Props[j] : tmp.Rarity[j - tmp.Props.Count], num, transform);
                 pool1.Add(objectPooler2);
             }
             pool.Add(pool1);

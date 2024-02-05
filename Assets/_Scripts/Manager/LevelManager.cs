@@ -31,10 +31,10 @@ public class LevelManager : MonoBehaviour
     {
         // Example of interaction with a layout and its components
         //Debug.Log(layout.Name);
-        //Debug.Log(layout.Theme(0));
-        //Debug.Log(layout.Theme(0).Name);
-        //Debug.Log(layout.Theme(0).Terrain(0));
-        //Debug.Log(layout.Theme(0).Terrain(0).PropList[0].Size);
+        //Debug.Log(layout.Theme[0]);
+        //Debug.Log(layout.Theme[0].Name);
+        //Debug.Log(layout.Theme[0].Terrain[0]);
+        //Debug.Log(layout.Theme[0].Terrain[0].Props[0].Size);
     }
 
     public int ChunckWidth
