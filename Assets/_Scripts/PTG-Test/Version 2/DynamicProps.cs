@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DynamicProps : Props
@@ -6,36 +7,27 @@ public class DynamicProps : Props
     [SerializeField, Min(0)] float speed;
     [SerializeField, Min(0)] float delay = 0f;
 
-    private int boundRigth = -3;
-    private int boundLeft;
-    private int x;
-    private int origin = -2;
-    private Vector3 dir = Vector3.forward;
+    int bounds;
 
     private void Awake()
     {
-        boundLeft = LevelManager.Instance.ChunckWidth + 2;
-
-        x = (int)transform.position.x;
-        boundRigth = -3;
-        origin = -2;
+        bounds = (int)(LevelManager.Instance.ChunckWidth / 2) + 2;
     }
 
     private void Update()
     {
-        transform.Translate(speed * Time.deltaTime * dir);
+        transform.Translate(speed * Time.deltaTime * Vector3.left);
 
-        if (transform.position.z > boundLeft || transform.position.z < boundRigth)
+        if (transform.position.x > (bounds + 1) || transform.position.x < (-bounds - 1))
         {
             StartCoroutine(CoroutineWait());
-            transform.position = new(x, 0, origin); //da girare
+            transform.position = new(transform.position.x > (bounds + 1) ? -bounds : bounds, 0, transform.position.z);
         }
     }
 
     public void Reverse()
     {
-        dir = -Vector3.forward;
-        origin = boundLeft;
+        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
     }
 
     IEnumerator CoroutineWait()

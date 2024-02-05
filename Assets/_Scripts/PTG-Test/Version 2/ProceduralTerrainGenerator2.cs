@@ -21,11 +21,13 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     private LevelManager levelManager;
     private int currentTheme;
 
+    private int chunckID;
+
     void Start()
     {
         levelManager = LevelManager.Instance;
 
-        _player.position = new(-(levelManager.ChunckWidth / 2f), _player.position.y, _player.position.z);
+        //_player.position = new(-(levelManager.ChunckWidth / 2f), _player.position.y, _player.position.z);
 
         GenerateInitialChunks();
 
@@ -85,7 +87,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         GameObject newChunk = new("Chunk");
         newChunk.transform.position = new Vector3(position, 0f, 0f);
 
-        int chunckID = Mathf.CeilToInt(position / levelManager.ChunckLength);
+        chunckID = Mathf.CeilToInt(position / levelManager.ChunckLength);
 
         _activeChunks.Add(newChunk);
 
@@ -98,10 +100,11 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
             for (int j = 0; j < currentPoolTheme.Count; j++)
             {
-                tmp += GetNormalizedSpawnPercentage(levelManager.Layout.Theme(currentTheme).TerrainList, j, 1, GetTerrainFrequency);
+                tmp += GetNormalizedSpawnPercentage(levelManager.Layout.Theme(currentTheme).TerrainList, j, chunckID, GetTerrainFrequency);
                 if (random <= tmp)
                 {
                     terrain = currentPoolTheme[j].Terrain.GetObject();
+                    tmp = j;
                     break;
                 }
             }
@@ -111,106 +114,122 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
             terrain.transform.localScale = new(levelManager.ChunckWidth, 1f, 1f);
 
-            GenerateObstacles(terrain, currentPoolTheme[chunckID].PropsList);
+            GenerateObstacles(terrain, currentPoolTheme[(int)tmp], (int)tmp);
         }
     }
 
-    //void GenerateObstacles(Terrain terrain, List<ObjectPooler<Props>> obstacleList)
-    //{
-    //    Props props = null;
-    //    float random = Random.Range(0f, 100f);
-    //    float tmp = 0;
-
-    //    for (int j = 0; j < obstacleList.Count; j++)
-    //    {
-    //        tmp += GetNormalizedSpawnPercentage(terrain.PropList, j, 1, GetPropsFrequency);
-    //        if (random <= tmp)
-    //        {
-    //            props = obstacleList[j].GetObject();
-    //            break;
-    //        }
-    //    }
-
-
-    //    bool isReverse = Random.Range(0, 2) == 0;
-
-    //    bool isDynamic = obstacleList[0].GetComponent<ObstacleMotion>() != null;
-
-    //    List<Props> obstacles = new();
-    //    _chunkObstacles.Add(terrain, obstacles);
-
-    //    float rowWidth = terrain.transform.localScale.x * _voxelSize;
-
-    //    int size = Mathf.Clamp(Mathf.CeilToInt(props.transform.GetChild(0).transform.localScale.x), 1, 3);
-
-    //    int obstacleCount = (int)Mathf.Clamp(Mathf.CeilToInt(difficultyPercentage * rowWidth * _obstacleDensity), 0, rowWidth - Mathf.CeilToInt(rowWidth / 8) * 2);
-
-    //    obstacleCount /= size;
-
-    //    if (single) obstacleCount = 1;
-
-    //    bool[] @bool = new bool[(int)rowWidth];
-
-    //    for (int i = 0; i < obstacleCount; i++)
-    //    {
-    //        int tp;
-    //        do
-    //        {
-    //            tp = Mathf.CeilToInt(Random.Range(terrain.transform.position.x - 1, terrain.transform.position.x - 1 + rowWidth));  // Inverti X e Z
-    //        } while (@bool[tp] || @bool[(int)(tp + (size / 2)) > (terrain.transform.position.x - 1 + rowWidth) ? 0 : (int)(tp + (size / 2))]);
-
-    //        @bool[tp] = true;
-    //        @bool[(int)(tp + (size / 2)) > (terrain.transform.position.x - 1 + rowWidth) ? 0 : (int)(tp + (size / 2))] = true;
-
-    //        GameObject obstaclePrefab = obstacleList[Random.Range(0, obstacleList.Count)];
-
-    //        if (terrain.CompareTag("Grass") && Random.value < spawnPercentage) obstaclePrefab = _takeable[Random.Range(0, _takeable.Count)];
-
-    //        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tp, 0f, terrain.transform.position.x), Quaternion.identity, terrain.transform);  // Inverti X e Z
-    //        obstacle.transform.localScale = new Vector3(1f / width, 1f, 1f);  // Inverti X e Z
-
-    //        if (isDynamic) if (isReverse) obstacle.GetComponent<ObstacleMotion>().Reverse();
-
-    //        obstacles.Add(obstacle);
-    //    }
-    //}
-
-    void GenerateObstacles(Terrain terrain, List<ObjectPooler<Props>> obstaclePoolList)
+    void GenerateObstacles(Terrain terrain, Pool obejctPool, int terrainID)
     {
-        float _factor = GetTerrainFactor(terrain);
 
-        int size = Mathf.CeilToInt(obstaclePoolList[0].GetObject().transform.GetChild(0).transform.localScale.z);
+        List<Props> props = terrain.AllPropsList;
 
-        float rowWidth = terrain.transform.localScale.x * _voxelSize;
+        bool isReverse = Random.Range(0, 2) == 0;
 
-        float difficultyPercentage = levelManager.Layout.DifficultyCurve.Evaluate(_factor);
+        bool isSingleType = terrain.IsSingleType;
 
-        int obstacleCount = Mathf.Clamp(Mathf.CeilToInt(difficultyPercentage * rowWidth * levelManager.Layout.ObstacleDensity), 0, Mathf.CeilToInt(rowWidth - rowWidth / 8) * 2);
+        Props prop = null;
 
-        bool[] isOccupied = new bool[Mathf.CeilToInt(rowWidth)];
-
-        for (int i = 0; i < obstacleCount; i++)
+        if (isSingleType)
         {
-            int tmp;
-            do
+            float random = Random.Range(0f, 100f);
+            float tmp = 0;
+
+            for (int j = 0; j < obejctPool.PropsList.Count; j++)
             {
-                tmp = Mathf.CeilToInt(Random.Range(0, rowWidth));
-            } while (isOccupied[tmp] || (tmp + size / 2 < rowWidth && isOccupied[tmp + size / 2]));
+                tmp += GetNormalizedSpawnPercentage(terrain.PropList, j, chunckID, GetPropsFrequency);
+                if (random <= tmp)
+                {
+                    prop = levelManager.Layout.Theme(currentTheme).Terrain(terrainID).AllProp(j); //cambiare sistemare ogni tanto un easter egg
+                    tmp = j;
+                    break;
+                }
+            }
+            if (prop.Max == 1)
+            {
+                prop = obejctPool.Props((int)tmp).GetObject();
 
-            isOccupied[tmp] = true;
-            isOccupied[tmp + size / 2 < rowWidth ? tmp + size / 2 : 0] = true;
+                if (prop.GetComponent<DynamicProps>() != null && isReverse) prop.GetComponent<DynamicProps>().Reverse();
 
-            ObjectPooler<Props> obstaclePool = obstaclePoolList[Random.Range(0, obstaclePoolList.Count)];
+                prop.transform.position = new(0, 0, terrain.transform.position.z);
 
-            Props obstacleProps = obstaclePool.GetObject();
+                prop.transform.SetParent(terrain.transform);
+            }
+            else
+            {
+                int rowWidth = (int)terrain.transform.localScale.x;
 
-            // Posiziona l'oggetto nella posizione desiderata
-            float xPos = terrain.transform.position.x;
-            float zPos = terrain.transform.position.z + (tmp * _voxelSize);
+                int maxObjectInRow = Mathf.FloorToInt(rowWidth - 2 / (int)prop.Size);
 
-            Vector3 obstaclePosition = new(xPos, 0f, zPos);
-            obstacleProps.transform.position = obstaclePosition;
-            obstacleProps.transform.SetParent(terrain.transform);
+                float difficulty = terrain.Frequency(chunckID);
+
+                int objectInRow = Mathf.Clamp(Mathf.CeilToInt(difficulty * rowWidth * levelManager.Layout.ObstacleDensity), 0, maxObjectInRow);
+
+                bool[] isOccupied = new bool[rowWidth];
+
+                for (int i = 0; i < objectInRow; i++)
+                {
+                    int tp;
+                    do
+                    {
+                        tp = Mathf.CeilToInt(Random.Range(0, rowWidth));
+                    } while (isOccupied[tp] || isOccupied[tp + (prop.Size - 1) >= isOccupied.Length ? (prop.Size - 2) : tp + (prop.Size - 1)]);
+                    for (int j = tp; j < tp + prop.Size - 1; j++)
+                    {
+                        isOccupied[j + (prop.Size - 1) >= isOccupied.Length ? (prop.Size - 2) : j + (prop.Size - 1)] = true;
+                    }
+                    prop = obejctPool.Props((int)tmp).GetObject();
+
+                    if (prop.GetComponent<DynamicProps>() != null && isReverse) prop.GetComponent<DynamicProps>().Reverse();
+
+                    prop.transform.position = new(tp, 0, terrain.transform.position.z);
+                    prop.transform.SetParent(terrain.transform);
+                }
+            }
+        }
+        else
+        {
+            int rowWidth = (int)terrain.transform.localScale.z;
+
+            int maxObjectInRow = Mathf.FloorToInt(rowWidth - 2);
+
+            float difficulty = terrain.Frequency(chunckID);
+
+            int objectInRow = Mathf.Clamp(Mathf.CeilToInt(difficulty * rowWidth * levelManager.Layout.ObstacleDensity), 0, maxObjectInRow);
+
+            bool[] isOccupied = new bool[rowWidth];
+
+            for (int i = 0; i < objectInRow; i++)
+            {
+                int tp;
+                do
+                {
+                    tp = Mathf.CeilToInt(Random.Range(0, rowWidth));
+                } while (isOccupied[tp]);
+                for (int j = tp; j < tp; j++)
+                {
+                    isOccupied[j] = true;
+                }
+
+                float random = Random.Range(0f, 100f);
+                float tmp = 0;
+
+                for (int j = 0; j < obejctPool.PropsList.Count; j++)
+                {
+                    tmp += GetNormalizedSpawnPercentage(terrain.PropList, j, chunckID, GetPropsFrequency);
+                    if (random <= tmp)
+                    {
+                        prop = levelManager.Layout.Theme(currentTheme).Terrain(terrainID).AllProp(j);
+                        tmp = j;
+                        break;
+                    }
+                }
+                prop = obejctPool.Props((int)tmp).GetObject();
+
+                if (prop.GetComponent<DynamicProps>() != null && isReverse) prop.GetComponent<DynamicProps>().Reverse();
+
+                prop.transform.position = new(tp - levelManager.ChunckWidth / 2, 0, terrain.transform.position.z); //correggere
+                prop.transform.SetParent(terrain.transform);
+            }
         }
     }
 

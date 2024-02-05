@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Terrain : MonoBehaviour
@@ -19,7 +20,11 @@ public class Terrain : MonoBehaviour
     }
 
     public float Frequency(int factor) => frequencyRate.Evaluate(factor / 100f);
+    public Props Prop(int index) => propList[index];
     public List<Props> PropList => propList;
     public int Max => max;
     public List<Props> RarityList => rarityPropList;
+    public List<Props> AllPropsList => propList.Concat(rarityPropList).ToList();
+    public Props AllProp(int index) => propList.Concat(rarityPropList).ToList()[index];
+    public bool IsSingleType => isSingleType;
 }
