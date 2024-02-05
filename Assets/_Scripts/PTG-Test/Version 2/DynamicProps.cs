@@ -14,7 +14,7 @@ public class DynamicProps : Props
         bounds = (int)(LevelManager.Instance.ChunckWidth / 2) + 2;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.Translate(speed * Time.deltaTime * Vector3.left);
 

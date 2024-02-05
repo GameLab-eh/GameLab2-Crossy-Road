@@ -13,4 +13,5 @@ public class Layout : MonoBehaviour
     public string Name => this.name;
     public int ObstacleDensity => obstacleDensity;
     public AnimationCurve DifficultyCurve => difficultyCurve;
+    public int ChunckDelay => chunckDelay;
 }

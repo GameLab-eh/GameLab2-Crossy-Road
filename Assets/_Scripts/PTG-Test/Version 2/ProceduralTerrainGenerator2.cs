@@ -14,6 +14,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     List<Pool> otherPoolTheme = new();
 
     private List<GameObject> _activeChunks = new();
+    private List<GameObject> _notActiveChunks = new();
     private float _lastPlayerPosition;
     private Dictionary<Terrain, List<Props>> _chunkObstacles = new();
     private readonly int _voxelSize = 1;
@@ -22,12 +23,18 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     private int currentTheme;
 
     private int chunckID;
+    private int _lastPlayerChunkIndex = 1;
 
     void Start()
     {
         levelManager = LevelManager.Instance;
 
         //_player.position = new(-(levelManager.ChunckWidth / 2f), _player.position.y, _player.position.z);
+
+        for (int i = 0; i < levelManager.VisibleChunks; i++)
+        {
+            _notActiveChunks.Add(new GameObject("Chunk"));
+        }
 
         GenerateInitialChunks();
 
@@ -51,41 +58,37 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
     void UpdateChunks()
     {
+        if (_player.position.z < 0) return;
 
-        (otherPoolTheme, currentPoolTheme) = (currentPoolTheme, otherPoolTheme);
+        int playerChunkIndex = Mathf.FloorToInt(_player.position.z / levelManager.ChunckLength);
 
-        if (_player.position.x < 0) return;
-        int playerChunkIndex = Mathf.FloorToInt(_player.position.x / levelManager.ChunckLength);
-
-        if (playerChunkIndex * levelManager.ChunckLength != Mathf.FloorToInt(_lastPlayerPosition / levelManager.ChunckLength) * levelManager.ChunckLength)
+        if (playerChunkIndex != _lastPlayerChunkIndex/*playerChunkIndex * levelManager.ChunckLength != Mathf.FloorToInt(_lastPlayerPosition / levelManager.ChunckLength) * levelManager.ChunckLength*/)
         {
-            // load new chunk
-            for (int i = playerChunkIndex - levelManager.VisibleChunks; i <= playerChunkIndex + levelManager.VisibleChunks; i++)
+            _lastPlayerChunkIndex = playerChunkIndex;
+
+            //if (chunckID -1 > levelManager.Layout.ChunckDelay) (otherPoolTheme, currentPoolTheme) = (currentPoolTheme, otherPoolTheme);
+            //if (chunckID == levelManager.Layout.ChunckDelay) DestroyObjectPoolerTheme();
+
+            if (playerChunkIndex > chunckID - 2)
             {
-                //if (!IsChunkActive(i))
-                //{
-                //    SpawnChunk(i * levelManager.ChunckLength);
-                //}
+                UnloadChunk(_activeChunks[0]);
+
+                SpawnChunk((chunckID + 1) * levelManager.ChunckLength);
             }
 
-            // unload old chunk
-            for (int i = _activeChunks.Count - 1; i >= 0; i--)
-            {
-                int chunkIndex = Mathf.FloorToInt(_activeChunks[i].transform.position.x / levelManager.ChunckLength);
-                //if (Mathf.Abs(playerChunkIndex - chunkIndex) > levelManager.VisibleChunks)
-                //{
-                //    UnloadChunk(_activeChunks[i]);
-                //}
-            }
-
-            _lastPlayerPosition = _player.position.x;
+            _lastPlayerPosition = _player.position.z;
         }
     }
 
     void SpawnChunk(float position)
     {
-        GameObject newChunk = new("Chunk");
+        GameObject newChunk = _notActiveChunks[0];
+
+        _notActiveChunks.Remove(newChunk);
+
         newChunk.transform.position = new Vector3(position, 0f, 0f);
+
+        newChunk.SetActive(true);
 
         chunckID = Mathf.CeilToInt(position / levelManager.ChunckLength);
 
@@ -144,6 +147,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
                     break;
                 }
             }
+
             if (prop.Max == 1)
             {
                 prop = obejctPool.Props((int)tmp).GetObject();
@@ -181,20 +185,21 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
                     if (prop.GetComponent<DynamicProps>() != null && isReverse) prop.GetComponent<DynamicProps>().Reverse();
 
-                    prop.transform.position = new(tp, 0, terrain.transform.position.z);
+                    prop.transform.position = new(tp - levelManager.ChunckWidth / 2, 0, terrain.transform.position.z);
                     prop.transform.SetParent(terrain.transform);
                 }
             }
         }
         else
         {
-            int rowWidth = (int)terrain.transform.localScale.z;
+
+            int rowWidth = (int)terrain.transform.localScale.x;
 
             int maxObjectInRow = Mathf.FloorToInt(rowWidth - 2);
 
             float difficulty = terrain.Frequency(chunckID);
 
-            int objectInRow = Mathf.Clamp(Mathf.CeilToInt(difficulty * rowWidth * levelManager.Layout.ObstacleDensity), 0, maxObjectInRow);
+            int objectInRow = Mathf.Clamp(Mathf.CeilToInt(difficulty * (rowWidth / 4) * levelManager.Layout.ObstacleDensity), 0, maxObjectInRow);
 
             bool[] isOccupied = new bool[rowWidth];
 
@@ -227,7 +232,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
                 if (prop.GetComponent<DynamicProps>() != null && isReverse) prop.GetComponent<DynamicProps>().Reverse();
 
-                prop.transform.position = new(tp - levelManager.ChunckWidth / 2, 0, terrain.transform.position.z); //correggere
+                prop.transform.position = new(tp - levelManager.ChunckWidth / 2, 0, terrain.transform.position.z);
                 prop.transform.SetParent(terrain.transform);
             }
         }
@@ -241,30 +246,49 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     }
 
 
-    //void UnloadChunk(GameObject chunk)
-    //{
-    //    _activeChunks.Remove(chunk);
-    //    Destroy(chunk);
+    void UnloadChunk(GameObject chunk)
+    {
+        foreach (Transform child in chunk.transform)
+        {
+            foreach (Transform grandChild in child)
+            {
+                if (grandChild.TryGetComponent(out Props propComponent))
+                {
+                    int i = 0;
+                    foreach (var terrain in levelManager.Layout.Theme(currentTheme).TerrainList)
+                    {
+                        int j = 0;
+                        foreach (var props in terrain.PropList)
+                        {
+                            if (props.name + "(Clone)" == propComponent.name)
+                            {
+                                currentPoolTheme[i].Props(j).ReturnToPool(propComponent);
+                            }
+                            j++;
+                        }
+                        i++;
+                    }
+                }
+            }
+            if (child.TryGetComponent(out Terrain terrainComponent))
+            {
+                int i = 0;
+                foreach (var terrain in levelManager.Layout.Theme(currentTheme).TerrainList)
+                {
+                    if (terrain.name + "(Clone)" == terrainComponent.name)
+                    {
+                        currentPoolTheme[i].Terrain.ReturnToPool(terrainComponent);
+                    }
+                    i++;
+                }
+            }
+        }
+        _notActiveChunks.Add(chunk);
+        _activeChunks.Remove(chunk);
 
-    //    // Rimuovi ostacoli dal dizionario
-    //    if (_chunkObstacles.ContainsKey(chunk))
-    //    {
-    //        _chunkObstacles.Remove(chunk);
-    //    }
-    //}
+        chunk.SetActive(false);
+    }
 
-    //bool IsChunkActive(int index)
-    //{
-    //    foreach (GameObject chunk in _activeChunks)
-    //    {
-    //        int chunkIndex = Mathf.FloorToInt(chunk.transform.position.x / length);
-    //        if (chunkIndex == index)
-    //        {
-    //            return true;
-    //        }
-    //    }
-    //    return false;
-    //}
 
     /// <summary>
     /// Destroys all object poolers in the other pool theme.

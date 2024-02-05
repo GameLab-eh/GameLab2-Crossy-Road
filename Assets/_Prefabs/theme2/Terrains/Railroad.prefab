@@ -94,7 +94,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   rarityPropList: []
-  isSingleType: 0
+  isSingleType: 1
 --- !u!1 &4406095758171840359
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ObjectPooler<T> where T : Component
 {
-    private List<T> pooledObjects = new();
+    private List<T> pooledObjects = new List<T>();
     private T prefab;
     private Transform parentTransform;
 
@@ -34,9 +35,24 @@ public class ObjectPooler<T> where T : Component
         return newObj;
     }
 
-    public void ReturnObject(T obj)
+    public void ReturnToPool()
     {
-        obj.gameObject.SetActive(false);
+        foreach (T obj in pooledObjects)
+        {
+            if (obj.gameObject.activeInHierarchy)
+            {
+                obj.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void ReturnToPool(T objectToReturn)
+    {
+        //objectToReturn.transform.SetParent(this.parentTransform);
+        if (objectToReturn.gameObject.activeInHierarchy)
+        {
+            objectToReturn.gameObject.SetActive(false);
+        }
     }
 
     public void DestroyPool()
