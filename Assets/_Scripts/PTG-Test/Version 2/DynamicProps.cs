@@ -16,7 +16,7 @@ public class DynamicProps : Props
 
     private void FixedUpdate()
     {
-        transform.Translate(speed * Time.deltaTime * Vector3.left);
+        transform.Translate(speed * Time.fixedDeltaTime * Vector3.left);
 
         if (transform.position.x > (bounds + 1) || transform.position.x < (-bounds - 1))
         {
