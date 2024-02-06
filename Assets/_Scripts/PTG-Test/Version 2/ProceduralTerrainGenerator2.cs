@@ -16,7 +16,6 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     private List<GameObject> _activeChunks = new();
     private List<GameObject> _notActiveChunks = new();
     private float _lastPlayerPosition;
-    private Dictionary<Terrain, List<Props>> _chunkObstacles = new();
     private readonly int _voxelSize = 1;
 
     private LevelManager levelManager;
@@ -37,9 +36,6 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         }
 
         GenerateInitialChunks();
-
-        //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).Terrain, 0, 1, GetTerrainFrequency));
-        //Debug.Log(GetNormalizedSpawnPercentage(levelManager.Layout.Theme(0).Terrain(0).Props, 0, 1, GetPropsFrequency));
     }
 
     void Update()
@@ -49,7 +45,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
 
     void GenerateInitialChunks()
     {
-        GenerateObjectPoolerTheme(0, 0, currentPoolTheme);
+        GenerateObjectPoolerTheme(0, 5, currentPoolTheme);
         for (int i = 0; i < levelManager.VisibleChunks; i++)
         {
             SpawnChunk(i * levelManager.ChunckLength);
@@ -83,15 +79,12 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     void SpawnChunk(float position)
     {
         GameObject newChunk = _notActiveChunks[0];
-
         _notActiveChunks.Remove(newChunk);
 
-        newChunk.transform.position = new Vector3(position, 0f, 0f);
-
+        newChunk.transform.position = new(position, 0f, 0f);
         newChunk.SetActive(true);
 
         chunckID = Mathf.CeilToInt(position / levelManager.ChunckLength);
-
         _activeChunks.Add(newChunk);
 
         for (float i = 0; i < levelManager.ChunckLength; i += _voxelSize)
@@ -192,7 +185,6 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         }
         else
         {
-
             int rowWidth = (int)terrain.transform.localScale.x;
 
             int maxObjectInRow = Mathf.FloorToInt(rowWidth - 2);
@@ -238,57 +230,50 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
         }
     }
 
-    float GetTerrainFactor(Terrain terrain)
-    {
-        // Calcola il fattore specifico per il terreno in base alla tua logica
-        // Puoi modificare questo metodo in base alle tue esigenze specifiche
-        return terrain.Frequency(0);  // Stiamo usando il primo chunk come esempio
-    }
-
-
     void UnloadChunk(GameObject chunk)
     {
-        foreach (Transform child in chunk.transform)
+        List<Transform> childrenList = new(chunk.transform.Cast<Transform>());
+
+        foreach (Transform child in childrenList)
         {
-            foreach (Transform grandChild in child)
+            List<Transform> grandChildrenList = new(child.Cast<Transform>());
+
+            for (int grandChildIndex = 1; grandChildIndex < grandChildrenList.Count; grandChildIndex++)
             {
+                Transform grandChild = grandChildrenList[grandChildIndex];
+
                 if (grandChild.TryGetComponent(out Props propComponent))
                 {
-                    int i = 0;
-                    foreach (var terrain in levelManager.Layout.Theme[currentTheme].Terrain)
+                    for (int i = 0; i < levelManager.Layout.Theme[currentTheme].Terrain.Count; i++)
                     {
-                        int j = 0;
-                        foreach (var props in terrain.Props)
+                        for (int j = 0; j < levelManager.Layout.Theme[currentTheme].Terrain[i].Props.Count; j++)
                         {
-                            if (props.name + "(Clone)" == propComponent.name)
+                            if (levelManager.Layout.Theme[currentTheme].Terrain[i].Props[j].name + "(Clone)" == propComponent.name)
                             {
-                                currentPoolTheme[i].Props(j).ReturnToPool(propComponent);
+                                currentPoolTheme[i].Props(j).ReturnToPool(propComponent, this.transform);
                             }
-                            j++;
                         }
-                        i++;
                     }
                 }
             }
+
             if (child.TryGetComponent(out Terrain terrainComponent))
             {
-                int i = 0;
-                foreach (var terrain in levelManager.Layout.Theme[currentTheme].Terrain)
+                for (int i = 0; i < levelManager.Layout.Theme[currentTheme].Terrain.Count; i++)
                 {
-                    if (terrain.name + "(Clone)" == terrainComponent.name)
+                    if (levelManager.Layout.Theme[currentTheme].Terrain[i].name + "(Clone)" == terrainComponent.name)
                     {
-                        currentPoolTheme[i].Terrain.ReturnToPool(terrainComponent);
+                        currentPoolTheme[i].Terrain.ReturnToPool(terrainComponent, this.transform);
                     }
-                    i++;
                 }
             }
         }
+
         _notActiveChunks.Add(chunk);
         _activeChunks.Remove(chunk);
 
         chunk.SetActive(false);
     }
-
 
     /// <summary>
     /// Destroys all object poolers in the other pool theme.
@@ -355,13 +340,11 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     float GetNormalizedSpawnPercentage<T>(List<T> objectList, int index, int chunkCounter, Func<T, int, float> frequencyFunc)
     {
         float total = 0;
-
         // Calculate the total sum of spawn frequencies for all objects
         for (int i = 0; i < objectList.Count; i++)
         {
             total += frequencyFunc(objectList[i], chunkCounter);
         }
-
         // Return the normalized spawn percentage, ensuring no division by zero
         return total > 0 ? (frequencyFunc(objectList[index], chunkCounter) * 100) / total : 0;
     }

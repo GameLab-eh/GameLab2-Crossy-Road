@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectPooler<T> where T : Component
 {
-    private List<T> pooledObjects = new List<T>();
+    private List<T> pooledObjects = new();
     private T prefab;
     private Transform parentTransform;
 
@@ -46,12 +46,13 @@ public class ObjectPooler<T> where T : Component
         }
     }
 
-    public void ReturnToPool(T objectToReturn)
+    public void ReturnToPool(T objectToReturn, Transform parent)
     {
-        //objectToReturn.transform.SetParent(this.parentTransform);
-        if (objectToReturn.gameObject.activeInHierarchy)
+        if (objectToReturn != null && objectToReturn.gameObject.activeInHierarchy)
         {
             objectToReturn.gameObject.SetActive(false);
+
+            objectToReturn.gameObject.transform.SetParent(parentTransform);
         }
     }
 
