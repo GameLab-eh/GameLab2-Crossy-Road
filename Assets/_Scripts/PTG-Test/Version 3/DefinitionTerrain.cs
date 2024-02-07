@@ -9,6 +9,13 @@ public class DefinitionTerrain : ScriptableObject
     [SerializeField] AnimationCurve frequencyRate;
     [SerializeField, Tooltip("true = one single type on terrain")] bool isSingleType;
 
+    [SerializeField] bool isFull;
+    [SerializeField] bool isMove;
+
+    public GameObject Prefab => prefab;
+    public bool IsFull => isFull;
+    public bool IsMove => isMove;
+
     public float Frequency(int factor) => frequencyRate.Evaluate(factor / 100f);
     public List<Props> Props => propList;
     public bool IsSingleType => isSingleType;

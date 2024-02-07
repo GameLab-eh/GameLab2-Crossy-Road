@@ -10,7 +10,7 @@ public class DynamicProps : Props
 
     private void Awake()
     {
-        bounds = (int)(LevelManager.Instance.ChunckWidth / 2) + 2;
+        bounds = (int)(GameManager.Instance.MapManager.RowWidth / 2) + 2;
     }
 
     private void FixedUpdate()

@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67c2a49b43df64e4cbb1535df529be7a, type: 3}
   m_Name: Road
@@ -16,7 +16,6 @@ MonoBehaviour:
   propList:
   - {fileID: 2604885239371324240, guid: b24023a534ec6ff449265b4f548a68fc, type: 3}
   - {fileID: 5740458059705200325, guid: a6cd1c7900111394cad27a7b4df7d910, type: 3}
-  - {fileID: -4950064841831683538, guid: 3ea10239c05b8ad4c99fde395bb7f197, type: 3}
   - {fileID: 8270598199709828141, guid: 404393aee7048d74e8f4b3e7e8ef1654, type: 3}
   frequencyRate:
     serializedVersion: 2
@@ -43,3 +42,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   isSingleType: 1
+  isFull: 0
+  isMove: 1

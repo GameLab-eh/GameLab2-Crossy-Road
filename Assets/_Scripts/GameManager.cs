@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] List<DefinitionLayout> layouts = null;
-    [SerializeField] string layoutName;
+    [SerializeField, Min(0)] int layoutName;
+
+    [SerializeField] Language language;
+
+    [SerializeField] MapManager mapManager;
 
     void Awake()
     {
@@ -25,18 +28,7 @@ public class GameManager : MonoBehaviour
         #endregion
     }
 
-    public DefinitionLayout CurrentLayout
-    {
-        get
-        {
-            foreach (DefinitionLayout layout in layouts)
-            {
-                if (layout.name == layoutName)
-                {
-                    return layout;
-                }
-            }
-            return null;
-        }
-    }
+    public DefinitionLayout CurrentLayout => layouts[layoutName];
+
+    public MapManager MapManager => mapManager;
 }

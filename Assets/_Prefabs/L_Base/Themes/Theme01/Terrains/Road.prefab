@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1031633468853212760}
   - component: {fileID: 2541436742388093296}
-  - component: {fileID: 951320642435618470}
   m_Layer: 0
   m_Name: Road
   m_TagString: Road
@@ -138,45 +137,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: -0.05, z: 0}
---- !u!114 &951320642435618470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5804105966408075239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73b9978aa904f5241a19dd7cfab9e218, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  propList:
-  - {fileID: 2604885239371324240, guid: f245ff5b23bd6cb4eadb42bcd72f68dd, type: 3}
-  - {fileID: 5740458059705200325, guid: b895203444d754d43b5a39199c6738e6, type: 3}
-  - {fileID: 8270598199709828141, guid: 007abbf7d7b11ae41b73c92c9a9cbab5, type: 3}
-  frequencyRate:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0083351135
-      value: 0.047180176
-      inSlope: 0.9449436
-      outSlope: 0.9449436
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.9449436
-      outSlope: 0.9449436
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rarityPropList: []
-  isSingleType: 1

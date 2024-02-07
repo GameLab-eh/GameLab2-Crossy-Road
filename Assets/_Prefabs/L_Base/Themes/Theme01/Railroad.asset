@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67c2a49b43df64e4cbb1535df529be7a, type: 3}
   m_Name: Railroad
@@ -40,3 +40,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   isSingleType: 1
+  template: {fileID: 8640808435649619233, guid: 58e742ebc60a65c4bb94e4b7b9f34038, type: 3}
+  isFull: 0
+  isMove: 1
