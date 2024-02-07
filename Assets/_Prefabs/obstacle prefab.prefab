@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6914831141856041182}
   - component: {fileID: 4061961838159526291}
   - component: {fileID: 3096355784150429447}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2897942894322870882}
   - component: {fileID: 7978979005232891742}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: obstacle prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

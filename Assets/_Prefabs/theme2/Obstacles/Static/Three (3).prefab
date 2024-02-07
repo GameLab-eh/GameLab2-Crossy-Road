@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7497101841616651607}
   - component: {fileID: 3159550360526839261}
   - component: {fileID: 2981542011485732527}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8284963611728190222}
   - component: {fileID: 287503679371631546}
   - component: {fileID: -8951302069587407519}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Three (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,5 +151,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 1
+  frequencyRate:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   spawnFrequency: 50
-  min: 0
