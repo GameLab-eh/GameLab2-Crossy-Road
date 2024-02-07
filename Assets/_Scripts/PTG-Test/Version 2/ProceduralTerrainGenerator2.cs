@@ -141,7 +141,7 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
                 }
             }
 
-            if (prop.Max == 1)
+            if (/*prop.Max == 1*/false)
             {
                 prop = obejctPool.Props((int)tmp).GetObject();
 
@@ -363,5 +363,5 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     /// <param name="props">The props object for which to calculate the spawn frequency.</param>
     /// <param name="chunkCounter">The current chunk counter.</param>
     /// <returns>The spawn frequency for the specified props.</returns>
-    float GetPropsFrequency(Props props, int chunkCounter) => props.Frequency;
+    float GetPropsFrequency(Props props, int chunkCounter) => /*props.Frequency*/0f;
 }

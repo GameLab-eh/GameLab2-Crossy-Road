@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c2a49b43df64e4cbb1535df529be7a, type: 3}
+  m_Name: Grass
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1173290322696329899, guid: 9f768ef2927d05946b603c1ea57cebfb, type: 3}
+  propList:
+  - {fileID: 8588481697792979114, guid: 76ab644d227447e4c9a18ce5f640eec5, type: 3}
+  - {fileID: 2946922518527558745, guid: c234b87ae1afdca4688a62f5320c59eb, type: 3}
+  - {fileID: -3027943331269589899, guid: 2957556cecb71a544a9e81892b292e29, type: 3}
+  - {fileID: -8951302069587407519, guid: f733e2f950ffe0c43817e2ee8000ee9f, type: 3}
+  frequencyRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0041656494
+      value: 0.89385986
+      inSlope: -0.99392915
+      outSlope: -0.99392915
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6958313
+      value: 0.19811249
+      inSlope: -0.99392915
+      outSlope: -0.99392915
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isSingleType: 0

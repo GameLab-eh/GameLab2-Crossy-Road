@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c2a49b43df64e4cbb1535df529be7a, type: 3}
+  m_Name: Road
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5804105966408075239, guid: acf18ea78e6cc5a448ec02d5a348cbb1, type: 3}
+  propList:
+  - {fileID: 2604885239371324240, guid: b24023a534ec6ff449265b4f548a68fc, type: 3}
+  - {fileID: 5740458059705200325, guid: a6cd1c7900111394cad27a7b4df7d910, type: 3}
+  - {fileID: -4950064841831683538, guid: 3ea10239c05b8ad4c99fde395bb7f197, type: 3}
+  - {fileID: 8270598199709828141, guid: 404393aee7048d74e8f4b3e7e8ef1654, type: 3}
+  frequencyRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0041656494
+      value: 0.24291992
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isSingleType: 1

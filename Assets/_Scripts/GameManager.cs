@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    
-    public DynamicObstacleManager DOM { get; private set; }
-    public LevelManager LM { get; private set; }
+
+    [SerializeField] List<DefinitionLayout> layouts = null;
+    [SerializeField] string layoutName;
 
     void Awake()
     {
@@ -23,5 +23,20 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(transform.root.gameObject);
 
         #endregion
+    }
+
+    public DefinitionLayout CurrentLayout
+    {
+        get
+        {
+            foreach (DefinitionLayout layout in layouts)
+            {
+                if (layout.name == layoutName)
+                {
+                    return layout;
+                }
+            }
+            return null;
+        }
     }
 }

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c2a49b43df64e4cbb1535df529be7a, type: 3}
+  m_Name: River
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7148348828950921592, guid: 22147e6570070c84eb761c539f65eb54, type: 3}
+  propList:
+  - {fileID: 5917107234630430171, guid: 8bc09974fccff4e42b77428410c3f737, type: 3}
+  frequencyRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2617798
+      inSlope: 0.7382202
+      outSlope: 0.7382202
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.7382202
+      outSlope: 0.7382202
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isSingleType: 0
