@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class DynamicProps : Props
+public class DefinitionDynamicProps : MonoBehaviour
 {
     [SerializeField, Min(0)] float speed;
     [SerializeField, Min(0)] float delay = 0f;
