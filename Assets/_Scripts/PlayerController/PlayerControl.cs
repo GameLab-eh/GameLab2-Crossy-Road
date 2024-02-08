@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour, IPlayer
 {
     //checks
     private bool _isMoving, _isOnMovingTarget, _isAlive = true;
@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour
     //movements
     private Vector3 _origPos, _targetPos;
     [SerializeField] private float _timeToMove;
+
+    [SerializeField] private LayerMask _obstacleLayer;
     //movements on logs/boat/ecc..
     private Vector3 _movingTargetPos;
     private GameObject _movingTargetGameObject;
@@ -16,27 +18,28 @@ public class PlayerControl : MonoBehaviour
     
     private void Awake()
     {
-        transform.position = new Vector3(-5f, 0.5f, 0f);
+        //transform.position = new Vector3(-5f, 0.5f, 0f);
     }
     private void Update()
     {
         if (_isAlive)
         {
             if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && !_isMoving)
-                if(CanMoveInDirection(Vector3.forward, 8))
+                if (!CheckObstacleInDirection(Vector3.forward))
                     StartCoroutine(MovePlayer(Vector3.forward, false));
             
             if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !_isMoving)
-                if(CanMoveInDirection(Vector3.back, 8))
+                if (!CheckObstacleInDirection(Vector3.back))
                     StartCoroutine(MovePlayer(Vector3.back, false));
             
             if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !_isMoving)
-                if(CanMoveInDirection(Vector3.left, 8)) 
+                if (!CheckObstacleInDirection(Vector3.left))
                     StartCoroutine(MovePlayer(Vector3.left, false));
             
             if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !_isMoving)
-                if(CanMoveInDirection(Vector3.right, 8))
+                if (!CheckObstacleInDirection(Vector3.right))
                     StartCoroutine(MovePlayer(Vector3.right, false));
+            
             if (_isOnMovingTarget)
             {
                 _movingTargetPos = SetMovingTargetPos();
@@ -48,22 +51,21 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator MovePlayer(Vector3 direction, bool isFallingInRiver)
     {
+
         _isMoving = true;
         float _elapsedTime = 0;
         if (!isFallingInRiver)
         {
-            _origPos = transform.position;
-            _targetPos = _origPos + direction;
-            
-            //making target pos fixed to an int value
-            _targetPos.x = Mathf.Round(_targetPos.x);
-            _targetPos.z = Mathf.Round(_targetPos.z);
+             _origPos = transform.position;
+             _targetPos = _origPos + direction;
+                
+             //making target pos fixed to an int value
+             _targetPos.x = Mathf.Round(_targetPos.x);
+             _targetPos.z = Mathf.Round(_targetPos.z);
         }
-        // if(Physics.Raycast(_origPos, _targetPos,1))
-        //     Debug.Log("can't move there");
 
-        
-        //player movement logic
+            
+            //player movement logic
         while (_elapsedTime < _timeToMove)
         {
             transform.position = Vector3.Lerp(_origPos, _targetPos, (_elapsedTime / _timeToMove));
@@ -72,11 +74,12 @@ public class PlayerControl : MonoBehaviour
         }
 
         transform.position = _targetPos;
-        
+            
         _isMoving = false;
+        
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Boat")
         {
@@ -89,7 +92,7 @@ public class PlayerControl : MonoBehaviour
             //FallingInRiver();
         }
     }
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision other)
     {
         if (other.gameObject.tag == "Boat")
         {
@@ -107,14 +110,16 @@ public class PlayerControl : MonoBehaviour
         _targetPos = new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z);
         StartCoroutine(MovePlayer(Vector3.down, true));
     }
-    private bool CanMoveInDirection(Vector3 direction, int layerMask)
+
+    bool CheckObstacleInDirection(Vector3 direction) 
     {
-        // Vector3 raycastOrigin = transform.position + direction * 0.1f;
-        //
-        // if (Physics.Raycast(raycastOrigin, direction, 1.5f, layerMask))
-        //     return false;
-        // else
+        if (Physics.Raycast(transform.position, direction, 1f, _obstacleLayer)) 
+        {
             return true;
+        }
+        return false;
     }
 
 }
+
+public interface IPlayer{}
