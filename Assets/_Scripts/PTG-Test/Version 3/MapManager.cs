@@ -108,7 +108,9 @@ public class MapManager : MonoBehaviour
 
         bool check = terrain.IsMove;
 
-        int range = Random.Range(0, ((rowWidth - 2) / prop.Size));
+        int maxRange = Mathf.CeilToInt(terrain.Frequency(chunkCount) * ((rowWidth - 2) / prop.Size) * layout.ObstacleDensity);
+
+        int range = Random.Range(((rowWidth /4) / prop.Size), maxRange);
 
         for (int i = 0; i < range; i++)
         {
