@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2aa06228ab511bb449a0b53ae468e584, type: 2}
   chunkLength: 20
   chunkDelay: 0
-  obstacleDensity: 2
+  obstacleDensity: 1
   difficultyCurve:
     serializedVersion: 2
     m_Curve:
