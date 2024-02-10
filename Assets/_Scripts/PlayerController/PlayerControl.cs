@@ -102,7 +102,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
             EventManager.OnCoinIncrease?.Invoke(1);
             Debug.Log("got it");
         }
-        if (other.gameObject.tag == "Car")
+        if (other.gameObject.tag == "Car" || other.gameObject.tag == "Train")
         {
             if (_isAlive)
             {
