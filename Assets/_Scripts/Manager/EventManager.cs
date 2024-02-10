@@ -7,4 +7,5 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     public static Action<int> OnCoinIncrease;
+    
 }

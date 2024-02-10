@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,43 +16,57 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private Vector3 _movingTargetPos;
     private GameObject _movingTargetGameObject;
     [SerializeField] private float _moveTowardsBoatMiddle;
+    private Animator _animator;
     
     private void Awake()
     {
-        //transform.position = new Vector3(-5f, 0.5f, 0f);
+        _animator = GetComponent<Animator>();
+        
     }
     private void Update()
     {
         if (_isAlive)
         {
             if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && !_isMoving)
+            {
+                _animator.SetTrigger("Hop");
                 if (!CheckObstacleInDirection(Vector3.forward))
                     StartCoroutine(MovePlayer(Vector3.forward, false));
-            
+            }
             if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !_isMoving)
+            {
+                _animator.SetTrigger("Hop");                
                 if (!CheckObstacleInDirection(Vector3.back))
                     StartCoroutine(MovePlayer(Vector3.back, false));
-            
+            }
             if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !_isMoving)
+            {
+                _animator.SetTrigger("Hop");
                 if (!CheckObstacleInDirection(Vector3.left))
                     StartCoroutine(MovePlayer(Vector3.left, false));
-            
+            }
             if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !_isMoving)
+            {
+                _animator.SetTrigger("Hop");
                 if (!CheckObstacleInDirection(Vector3.right))
                     StartCoroutine(MovePlayer(Vector3.right, false));
+            }
+
             
             if (_isOnMovingTarget)
             {
                 _movingTargetPos = SetMovingTargetPos();
                 transform.position = Vector3.MoveTowards(transform.position, _movingTargetPos, _moveTowardsBoatMiddle);
+                
             }
+            
         }
         
     }
 
     private IEnumerator MovePlayer(Vector3 direction, bool isFallingInRiver)
     {
-
+        
         _isMoving = true;
         float _elapsedTime = 0;
         if (!isFallingInRiver)
@@ -81,15 +96,32 @@ public class PlayerControl : MonoBehaviour, IPlayer
 
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("test");
+        if (other.gameObject.tag == "Coin")
+        {
+            EventManager.OnCoinIncrease?.Invoke(1);
+            Debug.Log("got it");
+        }
+        if (other.gameObject.tag == "Car")
+        {
+            if (_isAlive)
+            {
+                _animator.SetTrigger("CarHit");
+                _isAlive = false;
+            }
+        }
+    }
+    private void OnCollisionStay(Collision other)
+    {
         if (other.gameObject.tag == "Boat")
         {
             _movingTargetGameObject = other.gameObject;
             _isOnMovingTarget = true;
         }
-        if (other.gameObject.tag == "River")
+        if (other.gameObject.tag == "River" && !_isMoving && !_isOnMovingTarget && _isAlive)
         {
-            Debug.Log("fall in river");
-            //FallingInRiver();
+            _isAlive = false;
+            _animator.SetTrigger("WaterFall");
         }
     }
     private void OnCollisionExit(Collision other)
@@ -104,13 +136,6 @@ public class PlayerControl : MonoBehaviour, IPlayer
         return _movingTargetGameObject.transform.position;
     }
 
-    private void FallingInRiver()
-    {
-        _isAlive = false;
-        _targetPos = new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z);
-        StartCoroutine(MovePlayer(Vector3.down, true));
-    }
-
     bool CheckObstacleInDirection(Vector3 direction) 
     {
         if (Physics.Raycast(transform.position, direction, 1f, _obstacleLayer)) 
@@ -119,6 +144,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         }
         return false;
     }
+    
 
 }
 

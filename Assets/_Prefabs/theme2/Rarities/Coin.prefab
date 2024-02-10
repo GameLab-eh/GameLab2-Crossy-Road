@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2459552762396254545}
   m_Layer: 7
   m_Name: Coin
-  m_TagString: Untagged
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,8 +68,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 1
-  spawnFrequency: 1
-  min: 0
+  frequencyRate:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isAlone: 0
 --- !u!1 &1677591575905517606
 GameObject:
   m_ObjectHideFlags: 0
