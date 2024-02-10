@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   themeList:
   - {fileID: 11400000, guid: 2aa06228ab511bb449a0b53ae468e584, type: 2}
-  chunkLength: 20
+  chunkLength: 30
   chunkDelay: 0
-  obstacleDensity: 1
+  obstacleDensity: 0.8
   difficultyCurve:
     serializedVersion: 2
     m_Curve:
