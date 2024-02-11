@@ -112,7 +112,6 @@ public class PlayerControl : MonoBehaviour, IPlayer
              _targetPos = _origPos + direction;
                 
              //making target pos fixed to an int value
-             _targetPos.x = Mathf.Round(_targetPos.x);
              _targetPos.z = Mathf.Round(_targetPos.z);
         }
 
