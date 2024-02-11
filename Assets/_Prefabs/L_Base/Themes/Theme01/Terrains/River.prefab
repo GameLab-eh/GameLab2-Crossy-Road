@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2674519012708550449}
   - component: {fileID: 3841470014401944396}
   - component: {fileID: 5480410502648561391}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 748669459486749755}
   - component: {fileID: 7014451100322411406}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: River
   m_TagString: River
   m_Icon: {fileID: 0}
@@ -135,5 +135,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.4211143, z: 1}
-  m_Center: {x: 0, y: 0.01055716, z: 0}
+  m_Size: {x: 0.49902096, y: 0.4211143, z: 1}
+  m_Center: {x: -0.005856827, y: 0.01055716, z: 0}
