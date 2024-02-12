@@ -39,7 +39,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  density:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9952698
+      inSlope: -0.15655291
+      outSlope: -0.15655291
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9791565
+      value: 0.84198
+      inSlope: -0.15655291
+      outSlope: -0.15655291
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   isSingleType: 1
-  template: {fileID: -839821340979968320, guid: 22147e6570070c84eb761c539f65eb54, type: 3}
   isFull: 1
   isMove: 0

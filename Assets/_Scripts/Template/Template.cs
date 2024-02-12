@@ -15,11 +15,14 @@ public class Template : MonoBehaviour
 
     public void OnDestroy()
     {
-        foreach (var prop in propList)
+        if (this != null)
         {
-            Destroy(prop.gameObject);
+            foreach (var prop in propList)
+            {
+                Destroy(prop.gameObject);
+            }
+            propList.Clear();
         }
-        propList.Clear();
     }
 
 #if UNITY_EDITOR

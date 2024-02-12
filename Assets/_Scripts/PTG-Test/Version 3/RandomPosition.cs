@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 
 public static class RandomPosition
 {
@@ -29,27 +28,25 @@ public static class RandomPosition
             }
             else
             {
-                int numberOfObjects = prefabs.Count;
 
-                for (int i = 0; i < numberOfObjects; i++)
+                if (availablePositions.Count < prefab.Size)
                 {
-                    if (availablePositions.Count < prefab.Size)
-                    {
-                        Debug.LogError("Not enough available positions.");
-                        break;
-                    }
-
-                    int randomIndex = Random.Range(0, availablePositions.Count);
-                    Vector3 randomPosition = availablePositions[randomIndex];
-
-                    Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
-
-                    if (newObject is DynamicProps && isReverse) ((DynamicProps)newObject).Reverse();
-
-                    spawnedObjects.Add(newObject);
-
-                    RemoveOccupiedPositions(randomPosition, prefab.Size);
+                    Debug.LogWarning("Not enough available positions.");
+                    break;
                 }
+
+                int randomIndex = Random.Range(0, availablePositions.Count);
+                Vector3 randomPosition = availablePositions[randomIndex];
+
+                Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
+
+                if (newObject is DynamicProps && isReverse) ((DynamicProps)newObject).Reverse();
+                if (newObject.name == "Train(Clone)") ((DynamicProps)newObject).StartDelay(Random.Range(0f, 3f));
+
+                spawnedObjects.Add(newObject);
+
+                RemoveOccupiedPositions(randomPosition, prefab.Size);
+
             }
         }
 
@@ -80,30 +77,21 @@ public static class RandomPosition
                 int indexToRemove = availablePositions.FindIndex(pos => pos == position);
                 availablePositions.RemoveAt(indexToRemove);
 
-                // Sposta la posizione all'estremità opposta
                 position = GetOppositeEndPosition(indexToRemove);
             }
-            else
-            {
-                // Sposta la posizione normalmente
-                position = new Vector3(position.x - 1, 0, 0);
-            }
+            else position = new Vector3(position.x - 1, 0, 0);
         }
     }
 
-    private static Vector3 GetOppositeEndPosition(int currentIndex)
+    private static Vector3 GetOppositeEndPosition(int currentIndex) // needs to be revised
     {
+        if (availablePositions.Count == 0) return Vector3.zero;
+
         int lastIndex = availablePositions.Count - 1;
 
-        // Calcola l'indice all'estremità opposta garantendo che rimanga all'interno dei limiti della lista
-        int oppositeIndex = lastIndex - currentIndex;
-        if (oppositeIndex < 0)
-        {
-            oppositeIndex += availablePositions.Count;
-        }
+        int oppositeIndex = (lastIndex - currentIndex + availablePositions.Count) % availablePositions.Count;
 
         return availablePositions[oppositeIndex];
     }
-
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 using System.Drawing;
+using UnityEditor.Rendering;
 
 [RequireComponent(typeof(MapManager))]
 public class MapManager : MonoBehaviour
@@ -32,6 +33,12 @@ public class MapManager : MonoBehaviour
         layout = GameManager.Instance.CurrentLayout;
         currentTheme = layout.Theme[themeCount];
         if (layout.Theme.Count > 1) nextTheme = layout.Theme[themeCount + 1];
+
+        GameObject row = Instantiate(currentTheme.SafeArea, transform);
+        row.transform.localScale = new(rowWidth, 1f, 1f);
+        row.transform.position = new(0, 0, rowCount);
+        RowIDIncrement();
+        rowlist.Add(row);
 
         for (int i = 0; i < layout.ChunkLength; i++)
         {
@@ -163,44 +170,59 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        //rarity => coin
-
         return prop;
     }
 
     List<Props> ObjectGenerate(DefinitionTerrain terrain)
     {
-        List<Props> list = new List<Props>();
+        List<Props> list = new();
 
-        int maxRange = Mathf.CeilToInt(terrain.Frequency(chunkCount) * (gameRowWidth / 8 - 2) * layout.ObstacleDensity);
-        int numberOfObjects = Random.Range(2, maxRange);
+        int radius = rowWidth;
+        int numberOfObjects = 0;
 
-        switch (terrain.name.ToLower()){
-            case "river": 
-                //lot => little
-                //check prop velocity
+        bool needsToBeChecked = false;
+
+        switch (terrain.name.ToLower())
+        {
+            case "river":
+                needsToBeChecked = true;
                 break;
             case "lake":
-                //lot => little
+                radius = gameRowWidth;
                 break;
             case "road":
-                //little => lot
-                //check prop velocity
+                needsToBeChecked = true;
                 break;
             case "grass":
-                //little => lot
+                radius = gameRowWidth;
                 break;
             default:
                 numberOfObjects = 1;
                 break;
         }
 
-        for (int i = 0; i < numberOfObjects; i++)
+        if (numberOfObjects != 1)
         {
-            list.Add(Object(terrain));
+            int min = Mathf.CeilToInt((radius - 2) * terrain.Density(chunkCount));
+            numberOfObjects = Mathf.Clamp((int)(min * layout.ObstacleDensity), 0, radius - 2);
         }
 
-        List<Props> objects = RandomPosition.SpawnObjects(list, gameRowWidth, rowCount - 1);
+        float speed = 0;
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            Props prop = Object(terrain);
+            if (needsToBeChecked)
+            {
+                if (i == 0) speed = ((DynamicProps)prop).Speed;
+                while (((DynamicProps)prop).Speed != speed)
+                {
+                    prop = Object(terrain);
+                }
+            }
+            list.Add(prop);
+        }
+
+        List<Props> objects = RandomPosition.SpawnObjects(list, radius, rowCount - 1);
 
         list.Clear();
 
@@ -218,7 +240,7 @@ public class MapManager : MonoBehaviour
         return total > 0 ? (objectList[index].Frequency(chunkCounter) * 100) / total : 0;
     }
 
-    float NormalizedFrequency(List<Props> objectList, int index, int chunkCounter) //revisionare
+    float NormalizedFrequency(List<Props> objectList, int index, int chunkCounter)
     {
         float total = 0;
         for (int i = 0; i < objectList.Count; i++)

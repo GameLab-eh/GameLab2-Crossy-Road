@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 2946922518527558745, guid: c234b87ae1afdca4688a62f5320c59eb, type: 3}
   - {fileID: -3027943331269589899, guid: 2957556cecb71a544a9e81892b292e29, type: 3}
   - {fileID: -8951302069587407519, guid: f733e2f950ffe0c43817e2ee8000ee9f, type: 3}
+  - {fileID: -2459552762396254545, guid: 289fd146fb6f7464bac628326463e9f9, type: 3}
   frequencyRate:
     serializedVersion: 2
     m_Curve:
@@ -35,6 +36,30 @@ MonoBehaviour:
       value: 0.19811249
       inSlope: -0.99392915
       outSlope: -0.99392915
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  density:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0083351135
+      value: 0.20046997
+      inSlope: 0.79292095
+      outSlope: 0.79292095
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.79292095
+      outSlope: 0.79292095
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
