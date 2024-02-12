@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
+using System.Drawing;
 
 [RequireComponent(typeof(MapManager))]
 public class MapManager : MonoBehaviour
@@ -96,57 +97,61 @@ public class MapManager : MonoBehaviour
         rowlist.Add(row);
     }
 
-    List<Props> ObjectGenerate(DefinitionTerrain terrain)
-    {
-        List<Props> props = new();
+    //List<Props> ObjectGenerate(DefinitionTerrain terrain)
+    //{
+    //    List<Props> props = new();
 
-        bool isReverse = Random.Range(0, 2) == 0;
+    //    bool isReverse = Random.Range(0, 2) == 0;
 
-        bool[] isOccupied = new bool[rowWidth];
+    //    bool[] isOccupied = new bool[rowWidth];
 
-        Props prop = Object(terrain);
+    //    Props prop = Object(terrain);
 
-        bool check = terrain.IsMove;
+    //    bool check = terrain.IsMove;
 
-        int maxRange = Mathf.CeilToInt(terrain.Frequency(chunkCount) * ((rowWidth - 2) / prop.Size) * layout.ObstacleDensity);
+    //    int maxRange = Mathf.CeilToInt(terrain.Frequency(chunkCount) * ((rowWidth - 2) / prop.Size) * layout.ObstacleDensity);
 
-        int range = Random.Range(((rowWidth /4) / prop.Size), maxRange);
+    //    int range = Random.Range(((rowWidth / 4) / prop.Size), maxRange);
 
-        for (int i = 0; i < range; i++)
-        {
-            if (!check) prop = Object(terrain);
+    //    for (int i = 0; i < range; i++)
+    //    {
+    //        if (!check) prop = Object(terrain);
 
-            props.Add(Instantiate(prop, transform));
+    //        props.Add(Instantiate(prop, transform));
 
-            if (check && isReverse) ((DynamicProps)props[(^1)]).Reverse();
+    //        if (check && isReverse) ((DynamicProps)props[^1]).Reverse();
 
-            if (!terrain.IsFull) isOccupied[rowWidth / 2] = true;
+    //        if (!terrain.IsFull) isOccupied[rowWidth / 2] = true;
 
-            int tp;
-            do
-            {
-                tp = Mathf.CeilToInt(Random.Range(0, rowWidth));
-            } while (isOccupied[tp] || isOccupied[tp + (prop.Size - 1) >= isOccupied.Length ? (prop.Size - 2) : tp + (prop.Size - 1)]);
-            for (int j = tp; j < tp + prop.Size - 1; j++)
-            {
-                isOccupied[j + (prop.Size - 1) >= isOccupied.Length ? (prop.Size - 2) : j + (prop.Size - 1)] = true;
-            }
+    //        int tp;
+    //        do
+    //        {
+    //            tp = Mathf.CeilToInt(Random.Range(0, rowWidth));
+    //        } while (isOccupied[tp] || isOccupied[tp + (prop.Size - 1) >= isOccupied.Length ? (prop.Size - 2) : tp + (prop.Size - 1)]);
+    //        for (int j = tp; j < tp + prop.Size - 1; j++)
+    //        {
+    //            isOccupied[j + (prop.Size - 1) >= isOccupied.Length ? (prop.Size - 2) : j + (prop.Size - 1)] = true;
+    //        }
 
-            props[(^1)].transform.position = new((tp - (rowWidth / 2)), 0, (rowCount - 1));
+    //        props[^1].transform.position = new((tp - (rowWidth / 2)), 0, (rowCount - 1));
 
-            if (prop.IsAlone) break;
-        }
+    //        if (prop.IsAlone) break;
+    //    }
 
-        return props;
-    }
+    //    if (!isOccupied[rowWidth / 2] && prop.name == "WaterLilyLeaf")
+    //    {
+    //        props.Add(Instantiate(prop, transform));
+    //        props[^1].transform.position = new(0, 0, rowCount - 1);
+    //    }
+
+    //    return props;
+    //}
 
     Props Object(DefinitionTerrain terrain)
     {
-        Props prop = null;
+        Props prop = terrain.Props[0];
         float random = Random.Range(0f, 100f);
         float tmp = 0;
-
-        prop = terrain.Props[0];
 
         for (int j = 0; j < terrain.Props.Count; j++)
         {
@@ -157,7 +162,49 @@ public class MapManager : MonoBehaviour
                 break;
             }
         }
+
+        //rarity => coin
+
         return prop;
+    }
+
+    List<Props> ObjectGenerate(DefinitionTerrain terrain)
+    {
+        List<Props> list = new List<Props>();
+
+        int maxRange = Mathf.CeilToInt(terrain.Frequency(chunkCount) * (gameRowWidth / 8 - 2) * layout.ObstacleDensity);
+        int numberOfObjects = Random.Range(2, maxRange);
+
+        switch (terrain.name.ToLower()){
+            case "river": 
+                //lot => little
+                //check prop velocity
+                break;
+            case "lake":
+                //lot => little
+                break;
+            case "road":
+                //little => lot
+                //check prop velocity
+                break;
+            case "grass":
+                //little => lot
+                break;
+            default:
+                numberOfObjects = 1;
+                break;
+        }
+
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            list.Add(Object(terrain));
+        }
+
+        List<Props> objects = RandomPosition.SpawnObjects(list, gameRowWidth, rowCount - 1);
+
+        list.Clear();
+
+        return objects;
     }
 
     float NormalizedFrequency(List<DefinitionTerrain> objectList, int index, int chunkCounter)
@@ -171,7 +218,7 @@ public class MapManager : MonoBehaviour
         return total > 0 ? (objectList[index].Frequency(chunkCounter) * 100) / total : 0;
     }
 
-    float NormalizedFrequency(List<Props> objectList, int index, int chunkCounter)
+    float NormalizedFrequency(List<Props> objectList, int index, int chunkCounter) //revisionare
     {
         float total = 0;
         for (int i = 0; i < objectList.Count; i++)
@@ -187,5 +234,5 @@ public class MapManager : MonoBehaviour
     public DefinitionLayout Layout => layout;
 
     public int RowWidth => rowWidth;
-    public int RowHeight => gameRowWidth;
+    public int GameRowWidth => gameRowWidth;
 }

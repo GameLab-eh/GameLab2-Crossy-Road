@@ -15,7 +15,7 @@ public class Template : MonoBehaviour
 
     public void OnDestroy()
     {
-        foreach(var prop in propList)
+        foreach (var prop in propList)
         {
             Destroy(prop.gameObject);
         }
@@ -33,17 +33,28 @@ public class Template : MonoBehaviour
 
     private void DrawCubes()
     {
-        Gizmos.color = Color.cyan;
+        int lineSize = GameManager.Instance.MapManager.GameRowWidth;
 
-        int lineSize = (int)transform.localScale.x;
+        int boundsSize = (int)transform.localScale.x - lineSize;
 
         Vector3 centerPosition = transform.position;
+
+        Gizmos.color = Color.cyan;
 
         for (int x = 0; x < lineSize; x++)
         {
             if (x == lineSize / 2) if (!isFull) continue;
 
             Vector3 cubePosition = centerPosition + new Vector3(x - (lineSize - 1) * 0.5f, 0.5f, 0);
+            Gizmos.DrawWireCube(cubePosition, Vector3.one);
+        }
+
+        Gizmos.color = Color.magenta;
+
+        for (int x = 0; x < boundsSize; x++)
+        {
+            float offset = (x < boundsSize / 2) ? -0.5f : 0.5f;
+            Vector3 cubePosition = centerPosition + new Vector3(x + offset * lineSize - (boundsSize - 1) * 0.5f, 0.5f, 0);
             Gizmos.DrawWireCube(cubePosition, Vector3.one);
         }
     }
@@ -53,11 +64,26 @@ public class Template : MonoBehaviour
 
         float squareSize = 1.0f;
 
-        Vector3 leftSquarePosition = transform.position - transform.right * transform.localScale.x * 0.5f;
+        Vector3 leftSquarePosition = transform.position - 0.5f * transform.localScale.x * transform.right;
         Gizmos.DrawWireCube(leftSquarePosition + Vector3.up * 0.5f, new(0, squareSize, squareSize));
 
-        Vector3 rightSquarePosition = transform.position + transform.right * transform.localScale.x * 0.5f;
+        Vector3 rightSquarePosition = transform.position + 0.5f * transform.localScale.x * transform.right;
         Gizmos.DrawWireCube(rightSquarePosition + Vector3.up * 0.5f, new(0, squareSize, squareSize));
+
+        Gizmos.color = Color.magenta;
+
+        int lineSize = GameManager.Instance.MapManager.GameRowWidth;
+
+        float halfLineSize = lineSize / 2;
+        float zPosition = transform.position.z;
+
+        Vector3 startPoint1 = new Vector3(-halfLineSize - 0.5f, 0f, zPosition - 0.5f);
+        Vector3 endPoint1 = new Vector3(-halfLineSize - 0.5f, 0f, zPosition + 0.5f);
+        Gizmos.DrawLine(startPoint1, endPoint1);
+
+        Vector3 startPoint2 = new Vector3(halfLineSize + 0.5f, 0f, zPosition - 0.5f);
+        Vector3 endPoint2 = new Vector3(halfLineSize + 0.5f, 0f, zPosition + 0.5f);
+        Gizmos.DrawLine(startPoint2, endPoint2);
     }
 
     #endregion
