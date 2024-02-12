@@ -28,6 +28,11 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        StartInizializer();
+    }
+
+    private void StartInizializer()
+    {
         playerPosition = (int)player.position.z;
 
         layout = GameManager.Instance.CurrentLayout;

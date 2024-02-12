@@ -24,7 +24,19 @@ public class ProceduralTerrainGenerator2 : MonoBehaviour
     private int chunckID;
     private int _lastPlayerChunkIndex = 1;
 
+    private void OnEnable()
+    {
+        EventManager.OnReload += StartInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= StartInizializer;
+    }
     void Start()
+    {
+        StartInizializer();
+    }
+    private void StartInizializer()
     {
         levelManager = LevelManager.Instance;
 

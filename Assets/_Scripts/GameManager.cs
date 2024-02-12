@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,19 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] MapManager mapManager;
 
+    private void OnEnable()
+    {
+        EventManager.OnReload += AwakeInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= AwakeInizializer;
+    }
     void Awake()
+    {
+        AwakeInizializer();
+    }
+    private void AwakeInizializer()
     {
         #region Singleton
 
@@ -27,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         #endregion
     }
+
 
     public DefinitionLayout CurrentLayout => layouts[layoutName];
 

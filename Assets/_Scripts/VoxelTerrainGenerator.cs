@@ -14,7 +14,19 @@ public class VoxelTerrainGenerator : MonoBehaviour
     private List<GameObject> activeChunks = new List<GameObject>();
     private float lastPlayerPosition;
 
+    private void OnEnable()
+    {
+        EventManager.OnReload += StartInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= StartInizializer;
+    }
     void Start()
+    {
+        StartInizializer();
+    }
+    private void StartInizializer()
     {
         GenerateInitialChunks();
     }
@@ -36,7 +48,7 @@ public class VoxelTerrainGenerator : MonoBehaviour
     {
         int playerChunkIndex = Mathf.FloorToInt(player.position.x / chunkSize);
 
-        // Controlla se il giocatore si è spostato a un nuovo chunk
+        // Controlla se il giocatore si ï¿½ spostato a un nuovo chunk
         if (playerChunkIndex * chunkSize != Mathf.FloorToInt(lastPlayerPosition / chunkSize) * chunkSize)
         {
             // Carica nuovi chunk
@@ -48,7 +60,7 @@ public class VoxelTerrainGenerator : MonoBehaviour
                 }
             }
 
-            // Scarica chunk non più visibili
+            // Scarica chunk non piï¿½ visibili
             for (int i = activeChunks.Count - 1; i >= 0; i--)
             {
                 int chunkIndex = Mathf.FloorToInt(activeChunks[i].transform.position.x / chunkSize);

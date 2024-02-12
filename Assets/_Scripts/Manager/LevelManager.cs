@@ -11,8 +11,27 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Layout layout;
 
     public static LevelManager Instance { get; private set; }
-
+    
+    private void OnEnable()
+    {
+        EventManager.OnReload += AwakeInizializer;
+        EventManager.OnReload -= StartInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= AwakeInizializer;
+        EventManager.OnReload -= StartInizializer;
+    }
     void Awake()
+    {
+        AwakeInizializer();
+    }
+
+    private void Start()
+    {
+        StartInizializer();
+    }
+    private void AwakeInizializer()
     {
         #region Singleton
 
@@ -26,8 +45,7 @@ public class LevelManager : MonoBehaviour
 
         #endregion
     }
-
-    private void Start()
+    private void StartInizializer()
     {
         // Example of interaction with a layout and its components
         //Debug.Log(layout.Name);

@@ -39,9 +39,22 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     private readonly int _voxelSize = 1;
 
     private int chunckID;
+    
+    private void OnEnable()
+    {
+        EventManager.OnReload += StartInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= StartInizializer;
+    }
 
     void Start()
     {
+        StartInizializer();
+    }
+    private void StartInizializer()
+    {        
         width = LevelManager.Instance.ChunckWidth;
 
         _player.position = new(_player.position.x, _player.position.y, width / 2f);
@@ -49,6 +62,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         _departureArea.transform.localScale = new(_departureArea.transform.localScale.x, 1, width);
 
         GenerateInitialChunks();
+        
     }
 
     void Update()
@@ -69,7 +83,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         if (_player.position.x < 0) return;
         int playerChunkIndex = Mathf.FloorToInt(_player.position.x / length);
 
-        // Controlla se il giocatore si è spostato a un nuovo chunk
+        // Controlla se il giocatore si ï¿½ spostato a un nuovo chunk
         if (playerChunkIndex * length != Mathf.FloorToInt(_lastPlayerPosition / length) * length)
         {
             // Carica nuovi chunk
@@ -81,7 +95,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 }
             }
 
-            // Scarica chunk non più visibili
+            // Scarica chunk non piï¿½ visibili
             for (int i = _activeChunks.Count - 1; i >= 0; i--)
             {
                 int chunkIndex = Mathf.FloorToInt(_activeChunks[i].transform.position.x / length);
@@ -116,7 +130,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
             float scaleMultiplier = difficultyCurve.Evaluate(z / width);
             terrainObject.transform.localScale = new Vector3(1f, 1f, width);
 
-            // Se il terreno è un'aiuola, aggiungi ostacoli
+            // Se il terreno ï¿½ un'aiuola, aggiungi ostacoli
             switch (terrainPrefab.tag)
             {
                 case "Grass":

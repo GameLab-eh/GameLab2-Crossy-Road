@@ -20,13 +20,25 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private GameObject _movingTargetGameObject;
     [SerializeField] private float _moveTowardsBoatMiddle;
     
+    private void OnEnable()
+    {
+        EventManager.OnReload += AwakeInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= AwakeInizializer;
+    }
     
     private void Awake()
     {
+        AwakeInizializer();
+    }
+    private void AwakeInizializer()
+    {
         _animator = GetComponent<Animator>();
         _mesh = GameObject.Find("Cube");
-
     }
+
     private void Update()
     {
         if (_isAlive)

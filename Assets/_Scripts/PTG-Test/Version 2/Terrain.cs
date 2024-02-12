@@ -12,12 +12,25 @@ public class Terrain : MonoBehaviour
     [SerializeField, Tooltip("true = one single type on terrain")] bool isSingleType;
 
     private int max;
+    private void OnEnable()
+    {
+        EventManager.OnReload += AwakeInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= AwakeInizializer;
+    }
 
     private void Awake()
+    {
+        AwakeInizializer();
+    }
+    private void AwakeInizializer()
     {
         int rowWidth = LevelManager.Instance.ChunckWidth;
         max = (rowWidth - Mathf.CeilToInt(rowWidth / 8) * 2) * propList.Count;
     }
+
 
     public float Frequency(int factor) => frequencyRate.Evaluate(factor / 100f);
     public List<Props> Props => propList;

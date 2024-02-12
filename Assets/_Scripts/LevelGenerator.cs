@@ -5,11 +5,24 @@ public class LevelGenerator : MonoBehaviour
     public GameObject voxelPrefab; // Prefab del voxel (ad esempio, un cubo)
     public float voxelSize = 1f; // Dimensione del voxel
     public int chunkWidth = 10; // Larghezza del chunk in linee di voxel
-    public int chunkDepth = 20; // Profondità del chunk in linee di voxel
+    public int chunkDepth = 20; // Profonditï¿½ del chunk in linee di voxel
     public int chunkHeight = 5; // Altezza massima del terreno in voxel
-    public float obstacleProbability = 0.3f; // Probabilità di posizionare un ostacolo
+    public float obstacleProbability = 0.3f; // Probabilitï¿½ di posizionare un ostacolo
 
+    private void OnEnable()
+    {
+        EventManager.OnReload += StartInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= StartInizializer;
+    }
     void Start()
+    {
+        StartInizializer();
+    }
+
+    private void StartInizializer()
     {
         GenerateChunk();
     }

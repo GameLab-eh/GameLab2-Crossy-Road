@@ -13,8 +13,21 @@ public class ObstacleMotion : MonoBehaviour
     private int x;
     private int origin = -2;
     private Vector3 dir = Vector3.forward;
+    
+    private void OnEnable()
+    {
+        EventManager.OnReload += AwakeInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= AwakeInizializer;
+    }
 
     private void Awake()
+    {
+        AwakeInizializer();
+    }
+    private void AwakeInizializer()
     {
         boundLeft = LevelManager.Instance.ChunckWidth + 2;
 
@@ -22,6 +35,7 @@ public class ObstacleMotion : MonoBehaviour
         boundRigth = -3;
         origin = -2;
     }
+
 
     private void Update()
     {

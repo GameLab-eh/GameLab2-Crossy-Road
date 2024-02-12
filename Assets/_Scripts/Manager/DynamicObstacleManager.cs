@@ -10,10 +10,22 @@ public class DynamicObstacleManager : MonoBehaviour
     [SerializeField, Min(0)] float boatSpeed;
 
     public static DynamicObstacleManager Instance { get; private set; }
+    
+    private void OnEnable()
+    {
+        EventManager.OnReload += AwakeInizializer;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnReload -= AwakeInizializer;
+    }
 
     void Awake()
     {
-
+        AwakeInizializer();
+    }
+    private void AwakeInizializer()
+    {
         #region Singleton
 
         if (Instance != null)
@@ -26,6 +38,7 @@ public class DynamicObstacleManager : MonoBehaviour
 
         #endregion
     }
+
 
     public float GetSpeed(string value) {
         return value.ToLower() switch
