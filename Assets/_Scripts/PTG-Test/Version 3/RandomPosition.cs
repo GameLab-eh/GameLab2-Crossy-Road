@@ -94,4 +94,13 @@ public static class RandomPosition
         return availablePositions[oppositeIndex];
     }
 
+    /* for external density
+    for (int x = 0; x < boundsSize; x++)
+        {
+            float offset = (x < boundsSize / 2) ? -0.5f : 0.5f;
+            Vector3 cubePosition = centerPosition + new Vector3(x + offset * lineSize - (boundsSize - 1) * 0.5f, 0.5f, 0);
+            Gizmos.DrawWireCube(cubePosition, Vector3.one);
+        }
+    */
+
 }
