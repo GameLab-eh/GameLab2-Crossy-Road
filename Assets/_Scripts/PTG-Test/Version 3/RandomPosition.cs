@@ -29,7 +29,7 @@ public static class RandomPosition
             else
             {
 
-                if (availablePositions.Count < prefab.Size)
+                if (availablePositions.Count < prefab.Size) // check
                 {
                     Debug.LogWarning("Not enough available positions.");
                     break;
@@ -66,32 +66,60 @@ public static class RandomPosition
         }
     }
 
+    //private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
+    //{
+    //    Vector3 position = centerPosition;
+
+    //    for (int i = 0; i < objectSize; i++)
+    //    {
+    //        if (availablePositions.Contains(position))
+    //        {
+    //            int indexToRemove = availablePositions.FindIndex(pos => pos == position);
+    //            availablePositions.RemoveAt(indexToRemove);
+
+    //            position = GetOppositeEndPosition(indexToRemove);
+    //        }
+    //        else position = new Vector3(position.x - 1, 0, 0);
+    //    }
+    //}
+
+    //private static Vector3 GetOppositeEndPosition(int currentIndex) // needs to be revised
+    //{
+    //    if (availablePositions.Count == 0) return Vector3.zero;
+
+    //    int lastIndex = availablePositions.Count - 1;
+
+    //    int oppositeIndex = (lastIndex - currentIndex + availablePositions.Count) % availablePositions.Count;
+
+    //    return availablePositions[oppositeIndex];
+    //}
+
     private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
     {
         Vector3 position = centerPosition;
 
-        for (int i = 0; i < objectSize; i++)
+        if (availablePositions.Contains(position) && availablePositions.Contains(new(position.x - objectSize + 1, 0f, position.z)))
         {
-            if (availablePositions.Contains(position))
-            {
-                int indexToRemove = availablePositions.FindIndex(pos => pos == position);
-                availablePositions.RemoveAt(indexToRemove);
+            int indexlower = availablePositions.FindIndex(pos => pos == position);
 
-                position = GetOppositeEndPosition(indexToRemove);
-            }
-            else position = new Vector3(position.x - 1, 0, 0);
+            availablePositions.RemoveRange(indexlower, objectSize);
         }
-    }
-
-    private static Vector3 GetOppositeEndPosition(int currentIndex) // needs to be revised
-    {
-        if (availablePositions.Count == 0) return Vector3.zero;
-
-        int lastIndex = availablePositions.Count - 1;
-
-        int oppositeIndex = (lastIndex - currentIndex + availablePositions.Count) % availablePositions.Count;
-
-        return availablePositions[oppositeIndex];
+        else
+        {
+            for (int i = 0; i < objectSize; i++)
+            {
+                //position = new(position.x - i + 1, 0f, position.z);
+                //if (availablePositions.Contains(position))
+                //{
+                //    int indexToRemove = availablePositions.FindIndex(pos => pos == position);
+                //    availablePositions.RemoveAt(indexToRemove);
+                //}
+                //else
+                //{
+                //    position = availablePositions[^1];
+                //}
+            }
+        }
     }
 
     /* for external density

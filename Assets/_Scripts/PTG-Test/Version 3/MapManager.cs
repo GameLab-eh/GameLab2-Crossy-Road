@@ -106,11 +106,13 @@ public class MapManager : MonoBehaviour
             waterfalls.transform.parent = row.transform;
             waterfalls.transform.eulerAngles = new(0, 180, 0);
 
-            //template.PropList(waterfalls);
-
             waterfalls = Instantiate(currentTheme.Waterfall, transform);
             waterfalls.transform.position = new((int)(gameRowWidth / 2), 0, rowCount - 1);
             waterfalls.transform.parent = row.transform;
+        }
+        else if (terrain.Prefab.name == "Grass")
+        {
+            //template.PropList(ObjectGenerate(terrain)); external objects
         }
 
         template.PropList(ObjectGenerate(terrain));
