@@ -97,6 +97,10 @@ public class PlayerControl : MonoBehaviour, IPlayer
             }
             
         }
+        else
+        {
+            EventManager.OnPlayerDeath?.Invoke();
+        }
         
     }
 
