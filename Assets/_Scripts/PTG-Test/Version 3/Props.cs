@@ -8,5 +8,4 @@ public class Props : MonoBehaviour
 
     public float Frequency(int factor) => frequencyRate.Evaluate(factor / 100f);
     public int Size => size;
-    public bool IsAlone => isAlone; 
 }
