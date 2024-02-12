@@ -19,4 +19,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b16973e110962d44d8da2d24aacdfbb3, type: 2}
   - {fileID: 11400000, guid: 3aa901ebc2ab7c94b82202d76b9a11ba, type: 2}
   safeArea: {fileID: 7310197384367824595, guid: 55fd3ebfb03fce448a50120dff0b0602, type: 3}
+  waterfall: {fileID: 8218421584739504165, guid: 899cb92049380824ba62a0585c016465, type: 3}
   player: {fileID: 1805143716698612055, guid: 8388106c036b283439894259291d868a, type: 3}

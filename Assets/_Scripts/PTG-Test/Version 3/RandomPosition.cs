@@ -66,61 +66,74 @@ public static class RandomPosition
         }
     }
 
-    //private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
-    //{
-    //    Vector3 position = centerPosition;
-
-    //    for (int i = 0; i < objectSize; i++)
-    //    {
-    //        if (availablePositions.Contains(position))
-    //        {
-    //            int indexToRemove = availablePositions.FindIndex(pos => pos == position);
-    //            availablePositions.RemoveAt(indexToRemove);
-
-    //            position = GetOppositeEndPosition(indexToRemove);
-    //        }
-    //        else position = new Vector3(position.x - 1, 0, 0);
-    //    }
-    //}
-
-    //private static Vector3 GetOppositeEndPosition(int currentIndex) // needs to be revised
-    //{
-    //    if (availablePositions.Count == 0) return Vector3.zero;
-
-    //    int lastIndex = availablePositions.Count - 1;
-
-    //    int oppositeIndex = (lastIndex - currentIndex + availablePositions.Count) % availablePositions.Count;
-
-    //    return availablePositions[oppositeIndex];
-    //}
-
     private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
     {
         Vector3 position = centerPosition;
 
-        if (availablePositions.Contains(position) && availablePositions.Contains(new(position.x - objectSize + 1, 0f, position.z)))
+        for (int i = 0; i < objectSize; i++)
         {
-            int indexlower = availablePositions.FindIndex(pos => pos == position);
-
-            availablePositions.RemoveRange(indexlower, objectSize);
-        }
-        else
-        {
-            for (int i = 0; i < objectSize; i++)
+            if (availablePositions.Contains(position))
             {
-                //position = new(position.x - i + 1, 0f, position.z);
-                //if (availablePositions.Contains(position))
-                //{
-                //    int indexToRemove = availablePositions.FindIndex(pos => pos == position);
-                //    availablePositions.RemoveAt(indexToRemove);
-                //}
-                //else
-                //{
-                //    position = availablePositions[^1];
-                //}
+                int indexToRemove = availablePositions.FindIndex(pos => pos == position);
+                availablePositions.RemoveAt(indexToRemove);
+
+                position = GetOppositeEndPosition(indexToRemove);
             }
+            else position = new Vector3(position.x - 1, 0, 0);
         }
     }
+
+    private static Vector3 GetOppositeEndPosition(int currentIndex) // needs to be revised
+    {
+        if (availablePositions.Count == 0) return Vector3.zero;
+
+        int lastIndex = availablePositions.Count - 1;
+
+        int oppositeIndex = (lastIndex - currentIndex + availablePositions.Count) % availablePositions.Count;
+
+        return availablePositions[oppositeIndex];
+    }
+
+    //private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
+    //{
+    //    Vector3 position = centerPosition;
+
+    //    if (availablePositions.Contains(position) && availablePositions.Contains(new Vector3(position.x + objectSize - 1, 0f, position.z)))
+    //    {
+    //        int indexLower = availablePositions.FindIndex(pos => pos == position);
+
+    //        availablePositions.RemoveRange(indexLower, objectSize);
+    //    }
+    //    else
+    //    {
+    //        int[] array = new int[objectSize];
+    //        int tmp = (int)position.x;
+
+    //        for (int i = 0; i < array.Length; i++)
+    //        {
+    //            Vector3 vectortmp = new(tmp + i, 0, position.z);
+    //            if (availablePositions.Contains(vectortmp))
+    //            {
+    //                array[i] = availablePositions.FindIndex(pos => pos == vectortmp);
+    //            }
+    //            else
+    //            {
+    //                tmp -= availablePositions.Count;
+    //                i--;
+    //            }
+    //        }
+
+    //        System.Array.Sort(array);
+
+    //        Debug.Log("--------------------------");
+
+    //        for (int i=0; i<array.Length; i++)
+    //        {
+    //            Debug.Log(array[i]);
+    //            //availablePositions.RemoveAt(array[i]);
+    //        }
+    //    }
+    //}
 
     /* for external density
     for (int x = 0; x < boundsSize; x++)
