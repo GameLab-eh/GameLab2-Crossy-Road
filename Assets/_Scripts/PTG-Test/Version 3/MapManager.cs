@@ -1,10 +1,6 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Object = UnityEngine.Object;
-using System.Drawing;
-using UnityEditor.Rendering;
 
 [RequireComponent(typeof(MapManager))]
 public class MapManager : MonoBehaviour
