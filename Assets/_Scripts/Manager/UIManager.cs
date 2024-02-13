@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     private void AwakeInizializer()
     {
         _player=GameObject.FindWithTag("Player");
+        
     }
 
 
@@ -40,10 +41,14 @@ public class UIManager : MonoBehaviour
 
     public void RedButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        EventManager.OnReload?.Invoke();
-        _deathMenu.alpha = 0f;
+        if (_deathMenu.alpha >= 1f)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            EventManager.OnReload?.Invoke();
+            _deathMenu.alpha = 0f;
+        }
         
     }
+    
 
 }
