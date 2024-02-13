@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -68,7 +70,7 @@ public class LevelManager : MonoBehaviour
         set { layout = value; }
     }
 }
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(LevelManager))]
 public class LevelManagerEditor : Editor
 {
@@ -89,3 +91,4 @@ public class LevelManagerEditor : Editor
         DrawDefaultInspector();
     }
 }
+#endif

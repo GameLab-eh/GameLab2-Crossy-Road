@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class ProceduralTerrainGenerator3 : MonoBehaviour
@@ -60,7 +62,7 @@ public class ProceduralTerrainGenerator3 : MonoBehaviour
 
     #endregion
 }
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(ProceduralTerrainGenerator3))]
 public class ProceduralTerrainGenerator3Editor : Editor
 {
@@ -81,3 +83,4 @@ public class ProceduralTerrainGenerator3Editor : Editor
         DrawDefaultInspector();
     }
 }
+#endif
