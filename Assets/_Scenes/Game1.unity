@@ -413,7 +413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: test
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -787,7 +787,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fa51ed448b1304fa46f2e416c4468b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: {fileID: 0}
+  _scoreText: {fileID: 233830916}
+  _score: 0
   _deathMenu: {fileID: 686830526}
 --- !u!1 &679891474
 GameObject:
@@ -1599,7 +1600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb999446c83831a4b9c4ef793d9cf42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1835113016}
   rowWidth: 31
   gameRowWidth: 21
 --- !u!1 &1287471458

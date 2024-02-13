@@ -8,9 +8,13 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text Score;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private int _score;
+    
     private GameObject _player;
     [SerializeField] private CanvasGroup _deathMenu;
+
+    private bool isPlayerAlive;
     
     private void Awake()
     {
@@ -19,24 +23,36 @@ public class UIManager : MonoBehaviour
     private void AwakeInizializer()
     {
         _player=GameObject.FindWithTag("Player");
-        
+        _score = 0;
+        _scoreText.text = "Score:" + _score;
     }
+
 
 
     private void OnEnable()
     {
         EventManager.OnPlayerDeath += ShowDeathMenu;
         EventManager.OnReload += AwakeInizializer;
+        EventManager.OnPlayerMoveUp += ScoreUp;
     }
     private void OnDisable()
     {
         EventManager.OnPlayerDeath -= ShowDeathMenu;
         EventManager.OnReload -= AwakeInizializer;
+        EventManager.OnPlayerMoveUp -= ScoreUp;
     }
 
     private void ShowDeathMenu()
     {
+        isPlayerAlive = false;
         _deathMenu.alpha = 1f;
+    }
+    
+    private void ScoreUp()
+    {
+        Debug.Log("hello");
+        _score++;
+        _scoreText.text = "Score:" + _score;
     }
 
     public void RedButton()
@@ -46,6 +62,7 @@ public class UIManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             EventManager.OnReload?.Invoke();
             _deathMenu.alpha = 0f;
+            _score = 0;
         }
         
     }

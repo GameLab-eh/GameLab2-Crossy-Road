@@ -15,10 +15,15 @@ public class PlayerControl : MonoBehaviour, IPlayer
     
     
     [SerializeField] private LayerMask _obstacleLayer, _waterLayer;
+    
     //movements on logs/boat/ecc..
     private Vector3 _movingTargetPos;
     private GameObject _movingTargetGameObject;
     [SerializeField] private float _moveTowardsBoatMiddle;
+    
+    //variables for score
+    private int myZValue;
+    private int myMaxZValue;
     
     private void OnEnable()
     {
@@ -116,6 +121,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator MovePlayer(Vector3 direction, bool isFallingInRiver)
     {
         
@@ -142,7 +148,17 @@ public class PlayerControl : MonoBehaviour, IPlayer
         }
 
         transform.position = _targetPos;
+        ScoreCaller();
 
+    }
+    private void ScoreCaller()
+    {
+        myZValue = (int)transform.position.z;
+        if (myZValue > myMaxZValue)
+        {
+            myMaxZValue = myZValue;
+            EventManager.OnPlayerMoveUp?.Invoke();
+        }
     }
 
     private void OnCollisionEnter(Collision other)

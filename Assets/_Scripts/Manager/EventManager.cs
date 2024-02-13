@@ -10,4 +10,5 @@ public class EventManager : MonoBehaviour
     public static Action<int> OnCoinIncrease;
     public static Action OnPlayerDeath;
     public static Action OnReload;
+    public static Action OnPlayerMoveUp;
 }
