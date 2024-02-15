@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private int _score;
+    [SerializeField] private TMP_Text _maxScoreText;
+    [SerializeField] private TMP_Text _coinText;
+    private int _score;
+    
+    [HideInInspector]public static int _coins;
+    [HideInInspector]public static int _maxScore;
     
     private GameObject _player;
     [SerializeField] private CanvasGroup _deathMenu;
@@ -20,26 +26,41 @@ public class UIManager : MonoBehaviour
     {
         AwakeInizializer();
     }
+    private void Start()
+    {
+        StartInizializer();
+    }
     private void AwakeInizializer()
     {
         _player=GameObject.FindWithTag("Player");
         _score = 0;
-        _scoreText.text = "Score:" + _score;
+        
     }
-
+    private void StartInizializer()
+    {
+        RestoreData();
+        
+        _scoreText.text = "Score: " + _score;
+        _maxScoreText.text = "Max Score: " + _maxScore;
+        _maxScoreText.text = "Max Score: " + _maxScore;
+        _coinText.text = "Coins: " + _coins;
+        
+    }
 
 
     private void OnEnable()
     {
         EventManager.OnPlayerDeath += ShowDeathMenu;
-        EventManager.OnReload += AwakeInizializer;
+        EventManager.OnReload += AwakeInizializer; StartInizializer();
         EventManager.OnPlayerMoveUp += ScoreUp;
+        EventManager.OnCoinIncrease += CoinUp;
     }
     private void OnDisable()
     {
         EventManager.OnPlayerDeath -= ShowDeathMenu;
         EventManager.OnReload -= AwakeInizializer;
         EventManager.OnPlayerMoveUp -= ScoreUp;
+        EventManager.OnCoinIncrease -= CoinUp;
     }
 
     private void ShowDeathMenu()
@@ -50,9 +71,19 @@ public class UIManager : MonoBehaviour
     
     private void ScoreUp()
     {
-        Debug.Log("hello");
         _score++;
-        _scoreText.text = "Score:" + _score;
+        _scoreText.text = "Score: " + _score;
+        if (_score>_maxScore)
+        {
+            _maxScore = _score;
+            _maxScoreText.text = "Max Score: " + _maxScore;
+        }
+        
+    }
+    private void CoinUp(int coinToAdd)
+    {
+        _coins += coinToAdd;
+        _coinText.text = "Coins: " + _coins;
     }
 
     public void RedButton()
@@ -65,6 +96,13 @@ public class UIManager : MonoBehaviour
             _score = 0;
         }
         
+    }
+    private void RestoreData()
+    {
+        BinaryDataSaver data = SaveSystem.LoadPlayerData();
+
+        _maxScore = data.maxScore;
+        _coins = data.coins;
     }
     
 

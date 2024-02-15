@@ -54,7 +54,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 if (!CheckObstacleInDirection(Vector3.forward))
                 {
                     _animator.SetTrigger("Hop");
-                    StartCoroutine(MovePlayer(Vector3.forward, false));
+                    StartCoroutine(MovePlayer(Vector3.forward));
                 }
                 else
                 {
@@ -68,7 +68,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 if (!CheckObstacleInDirection(Vector3.back))
                 {
                     _animator.SetTrigger("Hop");
-                    StartCoroutine(MovePlayer(Vector3.back, false));
+                    StartCoroutine(MovePlayer(Vector3.back));
                 }
                 else
                 {
@@ -82,7 +82,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 if (!CheckObstacleInDirection(Vector3.left))
                 {
                     _animator.SetTrigger("Hop");
-                    StartCoroutine(MovePlayer(Vector3.left, false));
+                    StartCoroutine(MovePlayer(Vector3.left));
                 }
                 else
                 {
@@ -96,7 +96,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 if (!CheckObstacleInDirection(Vector3.right))
                 {
                     _animator.SetTrigger("Hop");
-                    StartCoroutine(MovePlayer(Vector3.right, false));
+                    StartCoroutine(MovePlayer(Vector3.right));
                 }
                 else
                 {
@@ -122,21 +122,20 @@ public class PlayerControl : MonoBehaviour, IPlayer
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
-    private IEnumerator MovePlayer(Vector3 direction, bool isFallingInRiver)
+    private IEnumerator MovePlayer(Vector3 direction)
     {
         
         _isMoving = true;
         _isAbleToFall = false;
         float _elapsedTime = 0;
-        if (!isFallingInRiver)
+        _origPos = transform.position;
+        _targetPos = _origPos + direction;
+        if (_isOnMovingTarget && Mathf.Abs((int)direction.z) == 1)
         {
-             _origPos = transform.position;
-             _targetPos = _origPos + direction;
-                
              //making target pos fixed to an int value
-             _targetPos.z = Mathf.Round(_targetPos.z);
              _targetPos.x = Mathf.Round(_targetPos.x);
         }
+        _targetPos.z = Mathf.Round(_targetPos.z);
 
             
             //player movement logic
@@ -166,7 +165,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         if (other.gameObject.tag == "Coin")
         {
             EventManager.OnCoinIncrease?.Invoke(1);
-            Debug.Log("got it");
+            Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Car" || other.gameObject.tag == "Train")
         {

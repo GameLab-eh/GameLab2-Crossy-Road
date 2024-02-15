@@ -111,12 +111,14 @@ public class MapManager : MonoBehaviour
             waterfalls.transform.position = new((int)(gameRowWidth / 2), 0, rowCount - 1);
             waterfalls.transform.parent = row.transform;
         }
-        else if (terrain.Prefab.name == "Grass")
-        {
-            //template.PropList(ObjectGenerate(terrain)); external objects
-        }
 
-        template.PropList(ObjectGenerate(terrain));
+        List<Props> props = new List<Props>();
+
+        props = ObjectGenerate(terrain);
+
+        template.PropList(props);
+
+        props.ForEach(son => son.transform.SetParent(template.transform));
 
         rowlist.Add(row);
     }
@@ -146,6 +148,7 @@ public class MapManager : MonoBehaviour
 
         int radius = rowWidth;
         int numberOfObjects = 0;
+        int mask = 0;
 
         bool needsToBeChecked = false;
 
@@ -162,6 +165,7 @@ public class MapManager : MonoBehaviour
                 break;
             case "grass":
                 radius = gameRowWidth;
+                mask = 1;
                 break;
             default:
                 numberOfObjects = 1;
@@ -189,7 +193,12 @@ public class MapManager : MonoBehaviour
             list.Add(prop);
         }
 
-        List<Props> objects = RandomPosition.SpawnObjects(list, radius, rowCount - 1);
+        List<Props> objects = RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1);
+
+        if (mask != 0)
+        {
+            objects.AddRange(RandomPosition.SpawnObjects(list, RowWidth, gameRowWidth, rowCount - 1));
+        }
 
         list.Clear();
 

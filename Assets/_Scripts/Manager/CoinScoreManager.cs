@@ -16,7 +16,7 @@ public class CoinScoreManager : MonoBehaviour
     private void AddCoins(int coin)
     {
         _coinCounter += coin;
-        Debug.Log(_coinCounter);
+        
     }
 
 

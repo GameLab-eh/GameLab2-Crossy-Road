@@ -10,11 +10,11 @@ public class CoinPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ENTRA?!?!?!?");
         if (other.gameObject.layer == 31)
         {
-            Debug.Log("NON PENSO PROPRIO");
+            _coinToAdd = 1;
             EventManager.OnCoinIncrease?.Invoke(_coinToAdd);
+            Destroy(gameObject);
         }
         
     }

@@ -5,13 +5,13 @@ public static class RandomPosition
 {
     private static List<Vector3> availablePositions = new List<Vector3>();
 
-    public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int row)
+    public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int mask, int row)
     {
         bool isReverse = Random.Range(0, 2) == 0;
 
         List<Props> spawnedObjects = new List<Props>();
 
-        GenerateAvailablePositions(spawnRadius, row);
+        GenerateAvailablePositions(spawnRadius, mask, row);
 
         bool isFirst = true;
 
@@ -53,7 +53,7 @@ public static class RandomPosition
         return spawnedObjects;
     }
 
-    private static void GenerateAvailablePositions(int spawnRadius, int row)
+    private static void GenerateAvailablePositions(int spawnRadius, int mask, int row)
     {
         availablePositions.Clear();
         spawnRadius /= 2;
@@ -64,6 +64,8 @@ public static class RandomPosition
             Vector3 position = new Vector3(x, 0, row);
             availablePositions.Add(position);
         }
+
+        if (mask != 0) availablePositions.RemoveRange(spawnRadius - mask / 2, mask - 1);
     }
 
     private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
