@@ -111,10 +111,6 @@ public class MapManager : MonoBehaviour
             waterfalls.transform.position = new((int)(gameRowWidth / 2), 0, rowCount - 1);
             waterfalls.transform.parent = row.transform;
         }
-        else if (terrain.Prefab.name == "Grass")
-        {
-            //template.PropList(ObjectGenerate(terrain)); external objects
-        }
 
         List<Props> props = new List<Props>();
 
