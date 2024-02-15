@@ -45,8 +45,8 @@ Material:
     - _foamSpeed: 1
     - _foamThickness: 4
     - _maxWaveHeight: 0.1
-    - _waveHeight: 0.1
-    - _waveSpread: 3
+    - _waveHeight: 0
+    - _waveSpread: 1
     m_Colors:
     - _Color: {r: 0.050980367, g: 0.54822, b: 1, a: 0}
     - _flowDirection: {r: 0.1, g: 0.5, b: 0, a: 0}
