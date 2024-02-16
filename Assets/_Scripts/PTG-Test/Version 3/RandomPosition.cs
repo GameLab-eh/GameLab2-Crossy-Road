@@ -5,9 +5,11 @@ public static class RandomPosition
 {
     private static List<Vector3> availablePositions = new List<Vector3>();
 
+    private static bool isReverse = false;
+
     public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int mask, int row)
     {
-        bool isReverse = Random.Range(0, 2) == 0;
+        isReverse = Random.Range(0, 2) == 0;
 
         List<Props> spawnedObjects = new List<Props>();
 
@@ -29,7 +31,7 @@ public static class RandomPosition
             else
             {
 
-                if (availablePositions.Count < prefab.Size) // check
+                if (availablePositions.Count < prefab.Size) // first check
                 {
                     Debug.LogWarning("Not enough available positions.");
                     break;
@@ -37,6 +39,12 @@ public static class RandomPosition
 
                 int randomIndex = Random.Range(0, availablePositions.Count);
                 Vector3 randomPosition = availablePositions[randomIndex];
+
+                if (!CheckPositionSize(randomPosition, prefab.Size))// second check
+                {
+                    Debug.LogWarning("Not enough available positions.");
+                    continue;
+                }
 
                 Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
 
@@ -46,7 +54,6 @@ public static class RandomPosition
                 spawnedObjects.Add(newObject);
 
                 RemoveOccupiedPositions(randomPosition, prefab.Size);
-
             }
         }
 
@@ -68,82 +75,71 @@ public static class RandomPosition
         if (mask != 0) availablePositions.RemoveRange(spawnRadius - mask / 2, mask - 1);
     }
 
-    private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
+    private static void RemoveOccupiedPositions(Vector3 position, int objectSize)
     {
-        Vector3 position = centerPosition;
-
-        for (int i = 0; i < objectSize; i++)
+        if (!CheckPositionSize(position, objectSize))
         {
-            if (availablePositions.Contains(position))
+            return;
+        }
+
+        int index = availablePositions.FindIndex(pos => pos == position);
+
+        index -= isReverse ? objectSize - 1 : 0;
+
+        if (index < 0)
+        {
+            index = availablePositions.Count + index;
+
+            int tmp = availablePositions.Count - index;
+            availablePositions.RemoveRange(index, tmp);
+
+            objectSize -= tmp;
+            index = 0;
+        }
+        if (availablePositions.Count - (index + objectSize) < 0)
+        {
+            int tmp = availablePositions.Count - index;
+            availablePositions.RemoveRange(index, tmp);
+
+            objectSize -= tmp;
+            index = 0;
+        }
+
+        availablePositions.RemoveRange(index, objectSize);
+    }
+
+    private static bool CheckPositionSize(Vector3 position, int objectSize)
+    {
+        if (!availablePositions.Contains(position))
+        {
+            return false;
+        }
+
+        for (int i = 1; i < objectSize; i++)
+        {
+            position.x += isReverse ? 1 : -1;
+
+            if (!availablePositions.Contains(position))
             {
-                int indexToRemove = availablePositions.FindIndex(pos => pos == position);
-                availablePositions.RemoveAt(indexToRemove);
-
-                position = GetOppositeEndPosition(indexToRemove);
+                return false;
             }
-            else position = new Vector3(position.x - 1, 0, 0);
+
+            int index = availablePositions.FindIndex(pos => pos == position);
+
+            if (objectSize > 1) Debug.Log($"{i}: {index}");
+
+            // correggere, fa ping-pong
+
+            if (index < 0)
+            {
+                position = availablePositions[^1];
+            }
+            else if (index > availablePositions.Count - 1)
+            {
+                position = availablePositions[0];
+            }
         }
+
+        return true;
     }
-
-    private static Vector3 GetOppositeEndPosition(int currentIndex) // needs to be revised
-    {
-        if (availablePositions.Count == 0) return Vector3.zero;
-
-        int lastIndex = availablePositions.Count - 1;
-
-        int oppositeIndex = (lastIndex - currentIndex + availablePositions.Count) % availablePositions.Count;
-
-        return availablePositions[oppositeIndex];
-    }
-
-    //private static void RemoveOccupiedPositions(Vector3 centerPosition, int objectSize)
-    //{
-    //    Vector3 position = centerPosition;
-
-    //    if (availablePositions.Contains(position) && availablePositions.Contains(new Vector3(position.x + objectSize - 1, 0f, position.z)))
-    //    {
-    //        int indexLower = availablePositions.FindIndex(pos => pos == position);
-
-    //        availablePositions.RemoveRange(indexLower, objectSize);
-    //    }
-    //    else
-    //    {
-    //        int[] array = new int[objectSize];
-    //        int tmp = (int)position.x;
-
-    //        for (int i = 0; i < array.Length; i++)
-    //        {
-    //            Vector3 vectortmp = new(tmp + i, 0, position.z);
-    //            if (availablePositions.Contains(vectortmp))
-    //            {
-    //                array[i] = availablePositions.FindIndex(pos => pos == vectortmp);
-    //            }
-    //            else
-    //            {
-    //                tmp -= availablePositions.Count;
-    //                i--;
-    //            }
-    //        }
-
-    //        System.Array.Sort(array);
-
-    //        Debug.Log("--------------------------");
-
-    //        for (int i=0; i<array.Length; i++)
-    //        {
-    //            Debug.Log(array[i]);
-    //            //availablePositions.RemoveAt(array[i]);
-    //        }
-    //    }
-    //}
-
-    /* for external density
-    for (int x = 0; x < boundsSize; x++)
-        {
-            float offset = (x < boundsSize / 2) ? -0.5f : 0.5f;
-            Vector3 cubePosition = centerPosition + new Vector3(x + offset * lineSize - (boundsSize - 1) * 0.5f, 0.5f, 0);
-            Gizmos.DrawWireCube(cubePosition, Vector3.one);
-        }
-    */
-
 }
