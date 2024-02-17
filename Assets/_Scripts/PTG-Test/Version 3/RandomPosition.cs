@@ -84,7 +84,7 @@ public static class RandomPosition
 
         int index = availablePositions.FindIndex(pos => pos == position);
 
-        index -= isReverse ? objectSize - 1 : 0;
+        index -= isReverse ? 0 : objectSize - 1;
 
         if (index < 0)
         {
@@ -110,15 +110,10 @@ public static class RandomPosition
 
     private static bool CheckPositionSize(Vector3 position, int objectSize)
     {
-        if (!availablePositions.Contains(position))
+        bool check = true;
+        float old = position.x;
+        for (int i = 0; i < objectSize; i++)
         {
-            return false;
-        }
-
-        for (int i = 1; i < objectSize; i++)
-        {
-            position.x += isReverse ? 1 : -1;
-
             if (!availablePositions.Contains(position))
             {
                 return false;
@@ -126,18 +121,27 @@ public static class RandomPosition
 
             int index = availablePositions.FindIndex(pos => pos == position);
 
-            if (objectSize > 1) Debug.Log($"{i}: {index}");
-
-            // correggere, fa ping-pong
-
-            if (index < 0)
+            if (index == 0 && check)
             {
+                check = !check;
                 position = availablePositions[^1];
             }
-            else if (index > availablePositions.Count - 1)
+            else if (index >= availablePositions.Count - 1 && check)
             {
+                check = !check;
                 position = availablePositions[0];
             }
+            else
+            {
+                check = !check;
+                position.x += isReverse ? 1 : -1;
+            }
+
+            if ((int)Mathf.Abs(position.x - old) == 1)
+            {
+                old = position.x;
+            }
+            else return false;
         }
 
         return true;
