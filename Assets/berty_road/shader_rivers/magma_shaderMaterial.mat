@@ -21,8 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: magma_shaderMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 0b55bac5bbeda2c4e89fb3d8fc59b2bb,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0b55bac5bbeda2c4e89fb3d8fc59b2bb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -58,7 +57,7 @@ Material:
     - _foamDensity: 8.12
     - _foamSpeed: 0.5
     - _foamThickness: 3.1
-    - _maxWaveHeight: 0.309
+    - _maxWaveHeight: 0.1
     - _waveHeight: 0.2
     - _waveSpread: 5
     m_Colors:
@@ -66,5 +65,5 @@ Material:
     - _flowDirection: {r: -0.02, g: 0.28, b: 0, a: 0}
     - _foamColor: {r: 1, g: 0.3785311, b: 0, a: 0}
     - _subColor: {r: 0.6415094, g: 0.1424845, b: 0.003025995, a: 1}
-    - _tling: {r: 1, g: 1, b: 0, a: 0}
+    - _tling: {r: 10, g: 0.3, b: 0, a: 0}
   m_BuildTextureStacks: []
