@@ -8,7 +8,7 @@ public class DataManager : MonoBehaviour
 {
     public int scoreData;
     public int coinData;
-    public int[] skinsData;
+    public bool[] skinsData;
     private void OnEnable()
     {
         EventManager.OnPlayerDeath += SaveData;
