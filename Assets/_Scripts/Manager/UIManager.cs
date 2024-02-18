@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [HideInInspector]public static int _maxScore;
     
     private GameObject _player;
+    [SerializeField] private GameObject _mainMenu;
     [SerializeField] private CanvasGroup _deathMenu;
 
     private bool isPlayerAlive;
@@ -34,7 +35,8 @@ public class UIManager : MonoBehaviour
     {
         _player=GameObject.FindWithTag("Player");
         _score = 0;
-        
+        // _scoreText.alpha = 0f;
+        // _maxScoreText.alpha = 0f;
     }
     private void StartInizializer()
     {
@@ -54,6 +56,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnReload += AwakeInizializer; StartInizializer();
         EventManager.OnPlayerMoveUp += ScoreUp;
         EventManager.OnCoinIncrease += CoinUp;
+        EventManager.OnGameStart += GameStart;
     }
     private void OnDisable()
     {
@@ -61,6 +64,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnReload -= AwakeInizializer;
         EventManager.OnPlayerMoveUp -= ScoreUp;
         EventManager.OnCoinIncrease -= CoinUp;
+        EventManager.OnGameStart -= GameStart;
     }
 
     private void ShowDeathMenu()
@@ -103,6 +107,13 @@ public class UIManager : MonoBehaviour
 
         _maxScore = data.maxScore;
         _coins = data.coins;
+    }
+    private void GameStart()
+    {
+        _scoreText.alpha = 1f;
+        _maxScoreText.alpha = 1f;
+        _mainMenu.SetActive(false);
+        
     }
     
 

@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     //movements
     private Vector3 _origPos, _targetPos;
     [SerializeField] private float _timeToMove;
-    private GameObject _mesh;
+    [SerializeField] private GameObject _mesh;
     private Animator _animator;
     
     
@@ -41,7 +41,6 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private void AwakeInizializer()
     {
         _animator = GetComponent<Animator>();
-        _mesh = GameObject.Find("Cube");
     }
 
     private void Update()

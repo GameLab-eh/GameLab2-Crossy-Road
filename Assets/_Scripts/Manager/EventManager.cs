@@ -11,4 +11,5 @@ public class EventManager : MonoBehaviour
     public static Action OnPlayerDeath;
     public static Action OnReload;
     public static Action OnPlayerMoveUp;
+    public static Action OnGameStart;
 }
