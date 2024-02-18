@@ -4,10 +4,16 @@ using UnityEngine;
 [System.Serializable]
 public class BinaryDataSaver
 {
-    public int maxScore;
-    public int coins;
+    public int maxScore = 0;
+    public int coins = 0;
     public int[] skins;
 
+    public BinaryDataSaver()
+    {
+        maxScore = 0;
+        coins = 0;
+        skins = null;
+    }
     public BinaryDataSaver(DataManager data)
     {
         maxScore = data.scoreData;

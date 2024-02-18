@@ -35,15 +35,15 @@ public class UIManager : MonoBehaviour
     {
         _player=GameObject.FindWithTag("Player");
         _score = 0;
+        _scoreText.text = "Score: " + 0;
+        _maxScoreText.text = "Max Score: " + 0;
+        _coinText.text = "Coins: " + 0;
         // _scoreText.alpha = 0f;
         // _maxScoreText.alpha = 0f;
     }
     private void StartInizializer()
     {
-        RestoreData();
-        
         _scoreText.text = "Score: " + _score;
-        _maxScoreText.text = "Max Score: " + _maxScore;
         _maxScoreText.text = "Max Score: " + _maxScore;
         _coinText.text = "Coins: " + _coins;
         
@@ -99,15 +99,6 @@ public class UIManager : MonoBehaviour
             _deathMenu.alpha = 0f;
             _score = 0;
         }
-        
-    }
-    private void RestoreData()
-    {
-        BinaryDataSaver data = SaveSystem.LoadPlayerData();
-
-
-        _maxScore = data.maxScore;
-        _coins = data.coins;
         
     }
     private void GameStart()

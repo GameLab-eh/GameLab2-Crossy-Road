@@ -20,6 +20,7 @@ public static class SaveSystem
 
     public static BinaryDataSaver LoadPlayerData()
     {
+        
         string path = Application.persistentDataPath + "/player.bert";
         if (File.Exists(path))
         {
@@ -27,14 +28,15 @@ public static class SaveSystem
             FileStream stream = new FileStream(path, FileMode.Open);
             BinaryDataSaver data = formatter.Deserialize(stream) as BinaryDataSaver;
             stream.Close();
-            
+                
             return data;
         }
         else
         {
-            Debug.LogError("no save file in " + path);
+            Debug.Log("sei un pirla");
             return null;
         }
+        
     }
     
 }
