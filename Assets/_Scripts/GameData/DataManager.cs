@@ -35,6 +35,10 @@ public class DataManager : MonoBehaviour
     }
     private void LoadData()
     {
+        if (SaveSystem.LoadPlayerData() == null)
+        {
+            SaveSystem.SavePlayerData(this);
+        }
         BinaryDataSaver data = SaveSystem.LoadPlayerData();
         scoreData = data.maxScore;
         coinData = data.coins;

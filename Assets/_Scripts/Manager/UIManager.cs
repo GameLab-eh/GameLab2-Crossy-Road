@@ -105,16 +105,9 @@ public class UIManager : MonoBehaviour
     {
         BinaryDataSaver data = SaveSystem.LoadPlayerData();
 
-        if(data.maxScore!=null || data.coins!=null)
-        {
-            _maxScore = data.maxScore;
-            _coins = data.coins;
-        }
-        else
-        {
-            _maxScore = 0;
-            _coins = 0;
-        }
+        _maxScore = data.maxScore;
+        _coins = data.coins;
+
     }
     private void GameStart()
     {
