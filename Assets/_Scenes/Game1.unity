@@ -3602,8 +3602,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1835113016}
-  rowWidth: 31
-  gameRowWidth: 21
+  rowWidth: 41
+  gameRowWidth: 15
 --- !u!1 &1284127586
 GameObject:
   m_ObjectHideFlags: 0

@@ -169,7 +169,7 @@ public class MapManager : MonoBehaviour
                 break;
             default:
                 numberOfObjects = 1;
-                mask = RowWidth - 6;
+                mask = rowWidth - 6;
                 break;
         }
 
@@ -178,6 +178,25 @@ public class MapManager : MonoBehaviour
             int min = Mathf.CeilToInt((radius - 2) * terrain.Density(chunkCount));
             numberOfObjects = Mathf.Clamp((int)(min * layout.ObstacleDensity), 0, radius - 2);
         }
+
+        list.AddRange(ListProps(numberOfObjects, terrain, needsToBeChecked));
+
+        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1) : new();
+
+        if (mask != 0)
+        {
+            if (numberOfObjects != 1) list.AddRange(ListProps(rowWidth - gameRowWidth, terrain, needsToBeChecked));
+            objects.AddRange(RandomPosition.SpawnObjects(list, rowWidth, mask, rowCount - 1));
+        }
+
+        list.Clear();
+
+        return objects;
+    }
+
+    List<Props> ListProps(int numberOfObjects, DefinitionTerrain terrain, bool needsToBeChecked)
+    {
+        List<Props> list = new List<Props>();
 
         float speed = 0;
         for (int i = 0; i < numberOfObjects; i++)
@@ -194,16 +213,7 @@ public class MapManager : MonoBehaviour
             list.Add(prop);
         }
 
-        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1) : new();
-
-        if (mask != 0)
-        {
-            objects.AddRange(RandomPosition.SpawnObjects(list, RowWidth, mask, rowCount - 1));
-        }
-
-        list.Clear();
-
-        return objects;
+        return list;
     }
 
     float NormalizedFrequency(List<DefinitionTerrain> objectList, int index, int chunkCounter)
