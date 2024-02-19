@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1173290322696329899, guid: 57b47a6201b4f9f439d9f2715ed0e758, type: 3}
   propList:
-  - {fileID: 8588481697792979114, guid: 76ab644d227447e4c9a18ce5f640eec5, type: 3}
-  - {fileID: 2946922518527558745, guid: c234b87ae1afdca4688a62f5320c59eb, type: 3}
-  - {fileID: -3027943331269589899, guid: 2957556cecb71a544a9e81892b292e29, type: 3}
-  - {fileID: -8951302069587407519, guid: f733e2f950ffe0c43817e2ee8000ee9f, type: 3}
-  - {fileID: -2459552762396254545, guid: 289fd146fb6f7464bac628326463e9f9, type: 3}
-  - {fileID: -8951302069587407519, guid: ca655330c9b88a748b9317c97a9310c5, type: 3}
+  - {fileID: -2459552762396254545, guid: 0ce4ad6880eaef34baa5768a8f479e8c, type: 3}
+  - {fileID: -8951302069587407519, guid: e1d18c22c7400574591bc1468f05367a, type: 3}
+  - {fileID: -8951302069587407519, guid: b4e9ddb8b8d790d44996e7b0b6e6ee87, type: 3}
+  - {fileID: 2946922518527558745, guid: 55466edefa497e746925ab7468abeebf, type: 3}
+  - {fileID: -3027943331269589899, guid: 4fa12e66b5b1c2640ad2d7811d3326d8, type: 3}
+  - {fileID: -8951302069587407519, guid: 5fb47b2a4f15acd45a6d272dc2058e41, type: 3}
   frequencyRate:
     serializedVersion: 2
     m_Curve:

@@ -273,6 +273,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1691108382770398659, guid: ae19652ef398f9349bf2d9e792656680, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c833998b67fb2ba4696710be950289d4, type: 2}
     - target: {fileID: 6951861213798098864, guid: ae19652ef398f9349bf2d9e792656680, type: 3}
       propertyPath: m_Name
       value: moneta
