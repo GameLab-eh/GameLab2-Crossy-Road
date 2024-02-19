@@ -17,7 +17,11 @@ public static class RandomPosition
 
         bool isFirst = true;
 
-        for (int prefabIndex = 0; prefabIndex < prefabs.Count; prefabIndex++)
+        int count = prefabs.Count;
+
+        if (prefabs[0].name == "Train") count = 1;
+
+        for (int prefabIndex = 0; prefabIndex < count; prefabIndex++)
         {
             Props prefab = prefabs[prefabIndex];
 
@@ -49,8 +53,18 @@ public static class RandomPosition
 
                 Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
 
-                if (newObject is DynamicProps && isReverse) ((DynamicProps)newObject).Reverse();
-                if (newObject.name == "Train(Clone)") ((DynamicProps)newObject).StartDelay(Random.Range(0f, 3f));
+                if (newObject is DynamicProps props && isReverse) props.Reverse();
+                if (newObject.name == "Train(Clone)")
+                {
+
+                    float delay = Random.Range(0f, 3f);
+
+                    ((DynamicProps)newObject).StartDelay(delay);
+
+                    spawnedObjects.Add(Object.Instantiate(prefabs[1], new Vector3(-5, 0, row), Quaternion.identity));
+
+                    spawnedObjects.Add(Object.Instantiate(prefabs[1], new Vector3(5, 0, row), Quaternion.identity));
+                }
 
                 spawnedObjects.Add(newObject);
 

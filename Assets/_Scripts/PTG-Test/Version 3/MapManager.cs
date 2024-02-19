@@ -198,6 +198,14 @@ public class MapManager : MonoBehaviour
     {
         List<Props> list = new List<Props>();
 
+        if (terrain.name == "Railroad")
+        {
+            list.Add(terrain.Props[0]);
+            list.Add(terrain.Props[1]);
+
+            return list;
+        }
+
         float speed = 0;
         for (int i = 0; i < numberOfObjects; i++)
         {

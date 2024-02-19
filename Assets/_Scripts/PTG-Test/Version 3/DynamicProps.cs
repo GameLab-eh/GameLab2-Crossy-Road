@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class DynamicProps : Props
@@ -10,6 +9,11 @@ public class DynamicProps : Props
 
     int bounds;
 
+    public delegate void TrainSignal(bool value, float z);
+    public static event TrainSignal run = null;
+
+    bool start = false;
+
     private void Awake()
     {
         bounds = (int)(GameManager.Instance.MapManager.RowWidth / 2) + 2 + Size;
@@ -17,7 +21,9 @@ public class DynamicProps : Props
 
     private void Start()
     {
+        if (startDelay == 0f) return;
         StartCoroutine(CoroutineWait(startDelay));
+        start = true;
     }
 
     private void FixedUpdate()
@@ -38,12 +44,14 @@ public class DynamicProps : Props
 
     IEnumerator CoroutineWait(float delay)
     {
-        float spedbackup = speed;
+        if (start) run?.Invoke(false, transform.position.z);
+        float speedbackup = speed;
         speed = 0;
         yield return new WaitForSeconds(delay);
-        speed = spedbackup;
+        if (start) run?.Invoke(true, transform.position.z);
+        speed = speedbackup;
     }
 
-    public float Speed => speed; 
+    public float Speed => speed;
     public void StartDelay(float value) => startDelay = value;
 }
