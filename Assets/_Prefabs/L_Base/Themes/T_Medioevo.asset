@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb5a24db44fed04bb350bbe70e828db, type: 3}
+  m_Name: T_Medioevo
+  m_EditorClassIdentifier: 
+  terrainList:
+  - {fileID: 11400000, guid: 8f29561230d1b8d458d2ca06cdd9bb0d, type: 2}
+  - {fileID: 11400000, guid: 9fd2fd3e27e292e4990868b50c5fe997, type: 2}
+  - {fileID: 11400000, guid: 1523544a41c906d41992432c82b7d943, type: 2}
+  - {fileID: 11400000, guid: 9e38f35626985f9438d602ca11cebb5a, type: 2}
+  - {fileID: 11400000, guid: 8832704b90291e24d975fecbae5e98f3, type: 2}
+  safeArea: {fileID: 7310197384367824595, guid: a14c5671f4c14a44c966d10844eab3b9, type: 3}
+  waterfall: {fileID: 8218421584739504165, guid: 182841add4feda24e98f2589dcd36c12, type: 3}
+  player: {fileID: 1805143716698612055, guid: 8388106c036b283439894259291d868a, type: 3}
