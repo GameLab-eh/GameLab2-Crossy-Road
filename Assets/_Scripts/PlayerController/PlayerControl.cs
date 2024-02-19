@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IPlayer
 {
+    [SerializeField] private GameObject SkinButton;
+    
     //checks
     private bool _isMoving, _isOnMovingTarget, _isAlive = true, _isAbleToFall;
     
@@ -123,6 +125,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator MovePlayer(Vector3 direction)
     {
+        SkinButton.SetActive(false);
         
         _isMoving = true;
         _isAbleToFall = false;
