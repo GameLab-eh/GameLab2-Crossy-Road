@@ -35,11 +35,18 @@ public class MapManager : MonoBehaviour
         currentTheme = layout.Theme[themeCount];
         if (layout.Theme.Count > 1) nextTheme = layout.Theme[themeCount + 1];
 
-        GameObject row = Instantiate(currentTheme.SafeArea, transform);
-        row.transform.localScale = new(rowWidth, 1f, 1f);
-        row.transform.position = new(0, 0, rowCount);
+        for (int i = 0; i < 5; i++) //to editable
+        {
+            GameObject row = Instantiate(currentTheme.SafeArea, transform);
+            row.transform.localScale = new(rowWidth, 1f, 1f);
+            row.transform.position = new(0, 0, i * -1);
+            rowlist.Add(row);
+        }
+        //GameObject row = Instantiate(currentTheme.SafeArea, transform);
+        //row.transform.localScale = new(rowWidth, 1f, 1f);
+        //row.transform.position = new(0, 0, rowCount);
         RowIDIncrement();
-        rowlist.Add(row);
+        //rowlist.Add(row);
 
         for (int i = 0; i < layout.ChunkLength; i++)
         {
