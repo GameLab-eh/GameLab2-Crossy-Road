@@ -30,8 +30,7 @@ public static class RandomPosition
             }
             else
             {
-
-                if (availablePositions.Count < prefab.Size) // first check
+                if (availablePositions.Count < prefab.Size && prefab.name != "Train") // first check
                 {
                     Debug.LogWarning("Not enough available positions.");
                     break;
@@ -40,7 +39,7 @@ public static class RandomPosition
                 int randomIndex = Random.Range(0, availablePositions.Count);
                 Vector3 randomPosition = availablePositions[randomIndex];
 
-                if (!CheckPositionSize(randomPosition, prefab.Size))// second check
+                if (!CheckPositionSize(randomPosition, prefab.Size) && prefab.name != "Train")// second check
                 {
                     Debug.LogWarning("Not enough available positions.");
                     continue;

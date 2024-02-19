@@ -12,7 +12,7 @@ public class DynamicProps : Props
 
     private void Awake()
     {
-        bounds = (int)(GameManager.Instance.MapManager.RowWidth / 2) + 2;
+        bounds = (int)(GameManager.Instance.MapManager.RowWidth / 2) + 2 + Size;
     }
 
     private void Start()

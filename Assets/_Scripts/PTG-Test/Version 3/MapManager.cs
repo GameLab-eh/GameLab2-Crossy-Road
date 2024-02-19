@@ -165,10 +165,11 @@ public class MapManager : MonoBehaviour
                 break;
             case "grass":
                 radius = gameRowWidth;
-                mask = 1;
+                mask = gameRowWidth;
                 break;
             default:
                 numberOfObjects = 1;
+                mask = RowWidth - 6;
                 break;
         }
 
@@ -193,11 +194,11 @@ public class MapManager : MonoBehaviour
             list.Add(prop);
         }
 
-        List<Props> objects = RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1);
+        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1) : new();
 
         if (mask != 0)
         {
-            objects.AddRange(RandomPosition.SpawnObjects(list, RowWidth, gameRowWidth, rowCount - 1));
+            objects.AddRange(RandomPosition.SpawnObjects(list, RowWidth, mask, rowCount - 1));
         }
 
         list.Clear();

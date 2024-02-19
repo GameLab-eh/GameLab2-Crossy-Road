@@ -2358,7 +2358,6 @@ GameObject:
   m_Component:
   - component: {fileID: 847184552}
   - component: {fileID: 847184549}
-  - component: {fileID: 847184551}
   - component: {fileID: 847184550}
   m_Layer: 0
   m_Name: CanvasCamera
@@ -2462,14 +2461,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &847184551
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 847184548}
-  m_Enabled: 1
 --- !u!4 &847184552
 Transform:
   m_ObjectHideFlags: 0

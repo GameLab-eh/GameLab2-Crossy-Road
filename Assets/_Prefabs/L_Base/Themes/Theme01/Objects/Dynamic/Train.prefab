@@ -54,7 +54,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 18.532125, y: 0.6, z: 0.5}
-  m_Center: {x: 0.21854877, y: 0.3, z: 0}
+  m_Center: {x: 9.1, y: 0.3, z: 0}
 --- !u!114 &-4950064841831683538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40dd34afac579b4f92ada0d50504c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 3
+  size: 18
   frequencyRate:
     serializedVersion: 2
     m_Curve:
@@ -234,7 +234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 65899595050972193, guid: 695e96a061dac974f909ab297aebf858, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.075
       objectReference: {fileID: 0}
     - target: {fileID: 65899595050972193, guid: 695e96a061dac974f909ab297aebf858, type: 3}
       propertyPath: m_LocalPosition.y
