@@ -41,6 +41,22 @@ public class GameManager : MonoBehaviour
         #endregion
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Quit();//change for open menu
+        }
+    }
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
 
     public DefinitionLayout CurrentLayout => layouts[layoutName];
 
