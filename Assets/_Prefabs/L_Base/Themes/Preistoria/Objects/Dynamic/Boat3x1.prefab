@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40dd34afac579b4f92ada0d50504c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 3
+  size: 5
   frequencyRate:
     serializedVersion: 2
     m_Curve:
@@ -73,7 +73,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   isAlone: 0
-  speed: 2
+  speed: 3
   startDelay: 0
   delay: 0
 --- !u!1001 &377467279235549633
