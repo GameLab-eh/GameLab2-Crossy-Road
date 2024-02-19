@@ -45,6 +45,8 @@ public static class RandomPosition
                     continue;
                 }
 
+                if (prefab.name == "Train") randomPosition = availablePositions[isReverse ? 0 : ^1];
+
                 Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
 
                 if (newObject is DynamicProps && isReverse) ((DynamicProps)newObject).Reverse();
