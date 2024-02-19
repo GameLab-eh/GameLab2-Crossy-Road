@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 573014510971123558}
   - component: {fileID: 8037323974631666449}
   - component: {fileID: 6755905925797591228}
-  - component: {fileID: 1644962382933070690}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -167,27 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1644962382933070690
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6939143694124832388}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8693253073300581937
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,8 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8284963611728190222}
-  - component: {fileID: 287503679371631546}
-  - component: {fileID: -8951302069587407519}
+  - component: {fileID: 2341755303711347161}
   m_Layer: 8
   m_Name: Train Pooler
   m_TagString: Untagged
@@ -219,33 +196,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 573014510971123558}
   - {fileID: 7497101841616651607}
   - {fileID: 1154539797288165245}
-  - {fileID: 573014510971123558}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &287503679371631546
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8693253073300581937}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &-8951302069587407519
+--- !u!114 &2341755303711347161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,31 +210,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8693253073300581937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6866815bdc382bd4287679e1eca5eee8, type: 3}
+  m_Script: {fileID: 11500000, guid: a80b83dd113864145812f14d3dfa76f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 1
+  size: 0
   frequencyRate:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0083351135
-      value: 0.5235863
-      inSlope: -0.06421397
-      outSlope: -0.06421397
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.45990753
-      inSlope: -0.06421397
-      outSlope: -0.06421397
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

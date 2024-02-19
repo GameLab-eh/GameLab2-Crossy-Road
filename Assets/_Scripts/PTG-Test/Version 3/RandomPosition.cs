@@ -36,7 +36,7 @@ public static class RandomPosition
             {
                 if (availablePositions.Count < prefab.Size && prefab.name != "Train") // first check
                 {
-                    Debug.LogWarning("Not enough available positions.");
+                    //Debug.LogWarning("Not enough available positions.");
                     break;
                 }
 
@@ -45,7 +45,7 @@ public static class RandomPosition
 
                 if (!CheckPositionSize(randomPosition, prefab.Size) && prefab.name != "Train")// second check
                 {
-                    Debug.LogWarning("Not enough available positions.");
+                    //Debug.LogWarning("Not enough available positions.");
                     continue;
                 }
 

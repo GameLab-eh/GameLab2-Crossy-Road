@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 1203279906652238510, guid: 58e742ebc60a65c4bb94e4b7b9f34038, type: 3}
   propList:
   - {fileID: -4950064841831683538, guid: 3ea10239c05b8ad4c99fde395bb7f197, type: 3}
-  - {fileID: 2814692776983740325, guid: 22722da255b418749bdd5430a3de5811, type: 3}
+  - {fileID: 2341755303711347161, guid: 22722da255b418749bdd5430a3de5811, type: 3}
   frequencyRate:
     serializedVersion: 2
     m_Curve:
