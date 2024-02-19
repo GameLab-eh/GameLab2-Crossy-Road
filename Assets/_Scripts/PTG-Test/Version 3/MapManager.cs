@@ -70,7 +70,7 @@ public class MapManager : MonoBehaviour
             {
                 themeCount++;
                 currentTheme = nextTheme;
-                if (layout.Theme.Count > themeCount) nextTheme = layout.Theme[themeCount + 1];
+                if (layout.Theme.Count > themeCount) nextTheme = layout.Theme[themeCount];
             }
         }
     }
