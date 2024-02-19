@@ -16,7 +16,8 @@ public class DynamicProps : Props
 
     private void Awake()
     {
-        bounds = (int)(GameManager.Instance.MapManager.RowWidth / 2) + 2 + Size;
+        bounds = (int)(GameManager.Instance.MapManager.RowWidth / 2) + 2;
+        bounds += transform.name == "Train(Clone)" ? Size : 0;
     }
 
     private void Start()

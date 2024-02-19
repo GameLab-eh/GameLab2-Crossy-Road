@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class RandomPosition
 {
@@ -56,19 +57,27 @@ public static class RandomPosition
                 if (newObject is DynamicProps props && isReverse) props.Reverse();
                 if (newObject.name == "Train(Clone)")
                 {
-
                     float delay = Random.Range(0f, 3f);
-
                     ((DynamicProps)newObject).StartDelay(delay);
 
                     spawnedObjects.Add(Object.Instantiate(prefabs[1], new Vector3(-5, 0, row), Quaternion.identity));
-
                     spawnedObjects.Add(Object.Instantiate(prefabs[1], new Vector3(5, 0, row), Quaternion.identity));
                 }
 
                 spawnedObjects.Add(newObject);
 
                 RemoveOccupiedPositions(randomPosition, prefab.Size);
+
+                //debug
+                //if (prefab.name.Contains("Boat"))
+                //{
+                //    string x = "";
+                //    foreach (Vector3 vector in availablePositions)
+                //    {
+                //        x += vector.x + ", ";
+                //    }
+                //    Debug.Log($"{prefab.name} | {prefab.Size} | {randomPosition.x} | {availablePositions.Count} | ({x})");
+                //}
             }
         }
 
@@ -92,10 +101,7 @@ public static class RandomPosition
 
     private static void RemoveOccupiedPositions(Vector3 position, int objectSize)
     {
-        if (!CheckPositionSize(position, objectSize))
-        {
-            return;
-        }
+        if (!CheckPositionSize(position, objectSize)) return;
 
         int index = availablePositions.FindIndex(pos => pos == position);
 
