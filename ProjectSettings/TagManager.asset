@@ -15,6 +15,7 @@ TagManager:
   - Highway
   - Coin
   - DeathMenu
+  - Skin
   layers:
   - Default
   - TransparentFX

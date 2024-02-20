@@ -13,14 +13,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] Language language;
 
     [SerializeField] MapManager mapManager;
+    [SerializeField] private GameObject[] _skins;
+    [SerializeField] private GameObject _playerMeshParent;
 
     private void OnEnable()
     {
         EventManager.OnReload += AwakeInizializer;
+        EventManager.OnSkinChoice += SkinSpawner;
     }
     private void OnDisable()
     {
         EventManager.OnReload -= AwakeInizializer;
+        EventManager.OnSkinChoice -= SkinSpawner;
     }
     void Awake()
     {
@@ -55,6 +59,14 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+    private void SkinSpawner(int skinIndex)
+    {
+        GameObject oldSkin = GameObject.FindGameObjectWithTag("Skin");
+        Destroy(oldSkin);
+        Transform playerTransform = _playerMeshParent.transform;
+        Instantiate(_skins[skinIndex], new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerTransform);
+        
     }
 
 

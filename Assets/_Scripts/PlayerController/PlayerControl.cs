@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour, IPlayer
@@ -8,6 +9,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     
     //checks
     private bool _isMoving, _isOnMovingTarget, _isAlive = true, _isAbleToFall;
+    [SerializeField] private GameObject SkinMenu;
     
     //movements
     private Vector3 _origPos, _targetPos;
@@ -30,10 +32,12 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private void OnEnable()
     {
         EventManager.OnReload += AwakeInizializer;
+        EventManager.OnSkinChoice += MeshChanger;
     }
     private void OnDisable()
     {
         EventManager.OnReload -= AwakeInizializer;
+        EventManager.OnSkinChoice -= MeshChanger;
     }
     
     private void Awake()
@@ -47,6 +51,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
 
     private void Update()
     {
+        
         if (_isAlive)
         {
             if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && !_isMoving)
@@ -125,6 +130,10 @@ public class PlayerControl : MonoBehaviour, IPlayer
     // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator MovePlayer(Vector3 direction)
     {
+        if (SkinMenu.activeSelf)
+        {
+            yield break;
+        }
         SkinButton.SetActive(false);
         
         _isMoving = true;
@@ -227,6 +236,15 @@ public class PlayerControl : MonoBehaviour, IPlayer
     public void ResetAnimationHitObject()
     {
         _animator.SetInteger("ObjectHit", 0);
+    }
+    public void MeshChanger(int skinIndex)
+    {
+        StartCoroutine(MeshChangerRoutine());
+    }
+    private IEnumerator MeshChangerRoutine()
+    {
+        yield return new WaitForNextFrameUnit();
+        _mesh=GameObject.FindGameObjectWithTag("Skin");
     }
     
 
