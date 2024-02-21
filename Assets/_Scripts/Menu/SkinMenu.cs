@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkinMenu : MonoBehaviour
 {
@@ -9,10 +11,20 @@ public class SkinMenu : MonoBehaviour
     [SerializeField] private GameObject _skinMenu;
     [SerializeField] private GameObject _inGameMenu;
     [SerializeField] private GameObject _skinPopUp;
+    [SerializeField] private TMP_Text _skinPopUpText;
 
     public void Selector(int index)
     {
-        EventManager.OnSkinChoice?.Invoke(index);
+        
+        if (GameManager.Instance.skinsUnlocked[index])
+        {
+            EventManager.OnSkinChoice?.Invoke(index);
+            _skinPopUpText.text = "Skin Selected!!!";
+        }
+        else
+        {
+            _skinPopUpText.text = "Skin Not Unlocked :(";
+        }
         _skinPopUp.SetActive(true);
         StartCoroutine(skinPopUpRoutine());
     }

@@ -6,18 +6,21 @@ public class BinaryDataSaver
 {
     public int maxScore = 0;
     public int coins = 0;
-    public int[] skins;
+    public bool[] skins;
+    public int lastSkinUsed;
 
     public BinaryDataSaver()
     {
         maxScore = 0;
         coins = 0;
-        skins = null;
+        lastSkinUsed = 0;
     }
     public BinaryDataSaver(DataManager data)
     {
         maxScore = data.scoreData;
         coins = data.coinData;
+        skins = data.skinsData;
+        lastSkinUsed = data.lastSkinUsedData;
     }
     
     

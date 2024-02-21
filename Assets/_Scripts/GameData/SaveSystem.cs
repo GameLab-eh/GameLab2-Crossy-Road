@@ -33,7 +33,6 @@ public static class SaveSystem
         }
         else
         {
-            Debug.Log("sei un pirla");
             return null;
         }
         

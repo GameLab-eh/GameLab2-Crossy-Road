@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(GameManager))]
@@ -15,6 +17,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] MapManager mapManager;
     [SerializeField] private GameObject[] _skins;
     [SerializeField] private GameObject _playerMeshParent;
+    public bool[] skinsUnlocked = new bool[]
+    {
+        true, false, false, false, false
+    };
+    public int lastSkinUsed;
+    
 
     private void OnEnable()
     {
@@ -43,6 +51,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(transform.root.gameObject);
 
         #endregion
+
+        StartCoroutine(skinSpawenerRoutine());
+
+
     }
 
     private void Update()
@@ -66,11 +78,18 @@ public class GameManager : MonoBehaviour
         Destroy(oldSkin);
         Transform playerTransform = _playerMeshParent.transform;
         Instantiate(_skins[skinIndex], new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerTransform);
-        
+        lastSkinUsed = skinIndex;
+    }
+    private IEnumerator skinSpawenerRoutine()
+    {
+        yield return new WaitForNextFrameUnit();
+        SkinSpawner(lastSkinUsed);
     }
 
 
     public DefinitionLayout CurrentLayout => layouts[layoutName];
 
     public MapManager MapManager => mapManager;
+    
+    
 }

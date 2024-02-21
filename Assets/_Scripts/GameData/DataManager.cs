@@ -9,28 +9,32 @@ public class DataManager : MonoBehaviour
     public int scoreData;
     public int coinData;
     public bool[] skinsData;
+    public int lastSkinUsedData;
+    private void Awake()
+    {
+        AwakeInzializer();
+    }
+    private void AwakeInzializer()
+    {
+        LoadData();
+    }
     private void OnEnable()
     {
         EventManager.OnPlayerDeath += SaveData;
-        EventManager.OnReload += AwakeInizializer;
+        EventManager.OnReload += LoadData;
     }
     private void OnDisable()
     {
         EventManager.OnPlayerDeath -= SaveData;
-        EventManager.OnReload -= AwakeInizializer;
+        EventManager.OnReload -= LoadData;
     }
-    private void Awake()
-    {
-        AwakeInizializer();
-    }
-    private void AwakeInizializer()
-    {
-        LoadData();
-    }
+
     private void SaveData()
     {
         scoreData = UIManager._maxScore;
         coinData = UIManager._coins;
+        lastSkinUsedData = GameManager.Instance.lastSkinUsed;
+        skinsData = GameManager.Instance.skinsUnlocked;
         SaveSystem.SavePlayerData(this);
     }
     private void LoadData()
@@ -41,17 +45,25 @@ public class DataManager : MonoBehaviour
         {
             scoreData = data.maxScore;
             coinData = data.coins;
+            skinsData = data.skins;
+            lastSkinUsedData = data.lastSkinUsed;
         }
         else
         {
             SaveData();
         }
+
+
         GiveValue();
+        
     }
     private void GiveValue()
     {
         UIManager._maxScore = scoreData;
         UIManager._coins = coinData;
+        GameManager.Instance.skinsUnlocked = skinsData;
+        GameManager.Instance.lastSkinUsed = lastSkinUsedData;
+
     }
 
     

@@ -1557,6 +1557,7 @@ MonoBehaviour:
   _skinMenu: {fileID: 0}
   _inGameMenu: {fileID: 0}
   _skinPopUp: {fileID: 0}
+  _skinPopUpText: {fileID: 0}
 --- !u!1 &426696738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,6 +2257,7 @@ MonoBehaviour:
   layoutName: 0
   language: {fileID: 11400000, guid: c4224a47ef9f7854d93c00b030725536, type: 2}
   mapManager: {fileID: 1239385603}
+  _dataManager: {fileID: 620695230}
   _skins:
   - {fileID: 5094843765733017116, guid: 989eaa979cd311147b46a8c13e93d8ff, type: 3}
   - {fileID: 2278492030276714702, guid: 9a5494070c88e0f4ba16ce79fe1a8a7f, type: 3}
@@ -2294,7 +2296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreData: 1
   coinData: 1
-  skinsData: 
+  skinsData: 0100000000
+  lastSkinUsedData: 0
 --- !u!1 &679891474
 GameObject:
   m_ObjectHideFlags: 0
@@ -10566,6 +10569,7 @@ MonoBehaviour:
   _skinMenu: {fileID: 1296250218}
   _inGameMenu: {fileID: 515093040}
   _skinPopUp: {fileID: 924718943}
+  _skinPopUpText: {fileID: 924718945}
 --- !u!4 &1629622236
 Transform:
   m_ObjectHideFlags: 0

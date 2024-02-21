@@ -47,6 +47,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private void AwakeInizializer()
     {
         _animator = GetComponent<Animator>();
+        StartCoroutine(MeshChangerRoutine());
     }
 
     private void Update()
@@ -243,6 +244,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     }
     private IEnumerator MeshChangerRoutine()
     {
+        yield return new WaitForNextFrameUnit();
         yield return new WaitForNextFrameUnit();
         _mesh=GameObject.FindGameObjectWithTag("Skin");
     }
