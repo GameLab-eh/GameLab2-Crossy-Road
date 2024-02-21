@@ -126,6 +126,17 @@ public class MapManager : MonoBehaviour
             waterfalls.transform.position = new((int)(gameRowWidth / 2), 0, rowCount - 1);
             waterfalls.transform.parent = row.transform;
         }
+        else if (terrain.Prefab.name == "Road")
+        {
+            GameObject barrier = Instantiate(currentTheme.Barrier, transform);
+            barrier.transform.position = new(-((gameRowWidth / 2) + 1), 0, rowCount - 1);
+            barrier.transform.parent = row.transform;
+            barrier.transform.eulerAngles = new(0, 180, 0);
+
+            barrier = Instantiate(currentTheme.Barrier, transform);
+            barrier.transform.position = new(((gameRowWidth / 2) + 1), 0, rowCount - 1);
+            barrier.transform.parent = row.transform;
+        }
 
         List<Props> props = new List<Props>();
 

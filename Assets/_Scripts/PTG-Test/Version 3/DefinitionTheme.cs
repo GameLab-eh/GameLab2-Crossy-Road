@@ -10,6 +10,8 @@ public class DefinitionTheme : ScriptableObject
 
     [SerializeField] GameObject waterfall;
 
+    [SerializeField] GameObject barrier;
+
     [SerializeField] GameObject player;
 
     public List<DefinitionTerrain> Terrain => terrainList;
@@ -18,4 +20,5 @@ public class DefinitionTheme : ScriptableObject
     public GameObject Player => player;
     public DefinitionTerrain SafeArea => safeArea;
     public GameObject Waterfall => waterfall;
+    public GameObject Barrier => barrier;
 }
