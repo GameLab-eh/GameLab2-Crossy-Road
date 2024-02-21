@@ -35,18 +35,26 @@ public class MapManager : MonoBehaviour
         currentTheme = layout.Theme[themeCount];
         if (layout.Theme.Count > 1) nextTheme = layout.Theme[themeCount + 1];
 
-        for (int i = 0; i < 5; i++) //to editable
+        for (int i = 0; i < 10; i++)
         {
-            GameObject row = Instantiate(currentTheme.SafeArea, transform);
+            GameObject row = Instantiate(currentTheme.SafeArea.Prefab, transform);
             row.transform.localScale = new(rowWidth, 1f, 1f);
             row.transform.position = new(0, 0, i * -1);
+
+            List<Props> props = new List<Props>();
+
+            props = ObjectGenerate(currentTheme.SafeArea);
+
+            Template template = row.AddComponent<Template>();
+            //template.IsFull(currentTheme.SafeArea.IsFull);
+
+            template.PropList(props);
+
+            props.ForEach(son => son.transform.SetParent(template.transform));
+
             rowlist.Add(row);
         }
-        //GameObject row = Instantiate(currentTheme.SafeArea, transform);
-        //row.transform.localScale = new(rowWidth, 1f, 1f);
-        //row.transform.position = new(0, 0, rowCount);
         RowIDIncrement();
-        //rowlist.Add(row);
 
         for (int i = 0; i < layout.ChunkLength; i++)
         {
@@ -174,13 +182,17 @@ public class MapManager : MonoBehaviour
                 radius = gameRowWidth;
                 mask = gameRowWidth;
                 break;
-            default:
+            case "railroad":
                 numberOfObjects = 1;
                 mask = rowWidth - 6;
                 break;
+            default:
+                radius = gameRowWidth;
+                numberOfObjects = gameRowWidth;
+                break;
         }
 
-        if (numberOfObjects != 1)
+        if (numberOfObjects == 0)
         {
             int min = Mathf.CeilToInt((radius - 2) * terrain.Density(chunkCount));
             numberOfObjects = Mathf.Clamp((int)(min * layout.ObstacleDensity), 0, radius - 2);
@@ -192,7 +204,12 @@ public class MapManager : MonoBehaviour
 
         if (mask != 0)
         {
-            if (numberOfObjects != 1) list.AddRange(ListProps(rowWidth - gameRowWidth, terrain, needsToBeChecked));
+            if (numberOfObjects != 1)
+            {
+                list.AddRange(ListProps(rowWidth - gameRowWidth, terrain, needsToBeChecked));
+
+                list.RemoveAll(obj => obj.name == "Coin");
+            }
             objects.AddRange(RandomPosition.SpawnObjects(list, rowWidth, mask, rowCount - 1));
         }
 

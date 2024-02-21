@@ -55,7 +55,7 @@ public static class RandomPosition
                 Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
 
                 if (newObject is DynamicProps props && isReverse) props.Reverse();
-                if (newObject.name == "Train(Clone)")
+                if (prefab.name == "Train")
                 {
                     float delay = Random.Range(0f, 3f);
                     ((DynamicProps)newObject).StartDelay(delay);
@@ -69,14 +69,14 @@ public static class RandomPosition
                 RemoveOccupiedPositions(randomPosition, prefab.Size);
 
                 //debug
-                //if (prefab.name.Contains("Boat"))
+                //if (prefab.name.Contains("Three3"))
                 //{
                 //    string x = "";
                 //    foreach (Vector3 vector in availablePositions)
                 //    {
                 //        x += vector.x + ", ";
                 //    }
-                //    Debug.Log($"{prefab.name} | {prefab.Size} | {randomPosition.x} | {availablePositions.Count} | ({x})");
+                //    Debug.Log($"{prefabIndex} | {randomPosition.x} | {availablePositions.Count} | ({x})");
                 //}
             }
         }
@@ -131,7 +131,7 @@ public static class RandomPosition
 
     private static bool CheckPositionSize(Vector3 position, int objectSize)
     {
-        bool check = true;
+        bool check = objectSize > 1;
         float old = position.x;
         for (int i = 0; i < objectSize; i++)
         {

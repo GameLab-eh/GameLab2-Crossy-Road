@@ -6,7 +6,7 @@ public class DefinitionTheme : ScriptableObject
 {
     [SerializeField] List<DefinitionTerrain> terrainList;
 
-    [SerializeField] GameObject safeArea;
+    [SerializeField] DefinitionTerrain safeArea;
 
     [SerializeField] GameObject waterfall;
 
@@ -16,6 +16,6 @@ public class DefinitionTheme : ScriptableObject
     public string Name => this.name;
 
     public GameObject Player => player;
-    public GameObject SafeArea => safeArea;
+    public DefinitionTerrain SafeArea => safeArea;
     public GameObject Waterfall => waterfall;
 }
