@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
         Transform playerTransform = _playerMeshParent.transform;
         Instantiate(_skins[skinIndex], new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerTransform);
         lastSkinUsed = skinIndex;
+        
     }
     private IEnumerator skinSpawenerRoutine()
     {

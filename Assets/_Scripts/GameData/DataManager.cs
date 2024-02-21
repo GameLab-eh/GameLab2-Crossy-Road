@@ -22,11 +22,14 @@ public class DataManager : MonoBehaviour
     {
         EventManager.OnPlayerDeath += SaveData;
         EventManager.OnReload += LoadData;
+        EventManager.OnSkinChoice += SaveSkin;
     }
+
     private void OnDisable()
     {
         EventManager.OnPlayerDeath -= SaveData;
-        EventManager.OnReload -= LoadData;
+        EventManager.OnReload -= LoadData; 
+        EventManager.OnSkinChoice -= SaveSkin;
     }
 
     private void SaveData()
@@ -64,6 +67,15 @@ public class DataManager : MonoBehaviour
         GameManager.Instance.skinsUnlocked = skinsData;
         GameManager.Instance.lastSkinUsed = lastSkinUsedData;
 
+    }
+    public void SaveSkin(int index)
+    {
+        StartCoroutine(SaveSkinRoutine());
+    }
+    private IEnumerator SaveSkinRoutine()
+    {
+        yield return new WaitForNextFrameUnit();
+        SaveData();
     }
 
     
