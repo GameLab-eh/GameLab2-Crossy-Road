@@ -10217,7 +10217,7 @@ MonoBehaviour:
   _coinText: {fileID: 1344509088}
   _skinObtainedText: {fileID: 1761416629}
   _skinObtained: {fileID: 1761416627}
-  _skinCost: 1
+  _skinCost: 50
 --- !u!1 &1664504644
 GameObject:
   m_ObjectHideFlags: 0
