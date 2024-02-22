@@ -13,4 +13,5 @@ public class EventManager : MonoBehaviour
     public static Action OnPlayerMoveUp;
     public static Action OnGameStart;
     public static Action<int> OnSkinChoice;
+    public static Action OnskinObtained;
 }

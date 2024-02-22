@@ -10,6 +10,7 @@ public class CoinPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        _coinToAdd = 30;
         if (other.gameObject.layer == 31)
         {
             _coinToAdd = 1;

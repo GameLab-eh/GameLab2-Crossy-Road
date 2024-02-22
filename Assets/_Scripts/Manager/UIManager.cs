@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnPlayerDeath += ShowDeathMenu;
-        EventManager.OnReload += AwakeInizializer; StartInizializer();
+        EventManager.OnReload += AwakeInizializer;
         EventManager.OnPlayerMoveUp += ScoreUp;
         EventManager.OnCoinIncrease += CoinUp;
         EventManager.OnGameStart += GameStart;
