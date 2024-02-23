@@ -11,7 +11,7 @@ public static class RandomPosition
     {
         isReverse = Random.Range(0, 2) == 0;
 
-        float speed = Mathf.Clamp(Random.Range(3, 10) * (row / 10), 2, 10);
+        float speed = Mathf.Clamp(Random.Range(3, 10) * (row / 100), 2, 10);
 
         List<Props> spawnedObjects = new List<Props>();
 
