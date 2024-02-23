@@ -53,6 +53,10 @@ public class DynamicProps : Props
         speed = speedbackup;
     }
 
-    public float Speed => speed;
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
     public void StartDelay(float value) => startDelay = value;
 }

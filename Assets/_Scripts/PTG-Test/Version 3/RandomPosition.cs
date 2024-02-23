@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public static class RandomPosition
 {
@@ -11,6 +10,8 @@ public static class RandomPosition
     public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int mask, int row, bool isFull = false)
     {
         isReverse = Random.Range(0, 2) == 0;
+
+        float speed = Mathf.Clamp(Random.Range(3, 10) * (row / 10), 2, 10);
 
         List<Props> spawnedObjects = new List<Props>();
 
@@ -54,7 +55,12 @@ public static class RandomPosition
 
                 Props newObject = Object.Instantiate(prefab, randomPosition, Quaternion.identity);
 
-                if (newObject is DynamicProps props && isReverse) props.Reverse();
+                if (newObject is DynamicProps props)
+                {
+                    if (isReverse) props.Reverse();
+                    if (prefab.name != "Train") props.Speed = speed;
+                }
+
                 if (prefab.name == "Train")
                 {
                     float delay = Random.Range(0f, 3f);
