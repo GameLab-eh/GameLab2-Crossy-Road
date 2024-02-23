@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] MapManager mapManager;
     [SerializeField] private GameObject[] _skins;
     [SerializeField] private GameObject _playerMeshParent;
+
     public bool[] skinsUnlocked = new bool[]
     {
         true, false, false, false, false
@@ -53,8 +54,6 @@ public class GameManager : MonoBehaviour
         #endregion
 
         StartCoroutine(skinSpawenerRoutine());
-
-
     }
 
     private void Update()

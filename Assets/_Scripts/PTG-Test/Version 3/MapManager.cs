@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -43,10 +44,35 @@ public class MapManager : MonoBehaviour
 
             List<Props> props = new List<Props>();
 
-            props = ObjectGenerate(currentTheme.SafeArea, rowCount, 5, 0);
+            int numberOfObjjects = 0;
+            int mask = 0;
+
+            switch (i)
+            {
+                case 0:
+                    mask = gameRowWidth;
+                    break;
+                case 1:
+                    mask = gameRowWidth - 2;
+                    break;
+                case 2:
+                    mask = gameRowWidth - 4;
+                    break;
+                case 3:
+                    mask = gameRowWidth - 6;
+                    break;
+                case 4:
+                    mask = gameRowWidth - 8;
+                    break;
+                default:
+                    numberOfObjjects = rowWidth;
+                    break;
+            }
+            props = ObjectGenerate(currentTheme.SafeArea, rowWidth, numberOfObjjects, mask, (-1 * i) + 1, true);
 
             Template template = row.AddComponent<Template>();
-            //template.IsFull(currentTheme.SafeArea.IsFull);
+            if (i != 0) template.IsFull(currentTheme.SafeArea.IsFull);
+
 
             template.PropList(props);
 
@@ -189,13 +215,13 @@ public class MapManager : MonoBehaviour
         return ObjectGenerate(terrain, radius, numberOfObjects, mask);
     }
 
-    List<Props> ObjectGenerate(DefinitionTerrain terrain, int radius, int numberOfObjects = 0, int mask = 0)
+    List<Props> ObjectGenerate(DefinitionTerrain terrain, int radius, int numberOfObjects = 0, int mask = 0, int z = 0, bool isFull = false)
     {
         List<Props> list = new();
 
         list.AddRange(ListProps(numberOfObjects, terrain));
 
-        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1) : new();
+        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1 + z, isFull) : new();
 
         if (mask != 0)
         {
@@ -205,7 +231,7 @@ public class MapManager : MonoBehaviour
 
                 list.RemoveAll(obj => obj.name == "Coin");
             }
-            objects.AddRange(RandomPosition.SpawnObjects(list, rowWidth, mask, rowCount - 1));
+            objects.AddRange(RandomPosition.SpawnObjects(list, rowWidth, mask, rowCount - 1 + z, isFull));
         }
 
         list.Clear();
@@ -215,7 +241,7 @@ public class MapManager : MonoBehaviour
 
     List<Props> ListProps(int numberOfObjects, DefinitionTerrain terrain)
     {
-        List<Props> list = new List<Props>();
+        List<Props> list = new();
 
         if (terrain.name == "Railroad")
         {
@@ -225,18 +251,9 @@ public class MapManager : MonoBehaviour
             return list;
         }
 
-        float speed = 0;
         for (int i = 0; i < numberOfObjects; i++)
         {
             Props prop = Object(terrain);
-            if (false)
-            {
-                if (i == 0) speed = ((DynamicProps)prop).Speed;
-                while (((DynamicProps)prop).Speed != speed)
-                {
-                    prop = Object(terrain);
-                }
-            }
             list.Add(prop);
         }
 
