@@ -2112,6 +2112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: rock_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 46ed505b9aa23ac42b34942c1dc3a684, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5571476503230861816, guid: 46ed505b9aa23ac42b34942c1dc3a684, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -9046,6 +9050,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: rock_2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2d9614d786c37ff4782f89ba2e6b0c6e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5571476503230861816, guid: 2d9614d786c37ff4782f89ba2e6b0c6e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -9143,6 +9151,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b0a525e8e6e7af9478dbc2ae7589f0e2, type: 3}
       propertyPath: m_Name
       value: caveman
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b0a525e8e6e7af9478dbc2ae7589f0e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9951,6 +9963,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: gentleman
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9ebb40e3b106d63419decd24f409cfd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7637009188412135434, guid: 9ebb40e3b106d63419decd24f409cfd9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -10085,6 +10101,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5bde7a36b7f2c4143afb0e3afe22b3a6, type: 3}
       propertyPath: m_Name
       value: peasant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5bde7a36b7f2c4143afb0e3afe22b3a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4687880567940192822, guid: 5bde7a36b7f2c4143afb0e3afe22b3a6, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -11322,6 +11342,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 83af09b26daa2294f898cc89d58b9f69, type: 3}
       propertyPath: m_Name
       value: rock_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 83af09b26daa2294f898cc89d58b9f69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5571476503230861816, guid: 83af09b26daa2294f898cc89d58b9f69, type: 3}
       propertyPath: m_Materials.Array.data[0]
