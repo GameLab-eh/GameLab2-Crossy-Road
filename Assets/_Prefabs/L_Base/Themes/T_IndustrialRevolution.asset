@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c4ef48968baf6454fa8e974c99d1d519, type: 2}
   - {fileID: 11400000, guid: 4c36e9629acd6f54d826e559cbd67346, type: 2}
   - {fileID: 11400000, guid: 65be18b0278af4448ae2da4386759dd6, type: 2}
-  safeArea: {fileID: 7310197384367824595, guid: a14c5671f4c14a44c966d10844eab3b9, type: 3}
-  waterfall: {fileID: 8218421584739504165, guid: 182841add4feda24e98f2589dcd36c12, type: 3}
+  safeArea: {fileID: 0}
+  waterfall: {fileID: 8218421584739504165, guid: aad534db80494c24daf01a1aaee1720a, type: 3}
   barrier: {fileID: 1266842082869487003, guid: de6d263bc7d51d441baff2d1bca1f6ca, type: 3}
   player: {fileID: 1805143716698612055, guid: 8388106c036b283439894259291d868a, type: 3}
