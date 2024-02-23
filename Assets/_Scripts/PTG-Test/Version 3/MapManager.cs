@@ -43,7 +43,7 @@ public class MapManager : MonoBehaviour
 
             List<Props> props = new List<Props>();
 
-            props = ObjectGenerate(currentTheme.SafeArea);
+            props = ObjectGenerate(currentTheme.SafeArea, rowCount, 5, 0);
 
             Template template = row.AddComponent<Template>();
             //template.IsFull(currentTheme.SafeArea.IsFull);
@@ -126,17 +126,6 @@ public class MapManager : MonoBehaviour
             waterfalls.transform.position = new((int)(gameRowWidth / 2), 0, rowCount - 1);
             waterfalls.transform.parent = row.transform;
         }
-        else if (terrain.Prefab.name == "Road")
-        {
-            GameObject barrier = Instantiate(currentTheme.Barrier, transform);
-            barrier.transform.position = new(-((gameRowWidth / 2) + 1), 0, rowCount - 1);
-            barrier.transform.parent = row.transform;
-            barrier.transform.eulerAngles = new(0, 180, 0);
-
-            barrier = Instantiate(currentTheme.Barrier, transform);
-            barrier.transform.position = new(((gameRowWidth / 2) + 1), 0, rowCount - 1);
-            barrier.transform.parent = row.transform;
-        }
 
         List<Props> props = new List<Props>();
 
@@ -170,24 +159,14 @@ public class MapManager : MonoBehaviour
 
     List<Props> ObjectGenerate(DefinitionTerrain terrain)
     {
-        List<Props> list = new();
-
         int radius = rowWidth;
         int numberOfObjects = 0;
         int mask = 0;
 
-        bool needsToBeChecked = false;
-
         switch (terrain.name.ToLower())
         {
-            case "river":
-                needsToBeChecked = true;
-                break;
             case "lake":
                 radius = gameRowWidth;
-                break;
-            case "road":
-                needsToBeChecked = true;
                 break;
             case "grass":
                 radius = gameRowWidth;
@@ -198,8 +177,6 @@ public class MapManager : MonoBehaviour
                 mask = rowWidth - 6;
                 break;
             default:
-                radius = gameRowWidth;
-                numberOfObjects = gameRowWidth;
                 break;
         }
 
@@ -209,7 +186,14 @@ public class MapManager : MonoBehaviour
             numberOfObjects = Mathf.Clamp((int)(min * layout.ObstacleDensity), 0, radius - 2);
         }
 
-        list.AddRange(ListProps(numberOfObjects, terrain, needsToBeChecked));
+        return ObjectGenerate(terrain, radius, numberOfObjects, mask);
+    }
+
+    List<Props> ObjectGenerate(DefinitionTerrain terrain, int radius, int numberOfObjects = 0, int mask = 0)
+    {
+        List<Props> list = new();
+
+        list.AddRange(ListProps(numberOfObjects, terrain));
 
         List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1) : new();
 
@@ -217,7 +201,7 @@ public class MapManager : MonoBehaviour
         {
             if (numberOfObjects != 1)
             {
-                list.AddRange(ListProps(rowWidth - gameRowWidth, terrain, needsToBeChecked));
+                list.AddRange(ListProps(rowWidth - gameRowWidth, terrain));
 
                 list.RemoveAll(obj => obj.name == "Coin");
             }
@@ -229,7 +213,7 @@ public class MapManager : MonoBehaviour
         return objects;
     }
 
-    List<Props> ListProps(int numberOfObjects, DefinitionTerrain terrain, bool needsToBeChecked)
+    List<Props> ListProps(int numberOfObjects, DefinitionTerrain terrain)
     {
         List<Props> list = new List<Props>();
 
@@ -245,7 +229,7 @@ public class MapManager : MonoBehaviour
         for (int i = 0; i < numberOfObjects; i++)
         {
             Props prop = Object(terrain);
-            if (needsToBeChecked)
+            if (false)
             {
                 if (i == 0) speed = ((DynamicProps)prop).Speed;
                 while (((DynamicProps)prop).Speed != speed)

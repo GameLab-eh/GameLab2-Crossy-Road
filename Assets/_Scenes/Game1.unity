@@ -1956,6 +1956,7 @@ GameObject:
   - component: {fileID: 620695228}
   - component: {fileID: 620695229}
   - component: {fileID: 620695230}
+  - component: {fileID: 620695231}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2037,6 +2038,24 @@ MonoBehaviour:
   coinData: 1
   skinsData: 0100000000
   lastSkinUsedData: 0
+--- !u!114 &620695231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620695224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1cdf63402c926b409dcb50b2fe127c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundtrack: {fileID: 0}
+  _tracks: []
+  _volumeMaster: 0.5
+  _voluemMusic: 0.5
+  _volumeEffects: 0.5
+  _advance: 0.2
 --- !u!1 &679891474
 GameObject:
   m_ObjectHideFlags: 0
