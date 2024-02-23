@@ -98,9 +98,7 @@ public class AudioManager : MonoBehaviour
 [Serializable]
 public class SoundTrack
 {
-    [Header("Track name")]
     public string trackName;
 
-    [Header("Sound Track")]
     public AudioClip track;
 }
