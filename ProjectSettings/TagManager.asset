@@ -16,6 +16,8 @@ TagManager:
   - Coin
   - DeathMenu
   - Skin
+  - Fog
+  - Bird
   layers:
   - Default
   - TransparentFX

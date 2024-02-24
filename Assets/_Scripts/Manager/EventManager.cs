@@ -16,4 +16,5 @@ public class EventManager : MonoBehaviour
     public static Action OnskinObtained;
     public static Action OnBirdAction;
     public static Action OnBirdArrived;
+    public static Action OnPlayerOutOfCam;
 }

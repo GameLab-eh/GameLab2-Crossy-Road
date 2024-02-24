@@ -36,12 +36,14 @@ public class PlayerControl : MonoBehaviour, IPlayer
         EventManager.OnReload += AwakeInizializer;
         EventManager.OnSkinChoice += MeshChanger;
         EventManager.OnBirdArrived += BirdRoutineStarter;
+        EventManager.OnPlayerOutOfCam += PlayerOutOfCam;
     }
     private void OnDisable()
     {
         EventManager.OnReload -= AwakeInizializer;
         EventManager.OnSkinChoice -= MeshChanger;
         EventManager.OnBirdArrived -= BirdRoutineStarter;
+        EventManager.OnPlayerOutOfCam -= PlayerOutOfCam;
     }
     
     private void Awake()
@@ -276,6 +278,11 @@ public class PlayerControl : MonoBehaviour, IPlayer
             yield return null;
         }
 
+    }
+    private void PlayerOutOfCam()
+    {
+        _isAlive = false;
+        EventManager.OnBirdAction?.Invoke();
     }
     
 
