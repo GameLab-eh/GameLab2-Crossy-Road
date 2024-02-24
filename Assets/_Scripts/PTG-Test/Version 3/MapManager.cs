@@ -104,15 +104,14 @@ public class MapManager : MonoBehaviour
     {
         rowCount++;
         if (rowCount / layout.ChunkLength > chunkCount) chunkCount++;
-        if (layout.chunkDelay != 0)
-        {
-            if (chunkCount / layout.ChunkDelay > themeCount)
-            {
-                themeCount++;
-                currentTheme = nextTheme;
-                if (layout.Theme.Count > themeCount) nextTheme = layout.Theme[themeCount];
-            }
-        }
+        if (layout.chunkDelay == 0) return;
+
+        themeCount = Mathf.FloorToInt(chunkCount / layout.ChunkDelay);
+
+        if (themeCount >= layout.Theme.Count) return;
+
+        currentTheme = nextTheme;
+        nextTheme = layout.Theme[themeCount];
     }
 
     void RowGenerate()
