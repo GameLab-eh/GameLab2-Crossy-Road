@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     
     //movements
     private Vector3 _origPos, _targetPos;
-    [SerializeField] private float _timeToMove;
+    [SerializeField] private float _timeToMove, _timeToMoveBird;
     [SerializeField] private GameObject _mesh;
     private Animator _animator;
     
@@ -24,6 +24,8 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private Vector3 _movingTargetPos;
     private GameObject _movingTargetGameObject;
     [SerializeField] private float _moveTowardsBoatMiddle;
+
+    [SerializeField] private float xMapLimitMax, xMapLimitMin;
     
     //variables for score
     private int myZValue;
@@ -33,11 +35,13 @@ public class PlayerControl : MonoBehaviour, IPlayer
     {
         EventManager.OnReload += AwakeInizializer;
         EventManager.OnSkinChoice += MeshChanger;
+        EventManager.OnBirdArrived += BirdRoutineStarter;
     }
     private void OnDisable()
     {
         EventManager.OnReload -= AwakeInizializer;
         EventManager.OnSkinChoice -= MeshChanger;
+        EventManager.OnBirdArrived -= BirdRoutineStarter;
     }
     
     private void Awake()
@@ -113,22 +117,28 @@ public class PlayerControl : MonoBehaviour, IPlayer
             
 
             
-            if (_isOnMovingTarget)
+            if (transform.position.x >= xMapLimitMax || transform.position.x <= xMapLimitMin)
             {
-                _movingTargetPos = SetMovingTargetPos();
-                transform.position = Vector3.MoveTowards(transform.position, _movingTargetPos, _moveTowardsBoatMiddle);
-                
+                _isAlive = false;
+                Debug.Log("arriva l'aquila");
+                EventManager.OnBirdAction?.Invoke();
             }
+                
             
         }
         else
         {
             EventManager.OnPlayerDeath?.Invoke();
         }
+        if (_isOnMovingTarget) 
+        { 
+            _movingTargetPos = SetMovingTargetPos(); 
+            transform.position = Vector3.MoveTowards(transform.position, _movingTargetPos, _moveTowardsBoatMiddle);
+        }
         
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     private IEnumerator MovePlayer(Vector3 direction)
     {
         if (SkinMenu.activeSelf)
@@ -144,13 +154,11 @@ public class PlayerControl : MonoBehaviour, IPlayer
         _targetPos = _origPos + direction;
         if (_isOnMovingTarget && Mathf.Abs((int)direction.z) == 1)
         {
-             //making target pos fixed to an int value
              _targetPos.x = Mathf.Round(_targetPos.x);
         }
         _targetPos.z = Mathf.Round(_targetPos.z);
 
-            
-            //player movement logic
+        
         while (_elapsedTime < _timeToMove)
         {
             transform.position = Vector3.Lerp(_origPos, _targetPos, (_elapsedTime / _timeToMove));
@@ -187,6 +195,8 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 _isAlive = false;
             }
         }
+
+        
     }
     private void OnCollisionStay(Collision other)
     {
@@ -195,7 +205,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
             _movingTargetGameObject = other.gameObject;
             _isOnMovingTarget = true;
         }
-        if (other.gameObject.tag == "River" && _isAbleToFall && !_isOnMovingTarget && _isAlive)
+        if (_isAbleToFall && !_isOnMovingTarget && _isAlive && other.gameObject.tag == "River")
         {
             _isAlive = false;
             _animator.SetTrigger("WaterFall");
@@ -247,6 +257,25 @@ public class PlayerControl : MonoBehaviour, IPlayer
         yield return new WaitForNextFrameUnit();
         yield return new WaitForNextFrameUnit();
         _mesh=GameObject.FindGameObjectWithTag("Skin");
+    }
+    private void BirdRoutineStarter()
+    {
+        StartCoroutine(MoveWithBird());
+    }
+    private IEnumerator MoveWithBird()
+    {
+        yield return new WaitForNextFrameUnit();
+        float _elapsedTime = 0;
+        _origPos = transform.position;
+        _targetPos = _origPos - new Vector3(0,-10,15);
+        
+        while (_elapsedTime < _timeToMoveBird)
+        {
+            transform.position = Vector3.Lerp(_origPos, _targetPos, (_elapsedTime / _timeToMoveBird));
+            _elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
     }
     
 

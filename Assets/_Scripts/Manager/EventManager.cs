@@ -14,4 +14,6 @@ public class EventManager : MonoBehaviour
     public static Action OnGameStart;
     public static Action<int> OnSkinChoice;
     public static Action OnskinObtained;
+    public static Action OnBirdAction;
+    public static Action OnBirdArrived;
 }
