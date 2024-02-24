@@ -19,6 +19,7 @@ MonoBehaviour:
   - {fileID: 2946922518527558745, guid: d74e461dee6c7a64492124f74d324a6d, type: 3}
   - {fileID: -3027943331269589899, guid: 57df5aaed2ced0244b8736306991e6ca, type: 3}
   - {fileID: -8951302069587407519, guid: 8fe31cde145fec542b1038caba6d4ffa, type: 3}
+  - {fileID: -8951302069587407519, guid: 7b154b13c25965a449edb3d24a0ecd3c, type: 3}
   frequencyRate:
     serializedVersion: 2
     m_Curve:

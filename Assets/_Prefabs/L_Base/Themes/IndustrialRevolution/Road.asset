@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5804105966408075239, guid: 52b6b36393359ee428238d89e52f8367, type: 3}
   propList:
-  - {fileID: 8270598199709828141, guid: c39e090be57be5b469359d95acfaf8e8, type: 3}
+  - {fileID: 2604885239371324240, guid: 18544f7fe45c1b04cae0a32705edc3bb, type: 3}
+  - {fileID: 2604885239371324240, guid: 852638a6482c7a140a0615e6ff4d75ad, type: 3}
+  - {fileID: 2604885239371324240, guid: 04710e1f083f8c242bc3779797ec3b9f, type: 3}
   frequencyRate:
     serializedVersion: 2
     m_Curve:
