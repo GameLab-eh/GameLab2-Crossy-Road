@@ -103,12 +103,14 @@ public class MapManager : MonoBehaviour
     void RowIDIncrement()
     {
         rowCount++;
-        if (rowCount / layout.ChunkLength > chunkCount) chunkCount++;
-        if (layout.chunkDelay == 0) return;
 
-        themeCount = Mathf.FloorToInt(chunkCount / layout.ChunkDelay);
+        if (rowCount % layout.ChunkLength == 0)
+            chunkCount++;
 
-        if (themeCount >= layout.Theme.Count) return;
+        if (layout.chunkDelay == 0 || chunkCount == 0 || themeCount >= layout.Theme.Count)
+            return;
+
+        themeCount = Mathf.FloorToInt(Mathf.Min(chunkCount / layout.ChunkDelay, layout.Theme.Count - 1));
 
         currentTheme = nextTheme;
         nextTheme = layout.Theme[themeCount];
