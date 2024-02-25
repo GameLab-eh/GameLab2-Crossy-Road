@@ -65,5 +65,5 @@ Material:
     - _flowDirection: {r: -0.02, g: 0.28, b: 0, a: 0}
     - _foamColor: {r: 1, g: 0.3785311, b: 0, a: 0}
     - _subColor: {r: 0.6415094, g: 0.1424845, b: 0.003025995, a: 1}
-    - _tling: {r: 10, g: 0.3, b: 0, a: 0}
+    - _tling: {r: 0.5, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
