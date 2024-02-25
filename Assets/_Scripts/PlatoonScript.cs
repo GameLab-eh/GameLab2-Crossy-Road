@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatoonScript : MonoBehaviour
-{ 
+{
     private Animator _animator;
     [SerializeField] private float _minValue,_maxValue;
 
@@ -31,8 +31,8 @@ public class PlatoonScript : MonoBehaviour
     {
         float index = Random.Range(_minValue, _maxValue);
         yield return new WaitForSeconds(index);
-        
-        _animator.SetBool("Delay", true);
+
+        _animator.SetTrigger("Delay");
     }
 
 }
