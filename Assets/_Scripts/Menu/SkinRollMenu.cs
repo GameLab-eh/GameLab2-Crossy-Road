@@ -67,7 +67,7 @@ public class SkinRollMenu : MonoBehaviour
             EventManager.OnskinObtained?.Invoke();
             EventManager.OnCoinIncrease?.Invoke(-_skinCost);
             int skinIndexForHuman = skinIndex + 1;
-            _skinObtainedText.text = "hai pagato " + _skinCost + "e ricevuto la skin numero " + skinIndexForHuman;
+            _skinObtainedText.text = "hai pagato " + _skinCost + " e ricevuto la skin numero " + skinIndexForHuman;
             _skinObtained.SetActive(true);
         }
     }

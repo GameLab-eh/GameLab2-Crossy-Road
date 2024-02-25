@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     [HideInInspector]public static int _maxScore;
     
     private GameObject _player;
-    [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _mainMenu, _quitButton, _creditsButton, _creditsMenu;
     [SerializeField] private CanvasGroup _deathMenu;
 
     private bool isPlayerAlive;
@@ -57,6 +57,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnPlayerMoveUp += ScoreUp;
         EventManager.OnCoinIncrease += CoinUp;
         EventManager.OnGameStart += GameStart;
+        EventManager.OnPlayerFirstMove += DeactivateMenu;
     }
     private void OnDisable()
     {
@@ -65,6 +66,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnPlayerMoveUp -= ScoreUp;
         EventManager.OnCoinIncrease -= CoinUp;
         EventManager.OnGameStart -= GameStart;
+        EventManager.OnPlayerFirstMove -= DeactivateMenu;
     }
 
     private void ShowDeathMenu()
@@ -106,11 +108,28 @@ public class UIManager : MonoBehaviour
         _scoreText.alpha = 1f;
         _maxScoreText.alpha = 1f;
         _mainMenu.SetActive(false);
-        
+        _quitButton.SetActive(true);
+        _creditsButton.SetActive(true);
     }
     public void QuitButton()
     {
         Application.Quit();
+    }
+    private void DeactivateMenu()
+    {
+        _quitButton.SetActive(false);
+        _creditsButton.SetActive(false);
+    }
+
+    public void CreditsMenuActivate()
+    {
+        _mainMenu.SetActive(false);
+        _creditsMenu.SetActive(true);
+    }
+    public void BackToMain()
+    {
+        _mainMenu.SetActive(true);
+        _creditsMenu.SetActive(false);
     }
     
 
