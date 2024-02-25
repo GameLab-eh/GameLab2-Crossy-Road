@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class RailroadSignal : Props
 {
-    new Transform light;
+    [SerializeField] Transform light1;
+    [SerializeField] Transform light2;
+
+    private AudioPropManager audioPropManager;
 
     private void Start()
     {
-        light = gameObject.transform.GetChild(0);
+        audioPropManager = GetComponent<AudioPropManager>();
     }
+
     private void OnEnable()
     {
         DynamicProps.run += active;
@@ -20,6 +24,9 @@ public class RailroadSignal : Props
     void active(bool value, float z)
     {
         if (z != transform.position.z) return;
-        light.gameObject.SetActive(value);
+        light1.gameObject.SetActive(value);
+        if (light2 != null) light2.gameObject.SetActive(value);
+
+        if (value) audioPropManager.StartAudioEffect();
     }
 }

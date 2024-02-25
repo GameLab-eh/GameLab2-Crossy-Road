@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static AudioPropManager;
 
 [RequireComponent(typeof(AudioManager))]
 public class AudioManager : MonoBehaviour
@@ -37,6 +38,7 @@ public class AudioManager : MonoBehaviour
         //OptionManager.Master += ChangeVolumeMaster;
         //OptionManager.Music += ChangeVolumeMusic;
         //OptionManager.Effects += ChangeVolumeEffects;
+        AudioPropManager.Effects += PlayEffect;
     }
 
     private void OnDisable()
@@ -44,6 +46,7 @@ public class AudioManager : MonoBehaviour
         //OptionManager.Master -= ChangeVolumeMaster;
         //OptionManager.Music -= ChangeVolumeMusic;
         //OptionManager.Effects -= ChangeVolumeEffects;
+        AudioPropManager.Effects -= PlayEffect;
     }
 
     void PlaySoundtrack()
@@ -64,6 +67,10 @@ public class AudioManager : MonoBehaviour
                 break;
             }
         }
+    }
+    public void PlayEffect(AudioClip track)
+    {
+        _effect.PlayOneShot(track, _volumeMaster * (_volumeEffects * 4));
     }
 
     void ChangeVolumeMaster(float volume)
