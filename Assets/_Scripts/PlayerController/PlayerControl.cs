@@ -59,6 +59,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private void Update()
     {
         
+        
         if (_isAlive)
         {
             if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && !_isMoving)
@@ -98,6 +99,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     if (_isOnMovingTarget && _myOldXValue > transform.position.x)
                     {
                         StartCoroutine(MovePlayer(new Vector3(-0.2f, 0, 0)));
+                        Debug.Log("hello");
                     }
                     else
                     {
@@ -119,6 +121,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     if (_isOnMovingTarget && _myOldXValue < transform.position.x)
                     {
                         StartCoroutine(MovePlayer(new Vector3(0.2f, 0, 0)));
+                        Debug.Log("hello");
                     }
                     else
                     {
@@ -183,6 +186,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         }
 
         transform.position = _targetPos;
+        _myOldXValue = transform.position.x;
         ScoreCaller();
 
     }
