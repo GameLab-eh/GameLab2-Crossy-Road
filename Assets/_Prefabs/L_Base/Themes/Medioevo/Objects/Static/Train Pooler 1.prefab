@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8284963611728190222}
   - component: {fileID: 2341755303711347161}
+  - component: {fileID: 7809424612616014794}
   m_Layer: 8
   m_Name: Train Pooler 1
   m_TagString: Untagged
@@ -222,6 +223,21 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   isAlone: 0
+  light1: {fileID: 573014510971123558}
+  light2: {fileID: 0}
+--- !u!114 &7809424612616014794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693253073300581937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8157daed207ed4597ff3f32e0a5f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  track: {fileID: 8300000, guid: 9f48f06046ed1524999cd669d1aa7bc1, type: 3}
 --- !u!1001 &4178622607372288057
 PrefabInstance:
   m_ObjectHideFlags: 0
