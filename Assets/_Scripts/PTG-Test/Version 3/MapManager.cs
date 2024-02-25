@@ -41,7 +41,7 @@ public class MapManager : MonoBehaviour
             row.transform.localScale = new(rowWidth, 1f, 1f);
             row.transform.position = new(0, 0, i * -1);
 
-            List<Props> props = new List<Props>();
+            List<Props> props = new();
 
             int numberOfObjjects = 0;
             int mask = 0;
@@ -153,7 +153,7 @@ public class MapManager : MonoBehaviour
             waterfalls.transform.parent = row.transform;
         }
 
-        List<Props> props = new List<Props>();
+        List<Props> props = new();
 
         props = ObjectGenerate(terrain);
 
