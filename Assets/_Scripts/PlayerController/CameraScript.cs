@@ -8,62 +8,71 @@ namespace _Scripts.PlayerController
     {
         [SerializeField] private Transform _player, playerDieingPosition;
         [SerializeField] private float _cameraForwardSpeed;
-        private bool _isPlayerAlive = true, _isWatchingPlayer, _haveToWatchPlayer, _isPlayerDeadForOthers;
+        private bool _isPlayerAlive = true, _isWatchingPlayer, _haveToWatchPlayer, _isPlayerDeadForOthers, isPlayerMoved;
         [SerializeField] private float _maxCameraDistance, _cameraBackSpeed, _playerDieingDistance;
 
         private void OnEnable()
         {
             EventManager.OnPlayerDeath += AlreadyDead;
+            EventManager.OnPlayerFirstMove += PlayerMoved;
         }
         private void OnDisable()
         {
             EventManager.OnPlayerDeath -= AlreadyDead;
+            EventManager.OnPlayerFirstMove -= PlayerMoved;
         }
 
 
         private void Update()
         {
-            if (!_isPlayerDeadForOthers)
+            if (isPlayerMoved)
             {
-                if (_isPlayerAlive)
+                if (!_isPlayerDeadForOthers)
                 {
-                    Vector3 newPosition = transform.position + Vector3.forward * _cameraForwardSpeed * Time.deltaTime;
+                    if (_isPlayerAlive)
+                    {
+                        Vector3 newPosition = transform.position + Vector3.forward * _cameraForwardSpeed * Time.deltaTime;
+                        transform.position = newPosition;
+                        
+                        if (_player.position.z > (transform.position.z + _maxCameraDistance))
+                        {
+                            Vector3 newPos = transform.position;
+                            newPos.z = _player.position.z - _maxCameraDistance;
+                            transform.position = newPos;
+                        }
+                        if (_player.position.x != transform.position.x +2f)
+                        {
+                            Vector3 newPos = transform.position;
+                            newPos.x = _player.position.x + 2f;
+                            transform.position = newPos;
+                        }
+                    }
+                    if (_player.position.z < transform.position.z + _playerDieingDistance)
+                    {
+                        _isPlayerAlive = false;
+                        EventManager.OnPlayerOutOfCam?.Invoke();
+                        playerDieingPosition = _player;
+                    }
+                }
+                if (!_isWatchingPlayer && !_isPlayerAlive)
+                { 
+                    Vector3 newPosition = transform.position + Vector3.back * (_cameraForwardSpeed * _cameraBackSpeed) * Time.deltaTime; 
                     transform.position = newPosition;
-                    
-                    if (_player.position.z > (transform.position.z + _maxCameraDistance))
-                    {
-                        Vector3 newPos = transform.position;
-                        newPos.z = _player.position.z - _maxCameraDistance;
-                        transform.position = newPos;
-                    }
-                    if (_player.position.x != transform.position.x +2f)
-                    {
-                        Vector3 newPos = transform.position;
-                        newPos.x = _player.position.x + 2f;
-                        transform.position = newPos;
-                    }
                 }
-                if (_player.position.z < transform.position.z + _playerDieingDistance)
+                if (playerDieingPosition.position.z > (transform.position.z + _maxCameraDistance) && !_isPlayerAlive)
                 {
-                    _isPlayerAlive = false;
-                    EventManager.OnPlayerOutOfCam?.Invoke();
-                    playerDieingPosition = _player;
+                    _isWatchingPlayer = true;
                 }
-            }
-            if (!_isWatchingPlayer && !_isPlayerAlive)
-            { 
-                Vector3 newPosition = transform.position + Vector3.back * (_cameraForwardSpeed * _cameraBackSpeed) * Time.deltaTime; 
-                transform.position = newPosition;
-            }
-            if (playerDieingPosition.position.z > (transform.position.z + _maxCameraDistance) && !_isPlayerAlive)
-            {
-                _isWatchingPlayer = true;
             }
 
         }
         private void AlreadyDead()
         {
             _isPlayerDeadForOthers = true;
+        }
+        private void PlayerMoved()
+        {
+            isPlayerMoved = true;
         }
     }
 }
