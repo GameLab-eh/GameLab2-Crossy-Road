@@ -97,7 +97,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     _animator.SetTrigger("Hop");
                     if (_isOnMovingTarget && _myOldXValue > transform.position.x)
                     {
-                        StartCoroutine(MovePlayer(new Vector3(-0.3f, 0, 0)));
+                        StartCoroutine(MovePlayer(new Vector3(-0.2f, 0, 0)));
                     }
                     else
                     {
@@ -118,7 +118,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     _animator.SetTrigger("Hop");
                     if (_isOnMovingTarget && _myOldXValue < transform.position.x)
                     {
-                        StartCoroutine(MovePlayer(new Vector3(0.3f, 0, 0)));
+                        StartCoroutine(MovePlayer(new Vector3(0.2f, 0, 0)));
                     }
                     else
                     {
