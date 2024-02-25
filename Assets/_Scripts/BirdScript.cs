@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class BirdScript : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class BirdScript : MonoBehaviour
     }
     private void MoveRoutineStarter()
     {
+        int index;
+        DefinitionLayout layout = GameManager.Instance.MapManager.Layout;
+        index = (int)(transform.position.z / (layout.ChunkLength * layout.chunkDelay));
+        Instantiate(layout.Theme[index].Bird, transform.position, Quaternion.identity, transform);
+
         StartCoroutine(MoveOnPlayer());
     }
     private IEnumerator MoveOnPlayer()

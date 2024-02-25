@@ -28,8 +28,7 @@ public class MapManager : MonoBehaviour
     }
 
     private void StartInizializer()
-    {
-        playerPosition = (int)player.position.z;
+    {playerPosition = (int)player.position.z;
 
         layout = GameManager.Instance.CurrentLayout;
         currentTheme = layout.Theme[themeCount];
