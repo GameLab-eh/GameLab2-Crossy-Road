@@ -108,6 +108,10 @@ public class UIManager : MonoBehaviour
         _mainMenu.SetActive(false);
         
     }
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
     
 
 }

@@ -55,21 +55,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(skinSpawenerRoutine());
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Quit();//change for open menu
-        }
-    }
-    public void Quit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
+    
     private void SkinSpawner(int skinIndex)
     {
         GameObject oldSkin = GameObject.FindGameObjectWithTag("Skin");
