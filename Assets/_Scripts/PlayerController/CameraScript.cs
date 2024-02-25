@@ -36,10 +36,10 @@ namespace _Scripts.PlayerController
                         newPos.z = _player.position.z - _maxCameraDistance;
                         transform.position = newPos;
                     }
-                    if (_player.position.x != transform.position.x +1.5f)
+                    if (_player.position.x != transform.position.x +2f)
                     {
                         Vector3 newPos = transform.position;
-                        newPos.x = _player.position.x + 1.5f;
+                        newPos.x = _player.position.x + 2f;
                         transform.position = newPos;
                     }
                 }
