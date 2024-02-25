@@ -24,7 +24,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     private Vector3 _movingTargetPos;
     private GameObject _movingTargetGameObject;
     [SerializeField] private float _moveTowardsBoatMiddle;
-
+    private float _myOldXValue;
     [SerializeField] private float xMapLimitMax, xMapLimitMin;
     
     //variables for score
@@ -58,6 +58,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
 
     private void Update()
     {
+        
         
         if (_isAlive)
         {
@@ -95,7 +96,15 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 if (!CheckObstacleInDirection(Vector3.left))
                 {
                     _animator.SetTrigger("Hop");
-                    StartCoroutine(MovePlayer(Vector3.left));
+                    if (_isOnMovingTarget && _myOldXValue > transform.position.x)
+                    {
+                        StartCoroutine(MovePlayer(new Vector3(-0.2f, 0, 0)));
+                        Debug.Log("hello");
+                    }
+                    else
+                    {
+                        StartCoroutine(MovePlayer(Vector3.left));
+                    }
                 }
                 else
                 {
@@ -109,7 +118,15 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 if (!CheckObstacleInDirection(Vector3.right))
                 {
                     _animator.SetTrigger("Hop");
-                    StartCoroutine(MovePlayer(Vector3.right));
+                    if (_isOnMovingTarget && _myOldXValue < transform.position.x)
+                    {
+                        StartCoroutine(MovePlayer(new Vector3(0.2f, 0, 0)));
+                        Debug.Log("hello");
+                    }
+                    else
+                    {
+                        StartCoroutine(MovePlayer(Vector3.right));
+                    }
                 }
                 else
                 {
@@ -169,6 +186,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         }
 
         transform.position = _targetPos;
+        _myOldXValue = transform.position.x;
         ScoreCaller();
 
     }
