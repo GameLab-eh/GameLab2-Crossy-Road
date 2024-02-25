@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     [SerializeField] private GameObject SkinButton;
     
     //checks
-    private bool _isMoving, _isOnMovingTarget, _isAlive = true, _isAbleToFall;
+    private bool _isMoving, _isOnMovingTarget, _isAlive = true, _isAbleToFall, _isMovedFirstTime;
     [SerializeField] private GameObject SkinMenu;
     
     //movements
@@ -160,6 +160,11 @@ public class PlayerControl : MonoBehaviour, IPlayer
     
     private IEnumerator MovePlayer(Vector3 direction)
     {
+        if (!_isMovedFirstTime)
+        {
+            _isMovedFirstTime = true;
+            EventManager.OnPlayerFirstMove?.Invoke();
+        }
         if (SkinMenu.activeSelf)
         {
             yield break;
