@@ -7,9 +7,14 @@ public static class RandomPosition
 
     private static bool isReverse = false;
 
+    private static bool directionBoat;
+    private static int nextRow = 1;
+
     public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int mask, int row, bool isFull = false)
     {
         isReverse = Random.Range(0, 2) == 0;
+
+        bool first = true;
 
         float speed = Mathf.Clamp(Random.Range(3, 10) * (row / 100), 2, 10);
 
@@ -29,27 +34,21 @@ public static class RandomPosition
 
             if (prefab.name == "WaterLilyLeaf" && isFirst)
             {
-                Vector3 position = new Vector3(0, 0, row);
+                Vector3 position = new(0, 0, row);
                 Props newObject = Object.Instantiate(prefab, position, Quaternion.identity);
                 spawnedObjects.Add(newObject);
                 isFirst = false;
             }
             else
             {
-                if (availablePositions.Count < prefab.Size && prefab.name != "Train") // first check
-                {
-                    //Debug.LogWarning("Not enough available positions.");
-                    break;
-                }
+                if (availablePositions.Count < prefab.Size && prefab.name != "Train") break;
+
 
                 int randomIndex = Random.Range(0, availablePositions.Count);
                 Vector3 randomPosition = availablePositions[randomIndex];
 
-                if (!CheckPositionSize(randomPosition, prefab.Size) && prefab.name != "Train")// second check
-                {
-                    //Debug.LogWarning("Not enough available positions.");
-                    continue;
-                }
+                if (!CheckPositionSize(randomPosition, prefab.Size) && prefab.name != "Train") continue;
+
 
                 if (prefab.name == "Train") randomPosition = availablePositions[isReverse ? 0 : ^1];
 
@@ -57,7 +56,20 @@ public static class RandomPosition
 
                 if (newObject is DynamicProps props)
                 {
+                    if (prefab.name.Length >= 4 && prefab.name[..4] == "Boat" && first)
+                    {
+                        if (row == nextRow)
+                        {
+                            directionBoat = !directionBoat;
+                            isReverse = directionBoat;
+                        }
+
+                        nextRow = row + 1;
+                        first = false;
+                    }
+
                     if (isReverse) props.Reverse();
+
                     if (prefab.name != "Train") props.Speed = speed;
                 }
 

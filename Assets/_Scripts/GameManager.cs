@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
         true, false, false, false, false, false, false, false, false, false, false, false, false, false
     };
     public int lastSkinUsed;
-    
 
     private void OnEnable()
     {
