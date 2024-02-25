@@ -15,11 +15,11 @@ MonoBehaviour:
   prefab: {fileID: 1173290322696329899, guid: 9f768ef2927d05946b603c1ea57cebfb, type: 3}
   propList:
   - {fileID: 8588481697792979114, guid: 76ab644d227447e4c9a18ce5f640eec5, type: 3}
+  - {fileID: -2459552762396254545, guid: 289fd146fb6f7464bac628326463e9f9, type: 3}
+  - {fileID: -8951302069587407519, guid: ca655330c9b88a748b9317c97a9310c5, type: 3}
   - {fileID: 2946922518527558745, guid: c234b87ae1afdca4688a62f5320c59eb, type: 3}
   - {fileID: -3027943331269589899, guid: 2957556cecb71a544a9e81892b292e29, type: 3}
   - {fileID: -8951302069587407519, guid: f733e2f950ffe0c43817e2ee8000ee9f, type: 3}
-  - {fileID: -2459552762396254545, guid: 289fd146fb6f7464bac628326463e9f9, type: 3}
-  - {fileID: -8951302069587407519, guid: ca655330c9b88a748b9317c97a9310c5, type: 3}
   frequencyRate:
     serializedVersion: 2
     m_Curve:
@@ -49,18 +49,18 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.2098999
-      inSlope: 0.09906387
-      outSlope: 0.09906387
+      value: 0.5
+      inSlope: 0.5
+      outSlope: 0.5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.30896378
-      inSlope: 0.09906387
-      outSlope: 0.09906387
+      value: 1
+      inSlope: 0.5
+      outSlope: 0.5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
