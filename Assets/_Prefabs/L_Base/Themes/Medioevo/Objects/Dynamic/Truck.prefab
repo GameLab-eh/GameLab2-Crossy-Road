@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6703957499073975317}
   - component: {fileID: 3780197276450505383}
   - component: {fileID: 8270598199709828141}
-  - component: {fileID: 8959538530663681596}
   m_Layer: 6
   m_Name: Truck
   m_TagString: Car
@@ -97,27 +96,6 @@ MonoBehaviour:
   speed: 2
   startDelay: 0
   delay: 0
---- !u!95 &8959538530663681596
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 515466607417976836}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 38eb725168522aa40809d1526a9fecbc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1677591575905517606
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,19 +333,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.69904524
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.106469594
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: -0.69904524
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.10646956
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -379,7 +357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -17.32
       objectReference: {fileID: 0}
     - target: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -388,10 +366,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 416070726631098430, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6599548724364025724}
   m_SourcePrefab: {fileID: 100100000, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
 --- !u!4 &1291460182155278900 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8829211602959193143, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
   m_PrefabInstance: {fileID: 7740448734664650243}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7975231734789170749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 416070726631098430, guid: b4e0290a1a571c148986ac4903155ba9, type: 3}
+  m_PrefabInstance: {fileID: 7740448734664650243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6599548724364025724
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975231734789170749}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2dc46a26ae85f5f4d93a8262d950cbd9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
