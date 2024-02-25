@@ -9933,7 +9933,7 @@ Transform:
   m_GameObject: {fileID: 1428986952}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4126005, y: -0.19616082, z: 0.091471285, w: 0.88482475}
-  m_LocalPosition: {x: 1.5, y: 7, z: -3}
+  m_LocalPosition: {x: 2, y: 7, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10056,10 +10056,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1835113016}
   playerDieingPosition: {fileID: 0}
-  _cameraForwardSpeed: 0.4
-  _maxCameraDistance: 3
+  _cameraForwardSpeed: 0.3
+  _maxCameraDistance: 4
   _cameraBackSpeed: 10
-  _playerDieingDistance: 0.7
+  _playerDieingDistance: 2
 --- !u!1001 &1440522120
 PrefabInstance:
   m_ObjectHideFlags: 0
