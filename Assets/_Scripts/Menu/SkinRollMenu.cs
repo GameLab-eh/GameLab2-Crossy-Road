@@ -55,7 +55,7 @@ public class SkinRollMenu : MonoBehaviour
     }
     private void SkinRoller()
     {
-        int skinIndex = Random.Range(1, GameManager.Instance.skinsUnlocked.Length + 1);
+        int skinIndex = Random.Range(1, GameManager.Instance.skinsUnlocked.Length);
         Debug.Log(skinIndex);
         if (GameManager.Instance.skinsUnlocked[skinIndex])
         {

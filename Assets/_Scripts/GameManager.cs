@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public bool[] skinsUnlocked = new bool[]
     {
-        true, false, false, false, false, false, false, false, false, false, false, false, false, false
+        true, false, false, false, false, false, false, false, false, false, false, false, false, false,false
     };
     public int lastSkinUsed;
 
