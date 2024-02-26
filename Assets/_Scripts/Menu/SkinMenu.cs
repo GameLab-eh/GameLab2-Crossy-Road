@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SkinMenu : MonoBehaviour
@@ -51,12 +52,8 @@ public class SkinMenu : MonoBehaviour
     }
     public void OnPlayMenu()
     {
-        _inGameMenu.SetActive(true);
-        _skinMenu.SetActive(false);
-        if (_skinPopUp.activeSelf)
-        {
-            _skinPopUp.SetActive(false);
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        EventManager.OnReload?.Invoke();
     }
     public void OnSkinMenu()
     {
