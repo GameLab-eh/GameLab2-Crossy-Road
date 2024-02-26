@@ -48,6 +48,13 @@ public class UIManager : MonoBehaviour
         _coinText.text = "Coins: " + _coins;
         
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            RedButton();
+        }
+    }
 
 
     private void OnEnable()
