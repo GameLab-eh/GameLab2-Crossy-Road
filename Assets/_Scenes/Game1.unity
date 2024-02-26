@@ -12660,7 +12660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1835113016}
-  rowWidth: 41
+  rowWidth: 49
   gameRowWidth: 15
 --- !u!1001 &1275095215
 PrefabInstance:
