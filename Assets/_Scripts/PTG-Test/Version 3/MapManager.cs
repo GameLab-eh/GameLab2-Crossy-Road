@@ -28,7 +28,8 @@ public class MapManager : MonoBehaviour
     }
 
     private void StartInizializer()
-    {playerPosition = (int)player.position.z;
+    {
+        playerPosition = (int)player.position.z;
 
         layout = GameManager.Instance.CurrentLayout;
         currentTheme = layout.Theme[themeCount];
@@ -106,7 +107,7 @@ public class MapManager : MonoBehaviour
         if (rowCount % layout.ChunkLength == 0)
             chunkCount++;
 
-        if (layout.chunkDelay == 0 || chunkCount == 0 || themeCount >= layout.Theme.Count)
+        if (layout.chunkDelay == 0 || chunkCount == 0 || themeCount + 3 > layout.Theme.Count)
             return;
 
         themeCount = Mathf.FloorToInt(Mathf.Min(chunkCount / layout.ChunkDelay, layout.Theme.Count - 1));
