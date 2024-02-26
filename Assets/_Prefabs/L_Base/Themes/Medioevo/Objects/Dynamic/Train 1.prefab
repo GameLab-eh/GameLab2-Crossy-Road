@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3780197276450505383}
   - component: {fileID: -4950064841831683538}
   m_Layer: 6
-  m_Name: Train
+  m_Name: Train 1
   m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 18.532125, y: 0.6, z: 0.5}
-  m_Center: {x: 9.1, y: 0.3, z: 0}
+  m_Size: {x: 30.206919, y: 0.6, z: 0.5}
+  m_Center: {x: 14.937398, y: 0.3, z: 0}
 --- !u!114 &-4950064841831683538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,13 +208,13 @@ Transform:
   m_LocalScale: {x: 3, y: 0.6, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4072463391313526744}
   - {fileID: 7044252664980538555}
   - {fileID: 3501160463658249762}
   - {fileID: 8308101858107032619}
-  - {fileID: 475967671545546999}
   m_Father: {fileID: 6703957499073975317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3256056928102832710
+--- !u!1001 &1383000315523525993
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -260,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3149472533062750897, guid: add098682a710b04389ea9eb2357d8af, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3149472533062750897, guid: add098682a710b04389ea9eb2357d8af, type: 3}
       propertyPath: m_LocalRotation.z
@@ -272,14 +272,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3149472533062750897, guid: add098682a710b04389ea9eb2357d8af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -180
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3149472533062750897, guid: add098682a710b04389ea9eb2357d8af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149472533062750897, guid: add098682a710b04389ea9eb2357d8af, type: 3}
-      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -287,10 +283,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add098682a710b04389ea9eb2357d8af, type: 3}
---- !u!4 &475967671545546999 stripped
+--- !u!4 &4072463391313526744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3149472533062750897, guid: add098682a710b04389ea9eb2357d8af, type: 3}
-  m_PrefabInstance: {fileID: 3256056928102832710}
+  m_PrefabInstance: {fileID: 1383000315523525993}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3493810009889249795
 PrefabInstance:
