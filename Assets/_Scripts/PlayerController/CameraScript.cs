@@ -7,7 +7,7 @@ namespace _Scripts.PlayerController
     public class CameraScript : MonoBehaviour
     {
         [SerializeField] private Transform _player, playerDieingPosition;
-        [SerializeField] private float _cameraForwardSpeed;
+        [SerializeField] private float _cameraForwardSpeed, _cameraChasingPlayerSpeed;
         private bool _isPlayerAlive = true, _isWatchingPlayer, _haveToWatchPlayer, _isPlayerDeadForOthers, isPlayerMoved;
         [SerializeField] private float _maxCameraDistance, _cameraBackSpeed, _playerDieingDistance;
 
@@ -36,15 +36,14 @@ namespace _Scripts.PlayerController
                         
                         if (_player.position.z > (transform.position.z + _maxCameraDistance))
                         {
-                            Vector3 newPos = transform.position;
-                            newPos.z = _player.position.z - _maxCameraDistance;
+                            Vector3 newPos = transform.position + Vector3.forward * _cameraChasingPlayerSpeed * Time.deltaTime;
                             transform.position = newPos;
                         }
                         if (_player.position.x != transform.position.x +2f)
                         {
                             Vector3 newPos = transform.position;
                             newPos.x = _player.position.x + 2f;
-                            transform.position = newPos;
+                            transform.position = Vector3.MoveTowards(transform.position, newPos, _cameraChasingPlayerSpeed * Time.deltaTime);
                         }
                     }
                     if (_player.position.z < transform.position.z + _playerDieingDistance)
@@ -74,5 +73,6 @@ namespace _Scripts.PlayerController
         {
             isPlayerMoved = true;
         }
+        
     }
 }

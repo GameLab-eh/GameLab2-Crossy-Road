@@ -13551,6 +13551,7 @@ MonoBehaviour:
   _player: {fileID: 1835113016}
   playerDieingPosition: {fileID: 1491052747}
   _cameraForwardSpeed: 0.2
+  _cameraChasingPlayerSpeed: 4
   _maxCameraDistance: 4
   _cameraBackSpeed: 10
   _playerDieingDistance: 2
