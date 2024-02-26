@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Language language;
 
     [SerializeField] MapManager mapManager;
-    [SerializeField] private GameObject[] _skins;
+    [SerializeField] public GameObject[] _skins;
     [SerializeField] private GameObject _playerMeshParent;
 
     public bool[] skinsUnlocked = new bool[]

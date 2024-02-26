@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,8 +11,12 @@ public class SkinRollMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text _coinText;
     [SerializeField] private TMP_Text _skinObtainedText;
-    [SerializeField] private GameObject _skinObtained;
+    [SerializeField] private GameObject _skinObtained, _bertAnimation, _skinPopUp;
     [SerializeField] private int _skinCost;
+    [SerializeField] private Transform skinSpawnPoint;
+    private int _skinIndex;
+    private GameObject toDestroy;
+    
 
     private void Start()
     {
@@ -55,20 +60,32 @@ public class SkinRollMenu : MonoBehaviour
     }
     private void SkinRoller()
     {
-        int skinIndex = Random.Range(1, GameManager.Instance.skinsUnlocked.Length);
-        Debug.Log(skinIndex);
-        if (GameManager.Instance.skinsUnlocked[skinIndex])
+        _skinIndex = Random.Range(1, GameManager.Instance.skinsUnlocked.Length);
+        Debug.Log(_skinIndex);
+        if (GameManager.Instance.skinsUnlocked[_skinIndex])
         {
             SkinRoller();
         }
         else
         {
-            GameManager.Instance.skinsUnlocked[skinIndex] = true;
+            if (_bertAnimation.activeSelf || _skinPopUp.activeSelf)
+            {
+                _bertAnimation.SetActive(false);
+                _skinPopUp.SetActive(false);
+            }
+            GameManager.Instance.skinsUnlocked[_skinIndex] = true;
             EventManager.OnskinObtained?.Invoke();
             EventManager.OnCoinIncrease?.Invoke(-_skinCost);
-            int skinIndexForHuman = skinIndex + 1;
+            int skinIndexForHuman = _skinIndex + 1;
             _skinObtainedText.text = "hai pagato " + _skinCost + " e ricevuto la skin numero " + skinIndexForHuman;
             _skinObtained.SetActive(true);
+            _bertAnimation.SetActive(true);
+            if (toDestroy != null)
+            {
+                Destroy(toDestroy);
+            }
+            StartCoroutine(SkinShower());
+
         }
     }
     private IEnumerator skinObtainedRoutine()
@@ -86,5 +103,30 @@ public class SkinRollMenu : MonoBehaviour
             }
         }
         return true;
+    }
+    private IEnumerator SkinShower()
+    {
+        yield return new WaitForSeconds(2.10f);
+        _skinPopUp.SetActive(true);
+        GameObject newObj = Instantiate(GameManager.Instance._skins[_skinIndex], skinSpawnPoint.position, quaternion.identity);
+        newObj.transform.localScale += new Vector3(5f,5f,5f);
+        SkinOBLITERATOR(newObj);
+    }
+    private void SkinOBLITERATOR(GameObject obj)
+    {
+        toDestroy = obj;
+    }
+    public void OnSkinMenu()
+    {
+        _skinObtained.SetActive(true);
+        if (_bertAnimation.activeSelf || _skinPopUp.activeSelf)
+        {
+            _bertAnimation.SetActive(false);
+            _skinPopUp.SetActive(false);
+        }
+        if (toDestroy != null)
+        {
+            Destroy(toDestroy);
+        }
     }
 }
