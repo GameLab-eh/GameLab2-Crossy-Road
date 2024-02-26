@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3780197276450505383}
   - component: {fileID: -4950064841831683538}
   m_Layer: 6
-  m_Name: Train 1
+  m_Name: Train
   m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
