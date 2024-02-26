@@ -13931,7 +13931,7 @@ MonoBehaviour:
   _cameraForwardSpeed: 0.2
   _cameraChasingPlayerSpeed: 4
   _maxCameraDistance: 4
-  _cameraBackSpeed: 10
+  _cameraBackSpeed: 15
   _playerDieingDistance: 2
 --- !u!1 &1451221032
 GameObject:

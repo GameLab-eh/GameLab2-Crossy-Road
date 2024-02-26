@@ -54,6 +54,17 @@ public class UIManager : MonoBehaviour
         {
             RedButton();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale==0f)
+            {
+                Time.timeScale=1f;
+            }
+            else
+            {
+                Time.timeScale=0f;
+            }
+        }
     }
 
 
