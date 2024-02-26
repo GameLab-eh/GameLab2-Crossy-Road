@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
     [HideInInspector]public static int _maxScore;
     
     private GameObject _player;
-    [SerializeField] private GameObject _mainMenu, _quitButton, _creditsButton, _creditsMenu;
+    [SerializeField] private GameObject _mainMenu, _quitButton, _creditsButton, _creditsMenu, _pauseMenu;
     [SerializeField] private CanvasGroup _deathMenu;
 
     private bool isPlayerAlive;
@@ -56,13 +57,15 @@ public class UIManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Time.timeScale==0f)
+            if (Time.timeScale!=0f)
             {
-                Time.timeScale=1f;
+                _pauseMenu.SetActive(true);
+                Time.timeScale=0f;
             }
             else
             {
-                Time.timeScale=0f;
+                _pauseMenu.SetActive(false);
+                Time.timeScale=1f;
             }
         }
     }
@@ -148,6 +151,11 @@ public class UIManager : MonoBehaviour
     {
         _mainMenu.SetActive(true);
         _creditsMenu.SetActive(false);
+    }
+    public void Resume()
+    {
+        _pauseMenu.SetActive(false);
+        Time.timeScale=1f;
     }
     
 
