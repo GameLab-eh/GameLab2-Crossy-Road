@@ -41,7 +41,7 @@ public class SkinRollMenu : MonoBehaviour
             _skinObtained.SetActive(true);
             StartCoroutine(skinObtainedRoutine());
         }
-        else if (UIManager._coins > _skinCost)
+        else if (UIManager._coins >= _skinCost)
         {
             SkinRoller();
         }
