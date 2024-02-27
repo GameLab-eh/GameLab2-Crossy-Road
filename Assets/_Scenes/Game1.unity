@@ -13802,6 +13802,7 @@ MonoBehaviour:
   player: {fileID: 1835113016}
   rowWidth: 49
   gameRowWidth: 15
+  rowMultiple: 150
 --- !u!1001 &1275095215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14630,8 +14631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1835113016}
   playerDieingPosition: {fileID: 1491052747}
-  _cameraForwardSpeed: 0.2
-  _cameraChasingPlayerSpeed: 4
+  _cameraForwardSpeed: 0.3
+  _cameraChasingPlayerSpeed: 3.5
   _maxCameraDistance: 4
   _cameraBackSpeed: 15
   _playerDieingDistance: 2
@@ -16281,7 +16282,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 131.64175, z: 61.311584, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 1
