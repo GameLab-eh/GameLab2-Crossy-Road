@@ -42,7 +42,7 @@ public class SkinRollMenu : MonoBehaviour
     {
         if (AllSkinObtained())
         {
-            _skinObtainedText.text = "Mi dispiace ma hai già tutte le skin, aspetta un nuovo aggiornamento per... GOTTA CATCH 'EM ALL";
+            _skinObtainedText.text = "Sorry but you already own all the characters, wait for a new update... GOTTA CATCH 'EM ALL";
             _skinObtained.SetActive(true);
             StartCoroutine(skinObtainedRoutine());
         }
@@ -53,7 +53,7 @@ public class SkinRollMenu : MonoBehaviour
         else 
         {
             int missingCoins = _skinCost-UIManager._coins;
-            _skinObtainedText.text = "Non hai abbastanza coin, te ne mancano: " + missingCoins;
+            _skinObtainedText.text = "You don't have enough coins, you need " + missingCoins + " more!" ;
             _skinObtained.SetActive(true);
             StartCoroutine(skinObtainedRoutine());
         }
@@ -77,7 +77,7 @@ public class SkinRollMenu : MonoBehaviour
             EventManager.OnskinObtained?.Invoke();
             EventManager.OnCoinIncrease?.Invoke(-_skinCost);
             int skinIndexForHuman = _skinIndex + 1;
-            _skinObtainedText.text = "hai pagato " + _skinCost + " e ricevuto la skin numero " + skinIndexForHuman;
+            _skinObtainedText.text = "You paid " + _skinCost + " coins and Won the charachter number " + skinIndexForHuman;
             _skinObtained.SetActive(true);
             _bertAnimation.SetActive(true);
             if (toDestroy != null)
