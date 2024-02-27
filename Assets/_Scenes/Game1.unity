@@ -1521,7 +1521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &173995223
 Transform:
   m_ObjectHideFlags: 0
@@ -2514,7 +2514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2618329311845887425, guid: 27d1900c4489bbf42a69f5ebd682051d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2618329311845887425, guid: 27d1900c4489bbf42a69f5ebd682051d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2994,7 +2994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3267624353242066645, guid: 31f16449a4647044188d3a627dad2c2b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3267624353242066645, guid: 31f16449a4647044188d3a627dad2c2b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3869,7 +3869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &484798067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15227,7 +15227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4273702226054493677, guid: 1dde18248add8b3458cf8bf4def3b349, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4273702226054493677, guid: 1dde18248add8b3458cf8bf4def3b349, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16220,8 +16220,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 08cb08bcd7aab2948a7e1a68c42f674c, type: 2}
+  m_sharedMaterial: {fileID: -6701519179285779742, guid: 08cb08bcd7aab2948a7e1a68c42f674c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16284,7 +16284,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1761416630
@@ -16325,7 +16325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1583204121093568852, guid: d156af72010f51849ba37a4c3909ae0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1583204121093568852, guid: d156af72010f51849ba37a4c3909ae0d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18871,7 +18871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3843266118766618714, guid: 5462d3dd5cb1f4c4fb272e594a512627, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3843266118766618714, guid: 5462d3dd5cb1f4c4fb272e594a512627, type: 3}
       propertyPath: m_LocalPosition.z

@@ -14,11 +14,11 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: BerTeam
   productName: Berty Road
-  defaultCursor: {fileID: 2800000, guid: 34abcb98d882b9841a2808720766dcfc, type: 3}
+  defaultCursor: {fileID: 2800000, guid: b8b6c15d6295c254db333170cd187c97, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 0.5
   m_SplashScreenAnimation: 2
   m_SplashScreenLogoStyle: 0
@@ -138,7 +138,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.4.0
+  bundleVersion: 0.4.4
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
