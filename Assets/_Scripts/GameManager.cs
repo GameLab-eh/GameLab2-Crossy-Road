@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject[] _skins;
     [SerializeField] private GameObject _playerMeshParent;
 
+    private AudioManager audioManager;
+
     public bool[] skinsUnlocked = new bool[]
     {
         true, false, false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -51,9 +53,10 @@ public class GameManager : MonoBehaviour
 
         #endregion
 
+        audioManager = GetComponent<AudioManager>();
+
         StartCoroutine(skinSpawenerRoutine());
     }
-
     
     private void SkinSpawner(int skinIndex)
     {
@@ -74,6 +77,6 @@ public class GameManager : MonoBehaviour
     public DefinitionLayout CurrentLayout => layouts[layoutName];
 
     public MapManager MapManager => mapManager;
-    
-    
+
+    public AudioManager AudioManager => audioManager;
 }
