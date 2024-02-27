@@ -25,12 +25,21 @@ public class AudioManager : MonoBehaviour
 
     public delegate void AudioManagerVolumeChanged(float master, float music, float effects);
     public static event AudioManagerVolumeChanged VolumeChanged;
+
+    public List<AudioSource> allAudioSources = new List<AudioSource>();
+
     private void Start()
     {
         _music = gameObject.AddComponent<AudioSource>();
         _effect = _music;
 
         PlaySoundtrack();
+        SetVolumeForAll();
+    }
+
+    private void Update()
+    {
+        SetVolumeForAll();
     }
 
     private void OnEnable()
@@ -77,6 +86,7 @@ public class AudioManager : MonoBehaviour
     {
         _volumeMaster = Mathf.Clamp01(volume);
         UpdateVolume();
+        SetVolumeForAll();
     }
     void ChangeVolumeMusic(float volume)
     {
@@ -88,10 +98,11 @@ public class AudioManager : MonoBehaviour
     {
         _volumeEffects = Mathf.Clamp01(volume);
         UpdateVolume();
+        SetVolumeForAll();
     }
 
-    public float IAVolumeMaster() { return _volumeMaster; }
-    public float IAVolumeEffects() { return _volumeEffects; }
+    public float VolumeMaster => _volumeMaster;
+    public float VolumeEffects => _volumeEffects;
 
     void UpdateVolume()
     {
@@ -99,6 +110,36 @@ public class AudioManager : MonoBehaviour
         _effect.volume = _volumeMaster * _volumeEffects;
 
         VolumeChanged?.Invoke(_volumeMaster, _voluemMusic, _volumeEffects);
+    }
+    void SetVolumeForAll()
+    {
+        float newVolume = GameManager.Instance.AudioManager.VolumeEffects * GameManager.Instance.AudioManager.VolumeMaster;
+
+        // Iterate through each AudioSource object in the list and set the desired volume
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            audioSource.volume = newVolume;
+        }
+    }
+
+    public void AddManualAudioSource(AudioSource audioSourceObject)
+    {
+        if (audioSourceObject != null)
+        {
+            AudioSource audioSource = audioSourceObject;
+            if (audioSource != null)
+            {
+                allAudioSources.Add(audioSource);
+            }
+            else
+            {
+                Debug.LogWarning("The object does not contain an AudioSource component.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Object not found.");
+        }
     }
 }
 
