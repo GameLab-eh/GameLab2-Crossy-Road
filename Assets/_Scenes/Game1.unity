@@ -14631,9 +14631,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1835113016}
   playerDieingPosition: {fileID: 1491052747}
-  _cameraForwardSpeed: 0.3
-  _cameraChasingPlayerSpeed: 3.5
-  _maxCameraDistance: 4
+  _cameraForwardSpeed: 0.28
+  _cameraChasingPlayerSpeed: 3
+  _maxCameraDistance: 4.5
   _cameraBackSpeed: 15
   _playerDieingDistance: 2
 --- !u!1 &1451221032
@@ -16285,7 +16285,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 131.64175, z: 61.311584, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1761416630
