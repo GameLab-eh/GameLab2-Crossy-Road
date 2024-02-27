@@ -30,7 +30,15 @@ public class PlayerControl : MonoBehaviour, IPlayer
     //variables for score
     private int myZValue;
     private int myMaxZValue;
-    
+
+    //audio effects
+    private AudioSource audioSource;
+    [SerializeField] AudioClip death;
+    [SerializeField] AudioClip fallInWater;
+    [SerializeField] AudioClip step;
+    [SerializeField] AudioClip coinPickup;
+    [SerializeField] AudioClip stepOnLog;
+
     private void OnEnable()
     {
         EventManager.OnReload += AwakeInizializer;
@@ -52,14 +60,13 @@ public class PlayerControl : MonoBehaviour, IPlayer
     }
     private void AwakeInizializer()
     {
+        audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
         StartCoroutine(MeshChangerRoutine());
     }
 
     private void Update()
     {
-        
-        
         if (_isAlive)
         {
             if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) && !_isMoving)
@@ -134,15 +141,12 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 }
             }
             
-
-            
             if (transform.position.x >= xMapLimitMax || transform.position.x <= xMapLimitMin)
             {
                 _isAlive = false;
                 Debug.Log("arriva l'aquila");
                 EventManager.OnBirdAction?.Invoke();
-            }
-                
+            } 
             
         }
         else
@@ -156,7 +160,6 @@ public class PlayerControl : MonoBehaviour, IPlayer
         }
         
     }
-
     
     private IEnumerator MovePlayer(Vector3 direction)
     {
@@ -195,6 +198,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         ScoreCaller();
 
     }
+
     private void ScoreCaller()
     {
         myZValue = (int)transform.position.z;
@@ -209,6 +213,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     {
         if (other.gameObject.tag == "Coin")
         {
+            PlayEffect(coinPickup);
             EventManager.OnCoinIncrease?.Invoke(1);
             Destroy(other.gameObject);
         }
@@ -216,6 +221,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         {
             if (_isAlive)
             {
+                PlayEffect(death);
                 _animator.SetTrigger("CarHit");
                 _isAlive = false;
             }
@@ -227,11 +233,13 @@ public class PlayerControl : MonoBehaviour, IPlayer
     {
         if (other.gameObject.tag == "Boat")
         {
+            PlayEffect(stepOnLog);
             _movingTargetGameObject = other.gameObject;
             _isOnMovingTarget = true;
         }
         if (_isAbleToFall && !_isOnMovingTarget && _isAlive && other.gameObject.tag == "River")
         {
+            PlayEffect(fallInWater);
             _isAlive = false;
             _animator.SetTrigger("WaterFall");
         }
@@ -243,8 +251,11 @@ public class PlayerControl : MonoBehaviour, IPlayer
             _isOnMovingTarget = false;
         }
     }
+
     private Vector3 SetMovingTargetPos()
     {
+        PlayEffect(step);
+
         return _movingTargetGameObject.transform.position;
     }
 
@@ -308,7 +319,27 @@ public class PlayerControl : MonoBehaviour, IPlayer
         EventManager.OnBirdAction?.Invoke();
     }
     
+    private void PlayEffect(AudioClip clip)
+    {
+        audioSource.clip = clip;
 
+        if (clip != null)
+        {
+            audioSource.enabled = true;
+            StartCoroutine(Playback());
+        }
+    }
+    IEnumerator Playback()
+    {
+        while (true)
+        {
+            audioSource.Play();
+
+            yield return new WaitForSeconds(audioSource.clip.length);
+
+            audioSource.enabled = false;
+        }
+    }
 }
 
 public interface IPlayer{}
