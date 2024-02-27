@@ -10,13 +10,13 @@ public static class RandomPosition
     private static bool directionBoat;
     private static int nextRow = 1;
 
-    public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int mask, int row, bool isFull = false)
+    public static List<Props> SpawnObjects(List<Props> prefabs, int spawnRadius, int mask, int row, int rowMultiple, bool isFull = false)
     {
         isReverse = Random.Range(0, 2) == 0;
 
         bool first = true;
 
-        float speed = Mathf.Clamp(Random.Range(3, 10) * (row / 100), 2, 10);
+        float speed = Mathf.Clamp(Random.Range(3, 10) * (row / rowMultiple), 2, 10);
 
         List<Props> spawnedObjects = new List<Props>();
 

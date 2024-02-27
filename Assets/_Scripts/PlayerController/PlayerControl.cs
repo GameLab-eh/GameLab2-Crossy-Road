@@ -6,27 +6,27 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour, IPlayer
 {
     [SerializeField] private GameObject SkinButton;
-    
+
     //checks
     private bool _isMoving, _isOnMovingTarget, _isAlive = true, _isAbleToFall, _isMovedFirstTime;
     [SerializeField] private GameObject SkinMenu;
-    
+
     //movements
     private Vector3 _origPos, _targetPos;
     [SerializeField] private float _timeToMove, _timeToMoveBird;
     [SerializeField] private GameObject _mesh;
     private Animator _animator;
-    
-    
+
+
     [SerializeField] private LayerMask _obstacleLayer, _waterLayer;
-    
+
     //movements on logs/boat/ecc..
     private Vector3 _movingTargetPos;
     private GameObject _movingTargetGameObject;
     [SerializeField] private float _moveTowardsBoatMiddle;
     private float _myOldXValue;
     [SerializeField] private float xMapLimitMax, xMapLimitMin;
-    
+
     //variables for score
     private int myZValue;
     private int myMaxZValue;
@@ -53,7 +53,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
         EventManager.OnBirdArrived -= BirdRoutineStarter;
         EventManager.OnPlayerOutOfCam -= PlayerOutOfCam;
     }
-    
+
     private void Awake()
     {
         AwakeInizializer();
@@ -140,27 +140,27 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     _animator.SetInteger("ObjectHit", 4);
                 }
             }
-            
+
             if (transform.position.x >= xMapLimitMax || transform.position.x <= xMapLimitMin)
             {
                 _isAlive = false;
                 Debug.Log("arriva l'aquila");
                 EventManager.OnBirdAction?.Invoke();
-            } 
-            
+            }
+
         }
         else
         {
             EventManager.OnPlayerDeath?.Invoke();
         }
-        if (_isOnMovingTarget) 
-        { 
-            _movingTargetPos = SetMovingTargetPos(); 
+        if (_isOnMovingTarget)
+        {
+            _movingTargetPos = SetMovingTargetPos();
             transform.position = Vector3.MoveTowards(transform.position, _movingTargetPos, _moveTowardsBoatMiddle);
         }
-        
+
     }
-    
+
     private IEnumerator MovePlayer(Vector3 direction)
     {
         if (!_isMovedFirstTime)
@@ -173,7 +173,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
             yield break;
         }
         SkinButton.SetActive(false);
-        
+
         _isMoving = true;
         _isAbleToFall = false;
         float _elapsedTime = 0;
@@ -181,11 +181,11 @@ public class PlayerControl : MonoBehaviour, IPlayer
         _targetPos = _origPos + direction;
         if (_isOnMovingTarget && Mathf.Abs((int)direction.z) == 1)
         {
-             _targetPos.x = Mathf.Round(_targetPos.x);
+            _targetPos.x = Mathf.Round(_targetPos.x);
         }
         _targetPos.z = Mathf.Round(_targetPos.z);
 
-        
+
         while (_elapsedTime < _timeToMove)
         {
             transform.position = Vector3.Lerp(_origPos, _targetPos, (_elapsedTime / _timeToMove));
@@ -226,8 +226,6 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 _isAlive = false;
             }
         }
-
-        
     }
     private void OnCollisionStay(Collision other)
     {
@@ -259,9 +257,9 @@ public class PlayerControl : MonoBehaviour, IPlayer
         return _movingTargetGameObject.transform.position;
     }
 
-    private bool CheckObstacleInDirection(Vector3 direction) 
+    private bool CheckObstacleInDirection(Vector3 direction)
     {
-        if (Physics.Raycast(transform.position, direction, 1f, _obstacleLayer)) 
+        if (Physics.Raycast(transform.position, direction, 1f, _obstacleLayer))
         {
             return true;
         }
@@ -292,7 +290,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     {
         yield return new WaitForNextFrameUnit();
         yield return new WaitForNextFrameUnit();
-        _mesh=GameObject.FindGameObjectWithTag("Skin");
+        _mesh = GameObject.FindGameObjectWithTag("Skin");
     }
     private void BirdRoutineStarter()
     {
@@ -303,8 +301,8 @@ public class PlayerControl : MonoBehaviour, IPlayer
         yield return new WaitForNextFrameUnit();
         float _elapsedTime = 0;
         _origPos = transform.position;
-        _targetPos = _origPos - new Vector3(0,-10,15);
-        
+        _targetPos = _origPos - new Vector3(0, -10, 15);
+
         while (_elapsedTime < _timeToMoveBird)
         {
             transform.position = Vector3.Lerp(_origPos, _targetPos, (_elapsedTime / _timeToMoveBird));
@@ -318,28 +316,22 @@ public class PlayerControl : MonoBehaviour, IPlayer
         _isAlive = false;
         EventManager.OnBirdAction?.Invoke();
     }
-    
+
     private void PlayEffect(AudioClip clip)
     {
-        audioSource.clip = clip;
+        if (clip == null) return;
 
-        if (clip != null)
-        {
-            audioSource.enabled = true;
-            StartCoroutine(Playback());
-        }
+        audioSource.enabled = true;
+        audioSource.clip = clip;
+        StartCoroutine(Playback());
     }
     IEnumerator Playback()
     {
-        while (true)
-        {
-            audioSource.Play();
+        audioSource.Play();
 
-            yield return new WaitForSeconds(audioSource.clip.length);
-
-            audioSource.enabled = false;
-        }
+        yield return new WaitForSeconds(audioSource.clip.length);
+        audioSource.enabled = false;
     }
 }
 
-public interface IPlayer{}
+public interface IPlayer { }

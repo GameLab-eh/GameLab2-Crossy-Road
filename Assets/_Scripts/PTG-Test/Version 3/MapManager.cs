@@ -8,6 +8,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField, Min(5)] int rowWidth;
     [SerializeField, Min(5)] int gameRowWidth;
+    [Space]
+    [SerializeField, Min(0)] int rowMultiple = 100;
 
     DefinitionLayout layout;
     DefinitionTheme currentTheme;
@@ -221,7 +223,7 @@ public class MapManager : MonoBehaviour
 
         list.AddRange(ListProps(numberOfObjects, terrain));
 
-        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1 + z, isFull) : new();
+        List<Props> objects = numberOfObjects > 1 ? RandomPosition.SpawnObjects(list, radius, 0, rowCount - 1 + z, rowMultiple, isFull) : new();
 
         if (mask != 0)
         {
@@ -231,7 +233,7 @@ public class MapManager : MonoBehaviour
 
                 list.RemoveAll(obj => obj.name == "Coin");
             }
-            objects.AddRange(RandomPosition.SpawnObjects(list, rowWidth, mask, rowCount - 1 + z, isFull));
+            objects.AddRange(RandomPosition.SpawnObjects(list, rowWidth, mask, rowCount - 1 + z, rowMultiple, isFull));
         }
 
         list.Clear();
