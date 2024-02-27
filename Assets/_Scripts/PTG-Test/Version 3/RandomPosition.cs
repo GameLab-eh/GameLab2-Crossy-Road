@@ -86,8 +86,8 @@ public static class RandomPosition
 
                 RemoveOccupiedPositions(randomPosition, prefab.Size);
 
-                if (newObject.GetComponent<AudioSource>() != null)
-                    GameManager.Instance.AudioManager.AddManualAudioSource(newObject.GetComponent<AudioSource>());
+                //if (newObject.GetComponent<AudioSource>() != null)
+                //    GameManager.Instance.AudioManager.AddManualAudioSource(newObject.GetComponent<AudioSource>());
 
                 //debug
                 //if (prefab.name.Contains("Three3"))

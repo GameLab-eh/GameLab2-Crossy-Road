@@ -28,7 +28,7 @@ public class RailroadSignal : Props
     {
         if (z != transform.position.z) return;
         light1.gameObject.SetActive(value);
-        if (light2 != null) light2.gameObject.SetActive(value);
+        if (light2 != null) light2.gameObject.SetActive(!value);
 
         if (value)
         {
