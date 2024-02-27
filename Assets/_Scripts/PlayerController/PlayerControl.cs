@@ -81,6 +81,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 {
                     _animator.SetInteger("ObjectHit", 1);
                 }
+                PlayEffect(step);
             }
 
             if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !_isMoving)
@@ -95,6 +96,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 {
                     _animator.SetInteger("ObjectHit", 2);
                 }
+                PlayEffect(step);
             }
 
             if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !_isMoving)
@@ -117,6 +119,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 {
                     _animator.SetInteger("ObjectHit", 3);
                 }
+                PlayEffect(step);
             }
 
             if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !_isMoving)
@@ -139,6 +142,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 {
                     _animator.SetInteger("ObjectHit", 4);
                 }
+                PlayEffect(step);
             }
 
             if (transform.position.x >= xMapLimitMax || transform.position.x <= xMapLimitMin)
@@ -226,18 +230,24 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 _isAlive = false;
             }
         }
+        else if(other.gameObject.tag == "River")
+        {
+            PlayEffect(fallInWater);
+        }
+        else if (other.gameObject.tag == "Boat" && other.gameObject.tag != "River")
+        {
+            PlayEffect(stepOnLog);
+        }
     }
     private void OnCollisionStay(Collision other)
     {
         if (other.gameObject.tag == "Boat")
         {
-            PlayEffect(stepOnLog);
             _movingTargetGameObject = other.gameObject;
             _isOnMovingTarget = true;
         }
         if (_isAbleToFall && !_isOnMovingTarget && _isAlive && other.gameObject.tag == "River")
         {
-            PlayEffect(fallInWater);
             _isAlive = false;
             _animator.SetTrigger("WaterFall");
         }
@@ -252,8 +262,6 @@ public class PlayerControl : MonoBehaviour, IPlayer
 
     private Vector3 SetMovingTargetPos()
     {
-        PlayEffect(step);
-
         return _movingTargetGameObject.transform.position;
     }
 
@@ -321,16 +329,7 @@ public class PlayerControl : MonoBehaviour, IPlayer
     {
         if (clip == null) return;
 
-        audioSource.enabled = true;
-        audioSource.clip = clip;
-        StartCoroutine(Playback());
-    }
-    IEnumerator Playback()
-    {
-        audioSource.Play();
-
-        yield return new WaitForSeconds(audioSource.clip.length);
-        audioSource.enabled = false;
+        audioSource.PlayOneShot(clip);
     }
 }
 
