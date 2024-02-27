@@ -13802,6 +13802,7 @@ MonoBehaviour:
   player: {fileID: 1835113016}
   rowWidth: 49
   gameRowWidth: 15
+  rowMultiple: 100
 --- !u!1001 &1275095215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17095,7 +17096,7 @@ PrefabInstance:
     - target: {fileID: 3810823063185255466, guid: 5374c9c2cdc939749b599d20390ed537, type: 3}
       propertyPath: fallInWater
       value: 
-      objectReference: {fileID: 8300000, guid: 7bbaa0c08301b15479d03d99933f3631, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3810823063185255466, guid: 5374c9c2cdc939749b599d20390ed537, type: 3}
       propertyPath: _timeToMoveBird
       value: 1
@@ -17164,7 +17165,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0
   MaxDistance: 2
   Pan2D: 0
   rolloffMode: 0

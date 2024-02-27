@@ -76,12 +76,12 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 {
                     _animator.SetTrigger("Hop");
                     StartCoroutine(MovePlayer(Vector3.forward));
+                    PlayEffect(step);
                 }
                 else
                 {
                     _animator.SetInteger("ObjectHit", 1);
                 }
-                PlayEffect(step);
             }
 
             if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !_isMoving)
@@ -91,12 +91,12 @@ public class PlayerControl : MonoBehaviour, IPlayer
                 {
                     _animator.SetTrigger("Hop");
                     StartCoroutine(MovePlayer(Vector3.back));
+                    PlayEffect(step);
                 }
                 else
                 {
                     _animator.SetInteger("ObjectHit", 2);
                 }
-                PlayEffect(step);
             }
 
             if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !_isMoving)
@@ -114,12 +114,12 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     {
                         StartCoroutine(MovePlayer(Vector3.left));
                     }
+                    PlayEffect(step);
                 }
                 else
                 {
                     _animator.SetInteger("ObjectHit", 3);
                 }
-                PlayEffect(step);
             }
 
             if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !_isMoving)
@@ -137,12 +137,12 @@ public class PlayerControl : MonoBehaviour, IPlayer
                     {
                         StartCoroutine(MovePlayer(Vector3.right));
                     }
+                    PlayEffect(step);
                 }
                 else
                 {
                     _animator.SetInteger("ObjectHit", 4);
                 }
-                PlayEffect(step);
             }
 
             if (transform.position.x >= xMapLimitMax || transform.position.x <= xMapLimitMin)
