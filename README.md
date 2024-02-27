@@ -53,7 +53,7 @@ These steps should allow you to copy a Unity project from GitHub, set it up in U
 
 ## Release
 
-[Download](https://github.com/GameLab-eh/GameLab2-Crossy-Road/releases/tag/Version1.0)
+[Download](https://github.com/GameLab-eh/GameLab2-Crossy-Road/releases/tag/Version1.1)
 
 ## Contributors classmates
 
