@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: ec1cee17487985b4c97ba425fd2233aa, type: 3}
-  delay: 2
+  delay: 5
 --- !u!82 &8541674157036197858
 AudioSource:
   m_ObjectHideFlags: 0
@@ -132,8 +132,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.5
-  MaxDistance: 2
+  MinDistance: 0.1
+  MaxDistance: 1
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
