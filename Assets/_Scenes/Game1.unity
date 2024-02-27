@@ -15775,7 +15775,7 @@ MonoBehaviour:
   _skinObtained: {fileID: 1761416627}
   _bertAnimation: {fileID: 173995222}
   _skinPopUp: {fileID: 1714797920}
-  _skinCost: 1
+  _skinCost: 20
   skinSpawnPoint: {fileID: 1522747422}
 --- !u!1 &1655457773
 GameObject:
