@@ -1,4 +1,4 @@
-# GameLab1-Hover-
+# GameLab1-Crossy-Road-
 
 Welcome to the Game Programming Group Project! This repository contains the source code and resources associated with our game.
 
