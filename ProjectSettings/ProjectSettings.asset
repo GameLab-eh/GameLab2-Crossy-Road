@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: BerTeam
   productName: Berty Road
-  defaultCursor: {fileID: 2800000, guid: 5fb3faac387119c43a3cc3155d22a7d1, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 34abcb98d882b9841a2808720766dcfc, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1
